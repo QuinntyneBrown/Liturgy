@@ -85,11 +85,12 @@ using (var scope = app.Services.CreateScope())
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     await db.Database.MigrateAsync();
 
-    if (app.Environment.IsDevelopment())
-    {
-        var seeder = scope.ServiceProvider.GetRequiredService<DevDataSeeder>();
-        await seeder.SeedAsync();
-    }
+    // Seed the New Hope Collective demo workspace in every environment. The deployed
+    // showcase is built entirely around this data, and sign-in has no value without the
+    // demo accounts it creates. SeedAsync is idempotent (it no-ops once a workspace
+    // exists), so this is safe to run on every startup.
+    var seeder = scope.ServiceProvider.GetRequiredService<DevDataSeeder>();
+    await seeder.SeedAsync();
 }
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
