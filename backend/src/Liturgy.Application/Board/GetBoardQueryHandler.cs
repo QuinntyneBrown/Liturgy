@@ -9,10 +9,12 @@ namespace Liturgy.Application.Board;
 public class GetBoardQueryHandler : IRequestHandler<GetBoardQuery, BoardDto>
 {
     private readonly IAppDbContext _db;
+    private readonly IWorkspaceAccess _workspaceAccess;
 
-    public GetBoardQueryHandler(IAppDbContext db)
+    public GetBoardQueryHandler(IAppDbContext db, IWorkspaceAccess workspaceAccess)
     {
         _db = db;
+        _workspaceAccess = workspaceAccess;
     }
 
     public async Task<BoardDto> Handle(GetBoardQuery request, CancellationToken cancellationToken)
@@ -21,6 +23,8 @@ public class GetBoardQueryHandler : IRequestHandler<GetBoardQuery, BoardDto>
             .AsNoTracking()
             .FirstOrDefaultAsync(p => p.Id == request.ProjectId, cancellationToken)
             ?? throw new ProjectNotFoundException(request.ProjectId);
+
+        await _workspaceAccess.EnsureProjectVisibleAsync(project.Id, cancellationToken);
 
         var sprint = await _db.Sprints
             .AsNoTracking()

@@ -1,7 +1,9 @@
 using System.Reflection;
 using FluentValidation;
+using Liturgy.Application.Abstractions;
 using Liturgy.Application.Behaviors;
 using Liturgy.Application.Enforcement;
+using Liturgy.Application.Workspaces;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -18,6 +20,7 @@ public static class DependencyInjection
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
         services.AddSingleton<EnforcementEngine>();
+        services.AddScoped<IWorkspaceAccess, WorkspaceAccess>();
 
         return services;
     }

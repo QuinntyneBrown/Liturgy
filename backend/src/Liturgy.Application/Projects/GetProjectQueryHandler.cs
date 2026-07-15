@@ -9,10 +9,12 @@ namespace Liturgy.Application.Projects;
 public class GetProjectQueryHandler : IRequestHandler<GetProjectQuery, ProjectJourneyDto>
 {
     private readonly IAppDbContext _db;
+    private readonly IWorkspaceAccess _workspaceAccess;
 
-    public GetProjectQueryHandler(IAppDbContext db)
+    public GetProjectQueryHandler(IAppDbContext db, IWorkspaceAccess workspaceAccess)
     {
         _db = db;
+        _workspaceAccess = workspaceAccess;
     }
 
     public async Task<ProjectJourneyDto> Handle(GetProjectQuery request, CancellationToken cancellationToken)
@@ -21,6 +23,8 @@ public class GetProjectQueryHandler : IRequestHandler<GetProjectQuery, ProjectJo
             .AsNoTracking()
             .FirstOrDefaultAsync(p => p.Id == request.ProjectId, cancellationToken)
             ?? throw new ProjectNotFoundException(request.ProjectId);
+
+        await _workspaceAccess.EnsureProjectVisibleAsync(project.Id, cancellationToken);
 
         var phases = await _db.Phases
             .AsNoTracking()

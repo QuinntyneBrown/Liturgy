@@ -34,6 +34,7 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, AuthResul
             throw new EmailAlreadyRegisteredException(normalizedEmail);
         }
 
+        var now = _clock.UtcNow;
         var user = new User
         {
             Id = Guid.NewGuid(),
@@ -42,10 +43,32 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, AuthResul
             LastName = request.LastName.Trim(),
             PasswordHash = _hasher.Hash(request.Password),
             Role = "Member",
-            CreatedAt = _clock.UtcNow
+            CreatedAt = now
         };
-
         _db.Users.Add(user);
+
+        // Every registrant gets their own (empty) workspace, so they never see another
+        // workspace's projects until they're invited into one.
+        var workspace = new Workspace
+        {
+            Id = Guid.NewGuid(),
+            Name = $"{user.FirstName}'s Workspace",
+            Slug = "ws-" + Guid.NewGuid().ToString("N")[..12],
+            CreatedAt = now
+        };
+        _db.Workspaces.Add(workspace);
+
+        var membership = new Membership
+        {
+            Id = Guid.NewGuid(),
+            WorkspaceId = workspace.Id,
+            UserId = user.Id,
+            Role = "Lead",
+            Initials = Initials.From(user.FirstName, user.LastName),
+            CreatedAt = now
+        };
+        _db.Memberships.Add(membership);
+
         await _db.SaveChangesAsync(cancellationToken);
 
         var accessToken = _tokens.Issue(user);

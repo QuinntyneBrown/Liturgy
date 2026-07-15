@@ -12,23 +12,28 @@ public class LogMovementCommandHandler : IRequestHandler<LogMovementCommand, Car
     private readonly EnforcementEngine _engine;
     private readonly IClock _clock;
     private readonly IRealtimeNotifier _realtime;
+    private readonly IWorkspaceAccess _workspaceAccess;
 
     public LogMovementCommandHandler(
         IAppDbContext db,
         EnforcementEngine engine,
         IClock clock,
-        IRealtimeNotifier realtime)
+        IRealtimeNotifier realtime,
+        IWorkspaceAccess workspaceAccess)
     {
         _db = db;
         _engine = engine;
         _clock = clock;
         _realtime = realtime;
+        _workspaceAccess = workspaceAccess;
     }
 
     public async Task<CardLoopDto> Handle(LogMovementCommand request, CancellationToken cancellationToken)
     {
         var card = await _db.Cards.FirstOrDefaultAsync(c => c.Id == request.CardId, cancellationToken)
             ?? throw new CardNotFoundException(request.CardId);
+
+        await _workspaceAccess.EnsureProjectVisibleAsync(card.ProjectId, cancellationToken);
 
         var movements = await _db.RMovements
             .Where(m => m.CardId == card.Id)

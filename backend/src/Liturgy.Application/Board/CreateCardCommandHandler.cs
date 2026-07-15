@@ -12,23 +12,28 @@ public class CreateCardCommandHandler : IRequestHandler<CreateCardCommand, CardD
     private readonly EnforcementEngine _engine;
     private readonly IClock _clock;
     private readonly IRealtimeNotifier _realtime;
+    private readonly IWorkspaceAccess _workspaceAccess;
 
     public CreateCardCommandHandler(
         IAppDbContext db,
         EnforcementEngine engine,
         IClock clock,
-        IRealtimeNotifier realtime)
+        IRealtimeNotifier realtime,
+        IWorkspaceAccess workspaceAccess)
     {
         _db = db;
         _engine = engine;
         _clock = clock;
         _realtime = realtime;
+        _workspaceAccess = workspaceAccess;
     }
 
     public async Task<CardDto> Handle(CreateCardCommand request, CancellationToken cancellationToken)
     {
         var project = await _db.Projects.FirstOrDefaultAsync(p => p.Id == request.ProjectId, cancellationToken)
             ?? throw new ProjectNotFoundException(request.ProjectId);
+
+        await _workspaceAccess.EnsureProjectVisibleAsync(project.Id, cancellationToken);
 
         var sprint = await _db.Sprints
             .Where(s => s.ProjectId == project.Id)

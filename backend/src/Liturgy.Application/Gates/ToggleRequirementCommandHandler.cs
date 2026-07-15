@@ -17,12 +17,14 @@ public class ToggleRequirementCommandHandler : IRequestHandler<ToggleRequirement
     private readonly IAppDbContext _db;
     private readonly EnforcementEngine _engine;
     private readonly IRealtimeNotifier _realtime;
+    private readonly IWorkspaceAccess _workspaceAccess;
 
-    public ToggleRequirementCommandHandler(IAppDbContext db, EnforcementEngine engine, IRealtimeNotifier realtime)
+    public ToggleRequirementCommandHandler(IAppDbContext db, EnforcementEngine engine, IRealtimeNotifier realtime, IWorkspaceAccess workspaceAccess)
     {
         _db = db;
         _engine = engine;
         _realtime = realtime;
+        _workspaceAccess = workspaceAccess;
     }
 
     public async Task<GateDto> Handle(ToggleRequirementCommand request, CancellationToken cancellationToken)
@@ -43,6 +45,11 @@ public class ToggleRequirementCommandHandler : IRequestHandler<ToggleRequirement
         gate.State = _engine.EvaluateGate(requirements);
 
         var phase = await _db.Phases.FirstOrDefaultAsync(p => p.Id == gate.PhaseId, cancellationToken);
+        if (phase is not null)
+        {
+            await _workspaceAccess.EnsureProjectVisibleAsync(phase.ProjectId, cancellationToken);
+        }
+
         Phase? unlockedPhase = null;
         if (phase is not null && gate.State == GateState.Open && previousGateState != GateState.Open)
         {

@@ -100,6 +100,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// Serve the bundled Angular SPA from wwwroot. The CI pipeline copies the built
+// frontend here before publish, so a single App Service hosts both API and UI.
+// In local development wwwroot is empty and the Angular dev server (ng serve) is
+// used instead, so these calls are simply no-ops.
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
 app.UseCors("web");
 app.UseAuthentication();
 app.UseAuthorization();
@@ -107,6 +114,10 @@ app.UseAuthorization();
 app.MapGet("/health", () => Results.Ok(new { status = "ok" }));
 app.MapControllers();
 app.MapHub<BoardHub>("/hubs/board");
+
+// Any request that isn't an API/hub route falls through to the SPA entry point so
+// Angular's client-side router can handle deep links (e.g. /board/123 on refresh).
+app.MapFallbackToFile("index.html");
 
 app.Run();
 

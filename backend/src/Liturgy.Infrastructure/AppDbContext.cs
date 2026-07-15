@@ -18,6 +18,10 @@ public class AppDbContext : DbContext, IAppDbContext
     public DbSet<Sprint> Sprints => Set<Sprint>();
     public DbSet<Card> Cards => Set<Card>();
     public DbSet<RMovement> RMovements => Set<RMovement>();
+    public DbSet<Decision> Decisions => Set<Decision>();
+    public DbSet<ImpactMetric> ImpactMetrics => Set<ImpactMetric>();
+    public DbSet<Story> Stories => Set<Story>();
+    public DbSet<Gratitude> Gratitudes => Set<Gratitude>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -111,6 +115,39 @@ public class AppDbContext : DbContext, IAppDbContext
             b.Property(m => m.WhatChanged).HasMaxLength(2000);
             b.Property(m => m.Thanksgiving).HasMaxLength(2000);
             b.HasIndex(m => new { m.CardId, m.Order }).IsUnique();
+        });
+
+        modelBuilder.Entity<Decision>(b =>
+        {
+            b.HasKey(d => d.Id);
+            b.Property(d => d.ChosenPath).HasConversion<int>();
+            b.Property(d => d.Rationale).HasMaxLength(2000).IsRequired();
+            b.Property(d => d.PrayedOverWith).HasMaxLength(200).IsRequired();
+            b.HasIndex(d => d.ProjectId).IsUnique();
+        });
+
+        modelBuilder.Entity<ImpactMetric>(b =>
+        {
+            b.HasKey(m => m.Id);
+            b.Property(m => m.Value).HasMaxLength(32).IsRequired();
+            b.Property(m => m.Unit).HasMaxLength(16);
+            b.Property(m => m.Label).HasMaxLength(300).IsRequired();
+            b.HasIndex(m => new { m.ProjectId, m.Order });
+        });
+
+        modelBuilder.Entity<Story>(b =>
+        {
+            b.HasKey(s => s.Id);
+            b.Property(s => s.Text).HasMaxLength(1000).IsRequired();
+            b.HasIndex(s => new { s.ProjectId, s.Order });
+        });
+
+        modelBuilder.Entity<Gratitude>(b =>
+        {
+            b.HasKey(g => g.Id);
+            b.Property(g => g.Quote).HasMaxLength(1000).IsRequired();
+            b.Property(g => g.Attribution).HasMaxLength(200).IsRequired();
+            b.HasIndex(g => new { g.ProjectId, g.Order });
         });
     }
 }

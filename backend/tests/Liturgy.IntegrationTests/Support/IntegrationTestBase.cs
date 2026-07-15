@@ -86,18 +86,22 @@ public abstract class IntegrationTestBase : IAsyncLifetime
         await cmd.ExecuteNonQueryAsync();
     }
 
-    /// <summary>Registers a fresh user and returns an HttpClient with its bearer token attached.</summary>
+    /// <summary>
+    /// Signs in as the seeded New Hope Collective member (rather than registering a
+    /// fresh user, who would only belong to their own empty personal workspace) and
+    /// returns an HttpClient with its bearer token attached, so the client sees the
+    /// seeded demo projects (Lantern, Wellspring, ...).
+    /// </summary>
     protected async Task<HttpClient> CreateAuthenticatedClientAsync()
     {
         var client = Factory.CreateClient();
-        var email = $"member+{Guid.NewGuid():N}@newhope.dev";
 
-        var register = await client.PostAsJsonAsync(
-            "/api/auth/register",
-            new { Email = email, FirstName = "Test", LastName = "Member", Password = "Liturgy!2026" });
-        register.EnsureSuccessStatusCode();
+        var signIn = await client.PostAsJsonAsync(
+            "/api/auth/sign-in",
+            new { Email = "quinn@newhope.dev", Password = "Liturgy!2026" });
+        signIn.EnsureSuccessStatusCode();
 
-        var auth = await register.Content.ReadFromJsonAsync<AuthResponse>();
+        var auth = await signIn.Content.ReadFromJsonAsync<AuthResponse>();
         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", auth!.AccessToken);
         return client;
     }

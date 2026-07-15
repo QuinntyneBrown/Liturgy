@@ -15,6 +15,10 @@ public interface IAppDbContext
     DbSet<Sprint> Sprints { get; }
     DbSet<Card> Cards { get; }
     DbSet<RMovement> RMovements { get; }
+    DbSet<Decision> Decisions { get; }
+    DbSet<ImpactMetric> ImpactMetrics { get; }
+    DbSet<Story> Stories { get; }
+    DbSet<Gratitude> Gratitudes { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

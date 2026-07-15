@@ -7,6 +7,7 @@ public static class LoopMapper
 {
     public static CardLoopDto ToDto(EnforcementEngine engine, Card card, IReadOnlyCollection<RMovement> movements) => new(
         card.Id,
+        card.ProjectId,
         card.Code,
         card.Title,
         card.Column,

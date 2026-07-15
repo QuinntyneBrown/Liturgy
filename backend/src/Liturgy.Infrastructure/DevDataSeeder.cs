@@ -7,10 +7,11 @@ using Microsoft.EntityFrameworkCore;
 namespace Liturgy.Infrastructure;
 
 /// <summary>
-/// Seeds the "Lantern" demo from docs/mocks so a fresh database mirrors the mockups:
-/// the New Hope Collective workspace, four members, a project in Develop with a live
-/// Sprint 6 board, and a Develop → Demonstrate gate that is one requirement short of
-/// opening (toggle it to watch Demonstrate unlock). Idempotent.
+/// Seeds the New Hope Collective workspace from docs/mocks so a fresh database mirrors
+/// the mockups: four members and six projects spread across every stage of the 4D
+/// cycle — Lantern (Develop, one gate requirement from opening Demonstrate), Wellspring
+/// (Discern, blocked on a sprint goal), Bread & Fish (Demonstrate, full impact story),
+/// Refuge Finder and Sabbath (Discover), and Common Table (Develop). Idempotent.
 /// </summary>
 public class DevDataSeeder
 {
@@ -81,6 +82,12 @@ public class DevDataSeeder
 
         SeedCards(project.Id, sprint.Id, quinn.user.Id, amara.user.Id, jonah.user.Id, sam.user.Id, now);
 
+        SeedWellspring(workspace.Id, now);
+        SeedBreadAndFish(workspace.Id, now);
+        SeedDiscoveryProject(workspace.Id, "Refuge Finder", "Trauma-informed shelter finder", now);
+        SeedDiscoveryProject(workspace.Id, "Sabbath", "Rhythms of rest", now);
+        SeedCommonTable(workspace.Id, now);
+
         await _db.SaveChangesAsync(cancellationToken);
     }
 
@@ -139,6 +146,211 @@ public class DevDataSeeder
             (RequirementState.Todo, "Demo prepared for the community", "required"));
     }
 
+    private void SeedWellspring(Guid workspaceId, DateTimeOffset now)
+    {
+        var project = new Project
+        {
+            Id = Guid.NewGuid(),
+            WorkspaceId = workspaceId,
+            Name = "Wellspring",
+            Tag = "Clean-water access",
+            CurrentPhase = PhaseKind.Discern,
+            CreatedAt = now
+        };
+        _db.Projects.Add(project);
+
+        var discover = AddPhase(project.Id, PhaseKind.Discover, PhaseState.Done, 0, now);
+        var discern = AddPhase(project.Id, PhaseKind.Discern, PhaseState.Current, 1, now);
+        AddPhase(project.Id, PhaseKind.Develop, PhaseState.Locked, 2, now);
+        AddPhase(project.Id, PhaseKind.Demonstrate, PhaseState.Locked, 3, now);
+
+        AddOpenGate(discover.Id, "Discover → Discern", now,
+            ("Lament recorded — who carries this problem?", "4 entries"),
+            ("Community interviews synthesized", "12 people"),
+            ("Problem framed with a Christ-shaped lens", "signed off"));
+
+        // Blocked one requirement short: the Decision below satisfies "path chosen" and
+        // "note written", so only the sprint goal keeps this gate from opening.
+        AddGate(discern.Id, "Discern → Develop", GateState.Blocked, now,
+            (RequirementState.Done, "Discernment path chosen", "Reimagine"),
+            (RequirementState.Done, "Discernment note written", null),
+            (RequirementState.Todo, "Sprint goal defined for Develop", "required"));
+
+        _db.Decisions.Add(new Decision
+        {
+            Id = Guid.NewGuid(),
+            ProjectId = project.Id,
+            ChosenPath = DiscernmentPath.Reimagine,
+            Rationale = "A borehole-monitoring tool already exists but ignores the women who walk for water. " +
+                        "We'll reimagine it around their route and their voice.",
+            PrayedOverWith = "Whole team · 11 July",
+            DecidedAt = now
+        });
+    }
+
+    private void SeedBreadAndFish(Guid workspaceId, DateTimeOffset now)
+    {
+        var project = new Project
+        {
+            Id = Guid.NewGuid(),
+            WorkspaceId = workspaceId,
+            Name = "Bread & Fish",
+            Tag = "Neighbourhood meal-share",
+            CurrentPhase = PhaseKind.Demonstrate,
+            CreatedAt = now
+        };
+        _db.Projects.Add(project);
+
+        var discover = AddPhase(project.Id, PhaseKind.Discover, PhaseState.Done, 0, now);
+        var discern = AddPhase(project.Id, PhaseKind.Discern, PhaseState.Done, 1, now);
+        var develop = AddPhase(project.Id, PhaseKind.Develop, PhaseState.Done, 2, now);
+        AddPhase(project.Id, PhaseKind.Demonstrate, PhaseState.Current, 3, now);
+
+        AddOpenGate(discover.Id, "Discover → Discern", now,
+            ("Lament recorded — who carries this problem?", "5 entries"),
+            ("Community interviews synthesized", "14 people"),
+            ("Problem framed with a Christ-shaped lens", "signed off"));
+
+        AddOpenGate(discern.Id, "Discern → Develop", now,
+            ("Discernment path chosen", "Create"),
+            ("Prayed over with the whole team", "3 March"),
+            ("Sprint goal defined for Develop", "done"));
+
+        AddOpenGate(develop.Id, "Develop → Demonstrate", now,
+            ("Every work item has completed the 5R loop", "12 of 12"),
+            ("Impact reframed as friendship compounded by time", "draft"),
+            ("Demo prepared for the community", "done"));
+
+        var metrics = new (string Value, string? Unit, string Label, bool Highlight)[]
+        {
+            ("17", " wks", "Weeks walked alongside the same 6 families", false),
+            ("41", null, "Meals shared between neighbours who were strangers", false),
+            ("9", null, "Volunteers still serving past the pilot", false),
+            ("4", null, "Stories of change, in their own words", true)
+        };
+        var order = 0;
+        foreach (var (value, unit, label, highlight) in metrics)
+        {
+            _db.ImpactMetrics.Add(new ImpactMetric
+            {
+                Id = Guid.NewGuid(),
+                ProjectId = project.Id,
+                Value = value,
+                Unit = unit,
+                Label = label,
+                Order = order++,
+                Highlight = highlight,
+                CreatedAt = now
+            });
+        }
+
+        var stories = new (int Week, string Text)[]
+        {
+            (2, "Maria signed up for a meal. She didn't know a single name on her street."),
+            (7, "Maria started cooking on Thursdays. Two neighbours now have her number."),
+            (14, "The Thursday table outgrew Maria's kitchen. They moved it to the church hall."),
+            (17, "Maria is training two others to host. The app now just quietly keeps the rota.")
+        };
+        order = 0;
+        foreach (var (week, text) in stories)
+        {
+            _db.Stories.Add(new Story
+            {
+                Id = Guid.NewGuid(),
+                ProjectId = project.Id,
+                Week = week,
+                Text = text,
+                Order = order++,
+                CreatedAt = now
+            });
+        }
+
+        var gratitude = new (string Quote, string Attribution)[]
+        {
+            ("We prayed for a way to reach the isolated. He gave us a table, not a feature.", "Team retro, week 12"),
+            ("Grateful the rota code was boring so the meals could be beautiful.", "Sam, developer"),
+            ("I came for food. I stayed for the people. Thank you for building the door.", "A guest, week 15")
+        };
+        order = 0;
+        foreach (var (quote, attribution) in gratitude)
+        {
+            _db.Gratitudes.Add(new Gratitude
+            {
+                Id = Guid.NewGuid(),
+                ProjectId = project.Id,
+                Quote = quote,
+                Attribution = attribution,
+                Order = order++,
+                CreatedAt = now
+            });
+        }
+    }
+
+    private void SeedDiscoveryProject(Guid workspaceId, string name, string tag, DateTimeOffset now)
+    {
+        var project = new Project
+        {
+            Id = Guid.NewGuid(),
+            WorkspaceId = workspaceId,
+            Name = name,
+            Tag = tag,
+            CurrentPhase = PhaseKind.Discover,
+            CreatedAt = now
+        };
+        _db.Projects.Add(project);
+
+        var discover = AddPhase(project.Id, PhaseKind.Discover, PhaseState.Current, 0, now);
+        AddPhase(project.Id, PhaseKind.Discern, PhaseState.Locked, 1, now);
+        AddPhase(project.Id, PhaseKind.Develop, PhaseState.Locked, 2, now);
+        AddPhase(project.Id, PhaseKind.Demonstrate, PhaseState.Locked, 3, now);
+
+        AddGate(discover.Id, "Discover → Discern", GateState.Blocked, now,
+            (RequirementState.Todo, "Lament recorded — who carries this problem?", null),
+            (RequirementState.Todo, "Community interviews synthesized", null));
+    }
+
+    private void SeedCommonTable(Guid workspaceId, DateTimeOffset now)
+    {
+        var project = new Project
+        {
+            Id = Guid.NewGuid(),
+            WorkspaceId = workspaceId,
+            Name = "Common Table",
+            Tag = "Shared-meal logistics",
+            CurrentPhase = PhaseKind.Develop,
+            CreatedAt = now
+        };
+        _db.Projects.Add(project);
+
+        var discover = AddPhase(project.Id, PhaseKind.Discover, PhaseState.Done, 0, now);
+        var discern = AddPhase(project.Id, PhaseKind.Discern, PhaseState.Done, 1, now);
+        var develop = AddPhase(project.Id, PhaseKind.Develop, PhaseState.Current, 2, now);
+        AddPhase(project.Id, PhaseKind.Demonstrate, PhaseState.Locked, 3, now);
+
+        AddOpenGate(discover.Id, "Discover → Discern", now,
+            ("Lament recorded — who carries this problem?", "3 entries"),
+            ("Community interviews synthesized", "8 people"),
+            ("Problem framed with a Christ-shaped lens", "signed off"));
+
+        AddOpenGate(discern.Id, "Discern → Develop", now,
+            ("Discernment path chosen", "Receive"),
+            ("Prayed over with the whole team", "2 June"),
+            ("Sprint goal defined for Develop", "done"));
+
+        AddGate(develop.Id, "Develop → Demonstrate", GateState.Blocked, now,
+            (RequirementState.Todo, "Every work item has completed the 5R loop", "0 of 4"),
+            (RequirementState.Todo, "Impact reframed as friendship compounded by time", "required"));
+
+        _db.Sprints.Add(new Sprint
+        {
+            Id = Guid.NewGuid(),
+            ProjectId = project.Id,
+            Number = 2,
+            EndsAt = now.AddDays(5),
+            CreatedAt = now
+        });
+    }
+
     private Phase AddPhase(Guid projectId, PhaseKind kind, PhaseState state, int order, DateTimeOffset now)
     {
         var phase = new Phase
@@ -157,7 +369,7 @@ public class DevDataSeeder
     private void AddOpenGate(Guid phaseId, string title, DateTimeOffset now, params (string Label, string Meta)[] requirements)
     {
         AddGate(phaseId, title, GateState.Open, now,
-            requirements.Select(r => (RequirementState.Done, r.Label, r.Meta)).ToArray());
+            requirements.Select(r => (RequirementState.Done, r.Label, (string?)r.Meta)).ToArray());
     }
 
     private void AddGate(
@@ -165,7 +377,7 @@ public class DevDataSeeder
         string title,
         GateState state,
         DateTimeOffset now,
-        params (RequirementState State, string Label, string Meta)[] requirements)
+        params (RequirementState State, string Label, string? Meta)[] requirements)
     {
         var gate = new Gate
         {
