@@ -1,0 +1,141 @@
+name: CI/CD
+
+# Push to main runs the full test suite and, if green, publishes the bundled
+# app (API + Angular SPA) to a single Azure App Service. Pull requests run the
+# same build and tests but do not deploy.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Least-privilege by default; the deploy job additionally requests id-token for
+# passwordless OIDC login to Azure.
+permissions:
+  contents: read
+
+env:
+  DOTNET_NOLOGO: 'true'
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 'true'
+  NODE_VERSION: '22'
+  # Connection string the integration tests use (see AcceptanceSqlServer.cs).
+  # Points at the SQL Server service container below.
+  LITURGY_TEST_SQLSERVER: 'Server=localhost,1433;User Id=sa;Password=Str0ng!Passw0rd;TrustServerCertificate=True;Encrypt=True'
+  # Where the publish-ready bundle (API + SPA) is staged.
+  PUBLISH_DIR: publish
+
+jobs:
+  build-and-test:
+    name: Build & Test
+    runs-on: ubuntu-latest
+
+    services:
+      sqlserver:
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        env:
+          ACCEPT_EULA: 'Y'
+          MSSQL_SA_PASSWORD: 'Str0ng!Passw0rd'
+        ports:
+          - 1433:1433
+        options: >-
+          --health-cmd "/opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P 'Str0ng!Passw0rd' -Q 'SELECT 1'"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 20
+          --health-start-period 30s
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # --- Backend: .NET 9 ---------------------------------------------------
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: backend/global.json
+
+      - name: Restore (backend)
+        run: dotnet restore backend/Liturgy.sln
+
+      - name: Build (backend)
+        run: dotnet build backend/Liturgy.sln -c Release --no-restore
+
+      - name: Test (backend — unit + integration)
+        run: dotnet test backend/Liturgy.sln -c Release --no-build --verbosity normal
+
+      # --- Frontend: Angular 21 ---------------------------------------------
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install (frontend)
+        working-directory: frontend
+        run: npm ci
+
+      - name: Test (frontend — jest)
+        working-directory: frontend
+        run: npm test
+
+      - name: Build (frontend — production)
+        working-directory: frontend
+        run: npm run build
+
+      # --- Bundle SPA into the API and publish ------------------------------
+      - name: Copy SPA into API wwwroot
+        run: |
+          rm -rf backend/src/Liturgy.Api/wwwroot
+          mkdir -p backend/src/Liturgy.Api/wwwroot
+          cp -r frontend/dist/liturgy-app/browser/. backend/src/Liturgy.Api/wwwroot/
+
+      - name: Publish (API + bundled SPA)
+        run: dotnet publish backend/src/Liturgy.Api/Liturgy.Api.csproj -c Release --no-restore -o ${{ env.PUBLISH_DIR }}
+
+      - name: Upload published app
+        uses: actions/upload-artifact@v4
+        with:
+          name: app
+          path: ${{ env.PUBLISH_DIR }}
+          if-no-files-found: error
+          retention-days: 7
+
+  deploy:
+    name: Deploy to Azure
+    needs: build-and-test
+    # Only deploy on a real push to main, and only once the Azure target is
+    # configured (repo variable AZURE_WEBAPP_NAME + the OIDC secrets). Until then
+    # the job is skipped so the pipeline stays green without deploy infrastructure.
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && vars.AZURE_WEBAPP_NAME != ''
+    runs-on: ubuntu-latest
+    environment: production
+
+    permissions:
+      contents: read
+      id-token: write   # required for OIDC federated login to Azure
+
+    steps:
+      - name: Download published app
+        uses: actions/download-artifact@v4
+        with:
+          name: app
+          path: ${{ env.PUBLISH_DIR }}
+
+      - name: Azure login (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Deploy to App Service
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ vars.AZURE_WEBAPP_NAME }}
+          slot-name: ${{ vars.AZURE_WEBAPP_SLOT || 'production' }}
+          package: ${{ env.PUBLISH_DIR }}
+
+      - name: Azure logout
+        if: always()
+        run: az logout || true

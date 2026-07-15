@@ -19,10 +19,11 @@ time.
 
 **This plan builds a full-stack vertical slice** through that core (per the chosen
 scope): Auth → Workspace/Project → 4D phases + gates → Develop Kanban board → the 5R
-loop → the enforcement engine → real-time updates → tests, end to end. Deferred to a
-follow-up: the marketing cover, full dashboard aggregation, the dedicated Discern
-decision screen, and the Demonstrate/Impact (stories, gratitude wall, metrics)
-surfaces.
+loop → the enforcement engine → real-time updates → tests, end to end. The surfaces
+originally deferred to a follow-up — the marketing cover, design-system page, workspace
+dashboard aggregation, the dedicated Discern decision screen, and the Demonstrate/Impact
+(stories, gratitude wall, metrics) surfaces — were subsequently built in the 2026-07-15
+audit remediation (see "Audit remediation" below).
 
 **Decisions locked with the user:** MediatR/CQS + controllers; hand-built following
 the Forge reference patterns (`C:\projects\forge`); JWT auth included; vertical slice
@@ -290,13 +291,28 @@ movement in one, confirm the other updates live via the `board` hub.
 
 ---
 
-## Out of scope (follow-up plan)
+## Audit remediation (2026-07-15) — the follow-up, delivered
 
-Marketing cover (`index.html`), design-system page, full dashboard aggregation +
-"gates that need attention" feed, dedicated Discern decision screen
-(`discern-gate.html`), and the entire Demonstrate surface (impact metrics, stories
-timeline, gratitude wall). The entities and engine built here are designed to extend
-into these without rework.
+A completeness + mock-fidelity audit closed the originally-deferred gaps:
+
+- **New screens** (all mock-faithful, against real endpoints): marketing landing
+  (`index.html`), design-system page, workspace **dashboard** (momentum stats + "gates
+  that need attention" feed + 4-lane 4D board), the dedicated **Discern** decision screen
+  (four paths + rationale, backed by a `Decision` entity), and **Demonstrate/Impact**
+  (relationship metrics, week-ordered stories, gratitude wall — `ImpactMetric`/`Story`/
+  `Gratitude` entities). New endpoints: `GET/PUT /api/projects/{id}/decision`,
+  `GET /api/projects/{id}/impact`, `GET /api/dashboard`, `GET /api/members`,
+  `POST /api/projects`; `CardLoopDto` gained `projectId`.
+- **Workspace scoping** (`IWorkspaceAccess`): project-scoped handlers require caller
+  membership (non-member → 404); `ListProjects` filters by membership; registration
+  creates a personal workspace.
+- **Signature Rhythm Rail** built as a real contextual component (4D spine + gate-latches
+  + Develop-nested 5R dial/rlist); brand webfonts loaded; create/assign-card UI wired;
+  fidelity bug fixes (Demonstrate badge slug, on-paper dial, 5R poetic titles, gate
+  advance affordance, `aria-disabled` locked-action language, skip links).
+- **Seed** expanded to Lantern, Wellspring, Bread & Fish, Refuge Finder, Sabbath, Common
+  Table (all four 4D phases represented). Refresh dev demo data by dropping the `Liturgy`
+  database (the seeder is globally idempotent).
 
 ---
 
@@ -324,7 +340,11 @@ into these without rework.
 - **E2E realtime** is aborted in the faked suite (`**/hubs/**` → abort); the app
   degrades to REST cleanly. A `LIVE=1` opt-in suite (`e2e/live`) drives the real API.
 
-### Verified green
+### Verified green (post-audit, 2026-07-15)
 - Backend: `dotnet build` clean; `Liturgy.UnitTests` 15/15; `Liturgy.IntegrationTests`
-  6/6 (real SQL Express, per-test DBs).
-- Frontend: `ng build` clean; Jest 8/8; Playwright 5/5 (faked) + live real-flow 1/1.
+  12/12 (real SQL Express, per-test DBs; added scoping/decision/impact/dashboard/
+  create-project/members acceptance tests).
+- Frontend: `ng build liturgy-app` clean; Jest 16/16; Playwright 11/11 (faked) + live
+  opt-in suite. Live contract + visual pass confirmed against the running API.
+- Note: `ng build` needs the project name in this multi-project workspace
+  (`ng build liturgy-app`); bare `ng build` errors on project ambiguity.
