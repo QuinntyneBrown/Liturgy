@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Question or support
+    url: https://github.com/QuinntyneBrown/Liturgy/blob/main/SUPPORT.md
+    about: How to get help and where to ask usage questions.
+  - name: Report a security vulnerability
+    url: https://github.com/QuinntyneBrown/Liturgy/security/advisories/new
+    about: Report vulnerabilities privately. Do not open a public issue.

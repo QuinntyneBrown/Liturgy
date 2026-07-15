@@ -1,0 +1,42 @@
+name: Bug report
+description: Report a reproducible defect in Liturgy
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to file a bug. Do not include credentials,
+        signing keys, connection strings, or security vulnerabilities. Report
+        vulnerabilities privately per SECURITY.md.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Describe the expected and the actual behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Minimal steps that reproduce the problem.
+      placeholder: |
+        1. Sign in as ...
+        2. Open the Develop board for ...
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, .NET SDK version, Node version, SQL Server edition, browser.
+    validations:
+      required: true
+  - type: input
+    id: commit
+    attributes:
+      label: Commit / branch
+      description: The commit SHA or branch where this occurs.
+    validations:
+      required: false

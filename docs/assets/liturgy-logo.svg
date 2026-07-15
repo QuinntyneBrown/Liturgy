@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200" role="img" aria-label="Liturgy">
+  <rect width="200" height="200" rx="28" fill="#16160c"/>
+  <circle cx="100" cy="100" r="58" fill="none" stroke="#c6fb50" stroke-width="8"/>
+  <!-- canonical-hours hand -->
+  <path d="M100 100 L146 100 A46 46 0 0 0 123 60 Z" fill="#c6fb50"/>
+  <circle cx="100" cy="100" r="9" fill="#c6fb50"/>
+</svg>
