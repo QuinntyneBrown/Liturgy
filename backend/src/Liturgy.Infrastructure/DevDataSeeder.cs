@@ -30,9 +30,14 @@ public class DevDataSeeder
         _engine = engine;
     }
 
+    private const string DemoWorkspaceSlug = "new-hope-collective";
+
     public async Task SeedAsync(CancellationToken cancellationToken = default)
     {
-        if (await _db.Workspaces.AnyAsync(cancellationToken))
+        // Key idempotency on the demo workspace specifically, not on "any workspace" —
+        // self-registration creates a private workspace per user, so a general check
+        // would skip seeding forever once a single account had signed up.
+        if (await _db.Workspaces.AnyAsync(w => w.Slug == DemoWorkspaceSlug, cancellationToken))
         {
             return;
         }
@@ -43,7 +48,7 @@ public class DevDataSeeder
         {
             Id = Guid.NewGuid(),
             Name = "New Hope Collective",
-            Slug = "new-hope-collective",
+            Slug = DemoWorkspaceSlug,
             CreatedAt = now
         };
         _db.Workspaces.Add(workspace);
