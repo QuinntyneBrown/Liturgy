@@ -1,3 +1,15 @@
 :host {
   display: block;
 }
+
+.gate__advance {
+  width: 100%;
+  justify-content: center;
+  margin-top: var(--s5);
+}
+
+.gate__advance-help {
+  font-size: 0.82rem;
+  margin: var(--s3) 0 0;
+  text-align: center;
+}

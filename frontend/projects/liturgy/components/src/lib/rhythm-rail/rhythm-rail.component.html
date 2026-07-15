@@ -1,0 +1,72 @@
+<nav class="rail" aria-label="Project rhythm">
+  <div class="rail__brand">
+    <span class="rail__mark" aria-hidden="true"></span>
+    <div>
+      <div class="rail__wordmark">{{ journey().name }}</div>
+      <span class="rail__tag">{{ journey().tag }}</span>
+    </div>
+  </div>
+
+  <div class="rail__label">The 4D Cycle</div>
+  <ol class="stations">
+    @for (phase of phases(); track phase.id; let i = $index, last = $last) {
+      <li
+        class="station"
+        [class.is-done]="phase.state === 'Done'"
+        [class.is-current]="phase.state === 'Current'"
+        [class.is-locked]="phase.state === 'Locked'"
+      >
+        @if (linkFor(phase); as link) {
+          <a class="station__link" [routerLink]="link">
+            <span class="station__node">{{ ordinal(phase.kind) }}</span>
+            <span class="station__meta">
+              <span class="station__name">{{ phase.kind }}</span>
+              <span class="station__sub">{{ sub(phase) }}</span>
+            </span>
+          </a>
+        } @else {
+          <span class="station__link" aria-disabled="true">
+            <span class="station__node">{{ ordinal(phase.kind) }}</span>
+            <span class="station__meta">
+              <span class="station__name">{{ phase.kind }}</span>
+              <span class="station__sub">{{ sub(phase) }}</span>
+            </span>
+          </span>
+        }
+      </li>
+
+      @if (phase.kind === 'Develop' && phase.state === 'Current' && fiveRFilled() !== null) {
+        <div class="rail__fiveR">
+          <div class="rail__fiveR-title">5R loop</div>
+          <div style="display: flex; justify-content: center; margin-bottom: var(--s4)">
+            <lit-dial [filled]="fiveRFilled()!" [size]="104" label="movements" />
+          </div>
+          <lit-rlist [filled]="fiveRFilled()!" />
+        </div>
+      }
+
+      @if (!last) {
+        <div
+          class="gate-latch"
+          [class.is-open]="latch(i) === 'open'"
+          [class.is-blocked]="latch(i) === 'blocked'"
+        >
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            @if (latch(i) === 'open') {
+              <path d="M7 11V8a5 5 0 019.9-1" stroke="currentColor" stroke-width="2" />
+              <rect x="5" y="11" width="14" height="9" rx="1.5" stroke="currentColor" stroke-width="2" />
+            } @else {
+              <rect x="5" y="11" width="14" height="9" rx="1.5" stroke="currentColor" stroke-width="2" />
+              <path d="M8 11V8a4 4 0 018 0v3" stroke="currentColor" stroke-width="2" />
+            }
+          </svg>
+          {{ latchLabel(i) }}
+        </div>
+      }
+    }
+  </ol>
+
+  <div class="rail__foot">
+    <button class="btn btn--on-dark btn--sm" type="button" (click)="signOut.emit()">Sign out</button>
+  </div>
+</nav>

@@ -1,0 +1,115 @@
+<div class="row" style="justify-content:space-between;align-items:flex-end;margin-bottom:var(--s6)">
+  <div>
+    <span class="eyebrow">Workspace</span>
+    <h1 style="font-size:2.2rem;margin-top:var(--s2)">{{ greeting() }}</h1>
+  </div>
+  <button class="btn btn--primary" type="button" (click)="toggleNewProject()">New project</button>
+</div>
+
+@if (showNewProject()) {
+  <form
+    class="card card--pad-lg"
+    style="margin-bottom:var(--s6)"
+    [formGroup]="newProjectForm"
+    (ngSubmit)="createProject()"
+    novalidate
+  >
+    <div class="row" style="gap:var(--s4);align-items:flex-end;flex-wrap:wrap">
+      <div class="field" style="flex:1;min-width:200px;margin-bottom:0">
+        <label class="form__label" for="newProjectName">Project name</label>
+        <input id="newProjectName" class="field__input" type="text" formControlName="name" autocomplete="off" />
+      </div>
+      <div class="field" style="flex:1;min-width:160px;margin-bottom:0">
+        <label class="form__label" for="newProjectTag">Tag</label>
+        <input id="newProjectTag" class="field__input" type="text" formControlName="tag" autocomplete="off" />
+      </div>
+      <button class="btn btn--primary" type="submit" [disabled]="creating()">
+        {{ creating() ? 'Creating…' : 'Create' }}
+      </button>
+    </div>
+  </form>
+}
+
+@if (dashboard(); as d) {
+  <!-- momentum -->
+  <div class="grid grid--4" style="margin-bottom:var(--s7)">
+    <div class="card stat">
+      <div class="stat__num">{{ d.momentum.activeProjects }}</div>
+      <div class="stat__label">Active projects</div>
+    </div>
+    <div class="card stat">
+      <div class="stat__num">{{ d.momentum.movementsThisWeek }}<span class="unit"> / 5</span></div>
+      <div class="stat__label">5R movements logged this week</div>
+    </div>
+    <div class="card stat" style="border-color:#f0522855">
+      <div class="stat__num" style="color:var(--discern)">{{ d.momentum.gatesBlocked }}</div>
+      <div class="stat__label">Gates blocked — need attention</div>
+    </div>
+    <div class="card stat">
+      <div class="stat__num">{{ d.momentum.weeksCompounded }}</div>
+      <div class="stat__label">Weeks of friendship compounded</div>
+    </div>
+  </div>
+
+  <!-- needs attention (enforcement surfaced) -->
+  <div class="card card--pad-lg" style="margin-bottom:var(--s7);border-color:#f0522840">
+    <div class="section-title">
+      <span class="badge badge--blocked badge--dot">Blocked</span>
+      <h2 style="font-size:1.3rem">Gates that need attention</h2>
+    </div>
+    @if (d.attention.length === 0) {
+      <p class="muted">All gates are clear.</p>
+    } @else {
+      @for (item of d.attention; track item.actionKind + item.actionTargetId) {
+        <div class="attn">
+          <span class="gate__lock" style="background:var(--discern)" aria-hidden="true">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+              <rect x="5" y="11" width="14" height="9" rx="1.5" stroke="currentColor" stroke-width="2" />
+              <path d="M8 11V8a4 4 0 018 0v3" stroke="currentColor" stroke-width="2" />
+            </svg>
+          </span>
+          <div>
+            <div style="font-family:var(--display);font-weight:600">{{ item.title }}</div>
+            <div class="muted" style="font-size:.86rem">{{ item.reason }}</div>
+          </div>
+          <a
+            class="btn btn--ghost btn--sm"
+            [routerLink]="item.actionKind === 'loop' ? ['/loop', item.actionTargetId] : ['/projects', item.actionTargetId]"
+          >
+            {{ item.actionKind === 'loop' ? 'Open 5R loop' : 'Open gate' }}
+          </a>
+        </div>
+      }
+    }
+  </div>
+
+  <!-- projects on the 4D cycle -->
+  <div class="section-title">
+    <span class="eyebrow">Every project, on the cycle</span>
+    <h2 style="font-size:1.3rem">The 4D board</h2>
+  </div>
+  <div class="grid grid--4" style="align-items:start">
+    @for (lane of lanes(); track lane.phase) {
+      <div class="lane">
+        <div class="lane__head">
+          <span [class]="phaseBadgeClass(lane.phase) + ' badge--dot'">{{ phaseOrdinal(lane.phase) }} {{ lane.phase }}</span>
+        </div>
+        <div class="lane__body">
+          @for (p of lane.projects; track p.id) {
+            <a class="pcard" [routerLink]="['/projects', p.id]" [style.border-color]="p.blocked ? '#f0522855' : null">
+              <div class="pcard__name">
+                {{ p.name }}
+                @if (p.blocked) {
+                  <span class="badge badge--blocked" style="font-size:.6rem">gate</span>
+                }
+              </div>
+              <div class="pcard__meta">{{ p.meta }}</div>
+            </a>
+          }
+        </div>
+      </div>
+    }
+  </div>
+} @else {
+  <p class="muted">Loading…</p>
+}

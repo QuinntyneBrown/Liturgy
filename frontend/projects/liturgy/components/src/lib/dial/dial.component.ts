@@ -32,7 +32,7 @@ export class DialComponent {
     const seg = circumference / 5;
     const gap = 6;
     const filled = this.filled();
-    const trackColor = this.onPaper() ? 'var(--ink-line)' : 'var(--ink-line)';
+    const trackColor = this.onPaper() ? 'var(--ink-12)' : 'var(--ink-line)';
 
     return Array.from({ length: 5 }, (_, i) => ({
       dash: `${seg - gap} ${circumference - seg + gap}`,

@@ -1,3 +1,4 @@
+// Traces to: L2-WORK-004, L2-WORK-005, L2-WORK-012, L2-WORK-013, L2-PLAY-016
 import { test, expect, authenticate } from '../fixtures/test';
 import { LoopPage } from '../pages/loop.page';
 import { DevelopBoardPage } from '../pages/develop-board.page';

@@ -4,6 +4,7 @@ import { RKind } from './r-kind';
 
 export interface CardLoop {
   cardId: string;
+  projectId: string;
   code: string;
   title: string;
   column: BoardColumn;

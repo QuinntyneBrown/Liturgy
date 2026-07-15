@@ -1,0 +1,89 @@
+@if (decision() && journey()) {
+  <span class="eyebrow">02 · Discern</span>
+  <h1 style="font-size:2.1rem;margin:var(--s2) 0 var(--s4);max-width:20ch">Before we build, we discern.</h1>
+  <p class="lede" style="max-width:58ch">
+    True discernment often comes from beyond our own frame of reference. Sit with the problem
+    prayerfully, then choose one path. Liturgy records the choice — and won't open Develop until
+    you do.
+  </p>
+  <p class="scripture" style="margin:var(--s5) 0 var(--s7);max-width:52ch">
+    "Trust in the Lord with all your heart, and do not lean on your own understanding."
+    <cite>Proverbs 3:5</cite>
+  </p>
+
+  <div class="section-title">
+    <span class="eyebrow">Choose one</span>
+    <h2 style="font-size:1.3rem">The four discernment paths</h2>
+  </div>
+  <div class="grid grid--2" style="margin-bottom:var(--s7)">
+    @for (p of paths; track p.path) {
+      <button
+        class="choice"
+        type="button"
+        [class.is-chosen]="chosen() === p.path"
+        [attr.aria-pressed]="chosen() === p.path"
+        (click)="choose(p.path)"
+      >
+        <div class="choice__r">{{ p.ordinal }}</div>
+        <div class="choice__name">{{ p.path }}</div>
+        <p class="choice__desc">{{ p.desc }}</p>
+        <div class="choice__pick">
+          @if (chosen() === p.path) {
+            <span
+              class="check__box"
+              style="width:18px;height:18px;background:var(--develop);border-color:var(--develop);color:#fff;display:grid;place-items:center"
+            >
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none">
+                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" />
+              </svg>
+            </span>
+            Chosen
+          } @else {
+            <span class="check__box" style="width:18px;height:18px"></span>
+            Choose {{ p.path }}
+          }
+        </div>
+      </button>
+    }
+  </div>
+
+  <div class="grid grid--2" style="align-items:start">
+    <div class="card card--pad-lg">
+      <div class="eyebrow" style="margin-bottom:var(--s3)">Discernment note</div>
+      <div class="field">
+        <label class="field__label" for="why">Why this path?</label>
+        <textarea
+          class="field__input"
+          id="why"
+          rows="4"
+          placeholder="What did the team hear? What confirmed this direction?"
+          [formControl]="form.controls.rationale"
+        ></textarea>
+      </div>
+      <div class="field">
+        <label class="field__label" for="pray">Prayed over with</label>
+        <input
+          class="field__input"
+          id="pray"
+          [formControl]="form.controls.prayedOverWith"
+          aria-label="Prayed over with"
+        />
+      </div>
+      <button class="btn btn--primary" type="button" (click)="save()" [disabled]="!chosen() || saving()">
+        {{ saving() ? 'Saving…' : 'Save decision' }}
+      </button>
+    </div>
+
+    @if (discernGate(); as gate) {
+      <lit-gate
+        [gate]="gate"
+        advanceLabel="Open Develop"
+        [advanceLink]="developLink()"
+        helperText="Develop unlocks automatically once every requirement is checked."
+        (toggle)="onToggle($event)"
+      />
+    }
+  </div>
+} @else {
+  <p class="muted">Loading…</p>
+}

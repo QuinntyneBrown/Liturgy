@@ -1,36 +1,82 @@
 <a class="skip-link" href="#main">Skip to content</a>
 <div class="app">
-  <nav class="rail" aria-label="Workspace">
-    <div class="rail__brand">
-      <span class="rail__mark"></span>
-      <span>
-        <span class="rail__wordmark">Liturgy</span>
-        <span class="rail__tag">New Hope Collective</span>
-      </span>
-    </div>
+  @if (mode() === 'project') {
+    @if (journey(); as j) {
+      <lit-rhythm-rail [journey]="j" [fiveRFilled]="fiveRFilled()" (signOut)="signOut()" />
+    } @else {
+      <nav class="rail" aria-label="Project rhythm">
+        <div class="rail__brand">
+          <span class="rail__mark" aria-hidden="true"></span>
+          <div><div class="rail__wordmark">Liturgy</div><span class="rail__tag">Loading…</span></div>
+        </div>
+        <div class="rail__foot">
+          <button class="btn btn--on-dark btn--sm" type="button" (click)="signOut()">Sign out</button>
+        </div>
+      </nav>
+    }
+  } @else {
+    <nav class="rail" aria-label="Workspace">
+      <div class="rail__brand">
+        <span class="rail__mark" aria-hidden="true"></span>
+        <div>
+          <div class="rail__wordmark">Liturgy</div>
+          <span class="rail__tag">Redemptive tech</span>
+        </div>
+      </div>
 
-    <div class="rail__label">Workspace</div>
-    <ul class="stations" style="gap: 0">
-      <li class="station">
-        <a class="station__link" routerLink="/projects" routerLinkActive="is-current">
-          <span class="station__node">P</span>
-          <span class="station__meta">
-            <span class="station__name">Projects</span>
-            <span class="station__sub">4D journeys</span>
-          </span>
-        </a>
-      </li>
-    </ul>
+      <div class="rail__label">Workspace</div>
+      <ul class="wsnav">
+        <li>
+          <a routerLink="/dashboard" routerLinkActive="is-active">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2" />
+              <rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2" />
+              <rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2" />
+              <rect x="14" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2" />
+            </svg>
+            Dashboard
+          </a>
+        </li>
+        <li>
+          <a routerLink="/projects" routerLinkActive="is-active">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M4 6h16M4 12h16M4 18h10" stroke="currentColor" stroke-width="2" />
+            </svg>
+            Projects
+          </a>
+        </li>
+      </ul>
 
-    <div class="rail__foot">
-      <button class="btn btn--on-dark btn--sm" type="button" (click)="signOut()">Sign out</button>
-    </div>
-  </nav>
+      <div class="rail__label" style="margin-top: var(--s6)">The 4D Cycle</div>
+      <div class="legend" style="padding: 0 var(--s5)">
+        <div class="legend__row"><span class="legend__dot" style="background: var(--discover)"></span>01 Discover</div>
+        <div class="legend__row"><span class="legend__dot" style="background: var(--discern)"></span>02 Discern</div>
+        <div class="legend__row"><span class="legend__dot" style="background: var(--develop)"></span>03 Develop</div>
+        <div class="legend__row"><span class="legend__dot" style="background: var(--demo)"></span>04 Demonstrate</div>
+      </div>
+
+      <div class="rail__foot">
+        <p class="scripture rail__scripture">
+          "Commit your work to the Lord, and your plans will be established." <cite>Proverbs 16:3</cite>
+        </p>
+        <button class="btn btn--on-dark btn--sm" type="button" (click)="signOut()">Sign out</button>
+      </div>
+    </nav>
+  }
 
   <main class="main" id="main">
     <header class="topbar">
-      <span class="topbar__crumbs"><b>Liturgy</b> — build in rhythm</span>
+      <span class="topbar__crumbs">
+        @if (mode() === 'project' && journey(); as j) {
+          Workspace · <b>{{ j.name }}</b> · {{ screenLabel() }}
+        } @else {
+          <b>{{ screenLabel() }}</b>
+        }
+      </span>
       <span class="topbar__spacer"></span>
+      @if (phasePill(); as pill) {
+        <span class="topbar__pill">{{ pill }}</span>
+      }
       @if (user(); as u) {
         <span class="topbar__pill">{{ u.firstName }} {{ u.lastName }}</span>
         <span class="avatar" [attr.title]="u.initials">{{ u.initials }}</span>

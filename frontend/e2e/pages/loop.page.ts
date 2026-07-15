@@ -23,7 +23,8 @@ export class LoopPage extends BasePage {
   }
 
   dialCount(): Locator {
-    return this.page.locator('.dial__count');
+    // Scope to the loop's own dial (#main); the Rhythm Rail nests a second dial.
+    return this.page.locator('#main .dial__count');
   }
 
   async logCurrent(): Promise<void> {

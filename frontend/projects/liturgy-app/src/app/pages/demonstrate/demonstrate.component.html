@@ -1,0 +1,77 @@
+@if (impact(); as data) {
+  <span class="eyebrow">04 · Demonstrate</span>
+  <h1 style="font-size:2.2rem;margin:var(--s2) 0 var(--s4);max-width:20ch">{{ data.headline }}</h1>
+  <p class="lede" style="max-width:60ch">
+    Liturgy doesn't crown the fastest ship. In Demonstrate we measure what redemptive work is actually for —
+    relationships that deepen, and communities that change because someone stayed.
+  </p>
+
+  <div class="grid grid--4" style="margin:var(--s7) 0">
+    @for (metric of data.metrics; track metric.label) {
+      @if (metric.highlight) {
+        <div class="card stat" style="background:var(--ink);color:var(--paper);border:0">
+          <div class="stat__num" style="color:var(--lime)">
+            {{ metric.value }}
+            @if (metric.unit) {
+              <span class="unit"> {{ metric.unit }}</span>
+            }
+          </div>
+          <div class="stat__label" style="color:var(--paper-45)">{{ metric.label }}</div>
+        </div>
+      } @else {
+        <div class="card stat">
+          <div class="stat__num">
+            {{ metric.value }}
+            @if (metric.unit) {
+              <span class="unit"> {{ metric.unit }}</span>
+            }
+          </div>
+          <div class="stat__label">{{ metric.label }}</div>
+        </div>
+      }
+    }
+  </div>
+
+  <div class="grid grid--2" style="align-items:start;gap:var(--s7)">
+    <div>
+      <div class="section-title">
+        <span class="eyebrow">Kept, not counted</span>
+        <h2 style="font-size:1.3rem">Stories over time</h2>
+      </div>
+      <div class="card card--pad-lg">
+        @for (story of data.stories; track story.week) {
+          <div class="story">
+            <span class="story__when">Week {{ story.week }}</span>
+            <p style="margin:0;color:var(--ink-72)">{{ story.text }}</p>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div>
+      <div class="section-title">
+        <span class="eyebrow">5R · Rejoice</span>
+        <h2 style="font-size:1.3rem">Wall of thanksgiving</h2>
+      </div>
+      <div class="gwall" style="columns:1">
+        @for (note of data.gratitude; track note.attribution) {
+          <figure class="gnote">
+            <blockquote class="gnote__text" style="margin:0">"{{ note.quote }}"</blockquote>
+            <figcaption class="gnote__by">— {{ note.attribution }}</figcaption>
+          </figure>
+        }
+      </div>
+    </div>
+  </div>
+
+  <hr class="rule" />
+  <div class="row" style="justify-content:space-between">
+    <p class="scripture" style="margin:0;max-width:44ch">
+      "Let your light shine before others, that they may see your good works and give glory to your Father."
+      <cite>Matthew 5:16</cite>
+    </p>
+    <a class="btn btn--dark" routerLink="/dashboard">Back to workspace</a>
+  </div>
+} @else {
+  <p class="muted">Loading…</p>
+}

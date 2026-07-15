@@ -2,16 +2,18 @@ import { ChangeDetectionStrategy, Component, DestroyRef, computed, effect, injec
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { BoardRealtime, CardLoop, LogMovementRequest, LoopService, Movement, RKind } from '@liturgy/api';
+import {
+  BoardRealtime,
+  CardLoop,
+  LogMovementRequest,
+  LoopService,
+  Movement,
+  RDescriptor,
+  RKind,
+  describeR,
+} from '@liturgy/api';
 import { DialComponent } from '@liturgy/components';
-
-const R_DESCRIPTIONS: Record<RKind, { name: string; desc: string }> = {
-  Request: { name: 'Request', desc: 'Invite the Spirit into the work. Name what you are seeking.' },
-  Receive: { name: 'Receive', desc: 'Wait, and write down what comes — without editing.' },
-  Review: { name: 'Review', desc: 'Synthesize what emerged into a buildable direction.' },
-  Render: { name: 'Render', desc: 'Build toward what you saw. Link the artifact; note what changed.' },
-  Rejoice: { name: 'Rejoice', desc: 'Give thanks for what was made, and name who it serves.' },
-};
+import { RailContextService } from '../../shell/rail-context.service';
 
 @Component({
   selector: 'lit-loop',
@@ -26,6 +28,7 @@ export class LoopComponent {
   private readonly router = inject(Router);
   private readonly fb = inject(FormBuilder);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly rail = inject(RailContextService);
 
   readonly cardId = input.required<string>();
   readonly loop = signal<CardLoop | null>(null);
@@ -45,7 +48,7 @@ export class LoopComponent {
   constructor() {
     this.realtime.movementLogged$.pipe(takeUntilDestroyed()).subscribe((loop) => {
       if (loop.cardId === this.cardId()) {
-        this.loop.set(loop);
+        this.applyLoop(loop);
       }
     });
 
@@ -57,8 +60,13 @@ export class LoopComponent {
     this.destroyRef.onDestroy(() => void this.realtime.stop());
   }
 
-  describe(kind: RKind): { name: string; desc: string } {
-    return R_DESCRIPTIONS[kind];
+  describe(kind: RKind): RDescriptor {
+    return describeR(kind);
+  }
+
+  /** The " · current" suffix the mock appends to the R-name of the active movement. */
+  rSuffix(movement: Movement): string {
+    return movement.state === 'Current' ? ' · current' : '';
   }
 
   content(movement: Movement): string {
@@ -96,7 +104,7 @@ export class LoopComponent {
 
     this.loopService.logMovement(this.cardId(), request).subscribe({
       next: (loop) => {
-        this.loop.set(loop);
+        this.applyLoop(loop);
         this.form.reset();
         this.submitting.set(false);
       },
@@ -110,7 +118,12 @@ export class LoopComponent {
     });
   }
 
+  private applyLoop(loop: CardLoop): void {
+    this.loop.set(loop);
+    this.rail.showProject(loop.projectId, loop.loggedCount);
+  }
+
   private load(id: string): void {
-    this.loopService.get(id).subscribe((loop) => this.loop.set(loop));
+    this.loopService.get(id).subscribe((loop) => this.applyLoop(loop));
   }
 }

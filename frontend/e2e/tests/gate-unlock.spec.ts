@@ -1,3 +1,4 @@
+// Traces to: L2-PLAY-005, L2-PLAY-006, L2-PLAY-007
 import { test, expect, authenticate } from '../fixtures/test';
 import { ProjectJourneyPage } from '../pages/project-journey.page';
 

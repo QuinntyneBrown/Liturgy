@@ -1,9 +1,14 @@
 @if (journey(); as j) {
-  <div class="section-title">
-    <span class="eyebrow eyebrow--lime">4D journey</span>
-    <h2>{{ j.name }}</h2>
-    <span class="muted">{{ j.tag }}</span>
-  </div>
+  <span class="eyebrow eyebrow--lime">The 4D journey</span>
+  <h1 style="font-size: 2.2rem; margin: var(--s2) 0 var(--s3)">{{ j.name }}</h1>
+  <p class="lede" style="max-width: 60ch">
+    {{ j.tag }} — move through Discover, Discern, Develop, and Demonstrate. Each gate opens only once its
+    requirements are met.
+  </p>
+  <p class="scripture" style="margin: var(--s4) 0 var(--s6); max-width: 52ch">
+    "For we are his workmanship, created in Christ Jesus for good works, which God prepared beforehand."
+    <cite>Ephesians 2:10</cite>
+  </p>
 
   <div class="journey">
     @for (phase of j.phases; track phase.id) {
@@ -31,14 +36,26 @@
         <div class="phase-row__body">
           <div class="phase-row__head">
             <span class="phase-row__name">{{ phase.kind }}</span>
-            <span [class]="'badge badge--' + phase.kind.toLowerCase()">{{ phase.state }}</span>
+            <span [class]="phaseBadge(phase.kind)">{{ phase.state }}</span>
+            @if (phase.kind === 'Discern' && phase.state !== 'Locked') {
+              <a class="btn btn--ghost btn--sm" [routerLink]="['/discern', j.id]">Open Discern →</a>
+            }
             @if (phase.kind === 'Develop' && phase.state !== 'Locked') {
               <a class="btn btn--ghost btn--sm" [routerLink]="['/board', j.id]">Open board →</a>
+            }
+            @if (phase.kind === 'Demonstrate' && phase.state !== 'Locked') {
+              <a class="btn btn--ghost btn--sm" [routerLink]="['/demonstrate', j.id]">Open Impact →</a>
             }
           </div>
 
           @if (phase.gate) {
-            <lit-gate [gate]="phase.gate" (toggle)="onToggle($event)" />
+            <lit-gate
+              [gate]="phase.gate"
+              [advanceLabel]="advanceLabel(phase.order)"
+              [advanceLink]="advanceLink(phase, j.id)"
+              helperText="The next phase unlocks automatically once every requirement is checked."
+              (toggle)="onToggle($event)"
+            />
           }
         </div>
       </div>

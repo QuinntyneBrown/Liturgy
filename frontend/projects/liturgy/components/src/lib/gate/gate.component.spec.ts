@@ -37,4 +37,20 @@ describe('GateComponent', () => {
     expect(emitted?.requirement.id).toBe('r2');
     expect(emitted?.done).toBe(true);
   });
+
+  it('labels the blocked badge with the remaining requirement count', () => {
+    const component = create();
+    expect(component.isOpen()).toBe(false);
+    expect(component.remainingLabel()).toBe('1 requirement left');
+  });
+
+  it('renders a locked advance control (aria-disabled) while blocked', () => {
+    const fixture = TestBed.createComponent(GateComponent);
+    fixture.componentRef.setInput('gate', gate());
+    fixture.componentRef.setInput('advanceLabel', 'Open Develop');
+    fixture.detectChanges();
+    const advance = fixture.nativeElement.querySelector('.gate__advance');
+    expect(advance).not.toBeNull();
+    expect(advance.getAttribute('aria-disabled')).toBe('true');
+  });
 });

@@ -11,10 +11,17 @@
         class="btn btn--primary"
         type="button"
         [class.is-locked]="!l.canMarkDone"
+        [attr.aria-disabled]="!l.canMarkDone"
         [disabled]="!l.canMarkDone"
         (click)="markDone()"
       >
         Mark done
+        @if (!l.canMarkDone) {
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="5" y="11" width="14" height="9" rx="1.5" stroke="currentColor" stroke-width="2" />
+            <path d="M8 11V8a4 4 0 018 0v3" stroke="currentColor" stroke-width="2" />
+          </svg>
+        }
       </button>
     </div>
 
@@ -28,8 +35,8 @@
         >
           <div class="movement__num">{{ movement.order }}</div>
           <div>
-            <div class="movement__r">{{ describe(movement.kind).name }}</div>
-            <h3 class="movement__name">{{ describe(movement.kind).name }}</h3>
+            <div class="movement__r">{{ describe(movement.kind).name }}{{ rSuffix(movement) }}</div>
+            <h3 class="movement__name">{{ describe(movement.kind).poeticName }}</h3>
             <p class="movement__desc">{{ describe(movement.kind).desc }}</p>
 
             @if (movement.state === 'Current') {

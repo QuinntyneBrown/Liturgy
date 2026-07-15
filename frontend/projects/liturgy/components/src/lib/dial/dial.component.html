@@ -15,7 +15,7 @@
   </svg>
   <div class="dial__center">
     <div class="dial__count">
-      {{ filled() }}<span style="color: var(--paper-45); font-size: 1rem">/5</span>
+      {{ filled() }}<span class="dial__count-total" [style.color]="onPaper() ? 'var(--ink-45)' : 'var(--paper-45)'" style="font-size: 1rem">/5</span>
     </div>
     <div class="dial__label">{{ label() }}</div>
   </div>

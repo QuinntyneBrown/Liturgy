@@ -1,0 +1,23 @@
+:host {
+  display: block;
+}
+
+.story {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--s4);
+  padding: var(--s5) 0;
+  border-bottom: 1px solid var(--ink-12);
+}
+
+.story:last-child {
+  border: 0;
+}
+
+.story__when {
+  font-family: var(--display);
+  font-weight: 600;
+  color: var(--ink-45);
+  font-size: 0.8rem;
+  white-space: nowrap;
+}

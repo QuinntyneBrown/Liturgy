@@ -4,8 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
+    "build": "ng build liturgy-app",
+    "watch": "ng build liturgy-app --watch --configuration development",
     "test": "jest",
     "test:watch": "jest --watch",
     "e2e": "playwright test"

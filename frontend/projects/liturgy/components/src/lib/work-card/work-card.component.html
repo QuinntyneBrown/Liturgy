@@ -15,10 +15,26 @@
   </button>
   <div class="wcard__foot">
     <lit-pip-strip [loggedCount]="card().loggedCount" [currentR]="card().currentR" />
-    @if (card().assigneeInitials) {
-      <span class="avatar avatar--sm" [attr.title]="card().assigneeInitials">
-        {{ card().assigneeInitials }}
-      </span>
-    }
+    <div class="wcard__assignee">
+      @if (card().assigneeInitials) {
+        <span class="avatar avatar--sm" [attr.title]="card().assigneeInitials">
+          {{ card().assigneeInitials }}
+        </span>
+      }
+      @if (members().length) {
+        <select
+          class="wcard__assign"
+          aria-label="Assign card"
+          (pointerdown)="$event.stopPropagation()"
+          (click)="$event.stopPropagation()"
+          (change)="onAssign($any($event.target).value)"
+        >
+          <option value="" [selected]="!card().assigneeId">Unassigned</option>
+          @for (member of members(); track member.id) {
+            <option [value]="member.id" [selected]="member.id === card().assigneeId">{{ member.initials }}</option>
+          }
+        </select>
+      }
+    </div>
   </div>
 </article>

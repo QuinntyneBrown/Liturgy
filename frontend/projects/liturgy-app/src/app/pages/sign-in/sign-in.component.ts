@@ -37,7 +37,7 @@ export class SignInComponent {
     this.auth.signIn(email, password).subscribe({
       next: (result) => {
         this.authState.setSession(result);
-        void this.router.navigate(['/projects']);
+        void this.router.navigate(['/dashboard']);
       },
       error: () => {
         this.error.set('That email and password did not match. Please try again.');

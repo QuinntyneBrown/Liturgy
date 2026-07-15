@@ -1,3 +1,4 @@
+// Traces to: L2-PLAY-005, L2-PLAY-006, L2-WORK-012, L2-WORK-013
 import { test, expect } from '@playwright/test';
 import { SignInPage } from '../pages/sign-in.page';
 import { ProjectsPage } from '../pages/projects.page';
@@ -17,8 +18,9 @@ test.describe('live', () => {
     await signIn.open();
     await signIn.signIn('quinn@newhope.dev', 'Liturgy!2026');
 
+    await expect(page).toHaveURL(/\/dashboard$/);
     const projects = new ProjectsPage(page);
-    await expect(page).toHaveURL(/\/projects$/);
+    await projects.open();
     await projects.openProject('Lantern');
 
     const journey = new ProjectJourneyPage(page);

@@ -22,6 +22,13 @@ export * from './lib/models/board';
 export * from './lib/models/movement';
 export * from './lib/models/card-loop';
 export * from './lib/models/log-movement-request';
+export * from './lib/models/phase-descriptor';
+export * from './lib/models/r-descriptor';
+export * from './lib/models/discernment-path';
+export * from './lib/models/decision';
+export * from './lib/models/impact';
+export * from './lib/models/dashboard';
+export * from './lib/models/member';
 
 // Services
 export * from './lib/services/api-config';
@@ -30,6 +37,10 @@ export * from './lib/services/projects.service';
 export * from './lib/services/board.service';
 export * from './lib/services/loop.service';
 export * from './lib/services/gates.service';
+export * from './lib/services/decision.service';
+export * from './lib/services/impact.service';
+export * from './lib/services/dashboard.service';
+export * from './lib/services/members.service';
 
 // Auth
 export * from './lib/auth/auth-state.service';

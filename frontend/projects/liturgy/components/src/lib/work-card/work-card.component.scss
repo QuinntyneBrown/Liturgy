@@ -1,3 +1,19 @@
 :host {
   display: block;
 }
+
+.wcard__assignee {
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+}
+.wcard__assign {
+  font: inherit;
+  font-size: 0.7rem;
+  color: var(--ink-72);
+  border: 1px solid var(--ink-12);
+  border-radius: var(--radius);
+  background: var(--paper);
+  padding: 2px 4px;
+  max-width: 84px;
+}

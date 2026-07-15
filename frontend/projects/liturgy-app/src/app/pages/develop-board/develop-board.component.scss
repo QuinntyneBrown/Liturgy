@@ -1,3 +1,14 @@
 :host {
   display: block;
 }
+
+.board-add {
+  display: flex;
+  gap: var(--s3);
+  align-items: center;
+  margin-bottom: var(--s6);
+  max-width: 520px;
+}
+.board-add .field__input {
+  flex: 1;
+}

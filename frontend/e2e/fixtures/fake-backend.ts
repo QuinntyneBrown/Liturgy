@@ -10,6 +10,8 @@ export interface FakeState {
   journey: any;
   board: any;
   loops: Record<string, any>;
+  decision: any;
+  impact: any;
 }
 
 const PROJECT_ID = 'p-lantern';
@@ -72,6 +74,7 @@ function initialState(): FakeState {
   const R = ['Request', 'Receive', 'Review', 'Render', 'Rejoice'];
   const makeLoop = (cardId: string, code: string, title: string, logged: number) => ({
     cardId,
+    projectId: PROJECT_ID,
     code,
     title,
     column: logged === 0 ? 'Backlog' : 'InLoop',
@@ -99,6 +102,19 @@ function initialState(): FakeState {
     loops: {
       'card-24': makeLoop('card-24', 'LAN-24', 'Warm-handoff script when a caller is in danger', 3),
       'card-33': makeLoop('card-33', 'LAN-33', 'Crisis resource directory by region', 0),
+    },
+    decision: { chosenPath: null, rationale: '', prayedOverWith: '', decidedAt: null },
+    impact: {
+      headline: 'Impact is friendship, compounded by time.',
+      metrics: [
+        { value: '17', unit: ' wks', label: 'Weeks walked alongside the same 6 families', highlight: false },
+        { value: '4', unit: null, label: 'Stories of change, in their own words', highlight: true },
+      ],
+      stories: [
+        { week: 2, text: 'Maria signed up for a meal. She knew no one on her street.' },
+        { week: 17, text: 'Maria is training two others to host.' },
+      ],
+      gratitude: [{ quote: 'He gave us a table, not a feature.', attribution: 'Team retro, week 12' }],
     },
   };
 }
@@ -134,12 +150,63 @@ export async function installFakeBackend(page: Page): Promise<FakeState> {
       return json(route, { id: 'u1', email: 'quinn@newhope.dev', firstName: 'Quinn', lastName: 'Brown', role: 'Member', initials: 'QB' });
     }
 
+    // --- Members ---
+    if (path === '/api/members' && method === 'GET') {
+      return json(route, [
+        { id: 'u1', name: 'Quinn Brown', initials: 'QB', role: 'Lead' },
+        { id: 'u2', name: 'Jonah Park', initials: 'JP', role: 'Developer' },
+      ]);
+    }
+
+    // --- Dashboard ---
+    if (path === '/api/dashboard' && method === 'GET') {
+      return json(route, {
+        momentum: { activeProjects: 1, movementsThisWeek: 3, gatesBlocked: 1, weeksCompounded: 17 },
+        attention: [
+          {
+            projectId: PROJECT_ID,
+            projectName: 'Lantern',
+            title: 'Lantern · Develop → Demonstrate',
+            reason: '1 requirement remaining before this gate opens.',
+            actionKind: 'gate',
+            actionTargetId: PROJECT_ID,
+          },
+        ],
+        projects: [
+          { id: PROJECT_ID, name: 'Lantern', currentPhase: state.journey.currentPhase, meta: 'Sprint 6 · 3.0/5 R avg', blocked: true },
+        ],
+      });
+    }
+
     // --- Projects / journey ---
     if (path === '/api/projects' && method === 'GET') {
       return json(route, [{ id: PROJECT_ID, name: 'Lantern', tag: 'After-hours crisis line', currentPhase: state.journey.currentPhase }]);
     }
+    if (path === '/api/projects' && method === 'POST') {
+      const body = request.postDataJSON() as { name: string; tag: string };
+      return json(route, { id: 'p-new', name: body.name, tag: body.tag, currentPhase: 'Discover' });
+    }
     if (path === `/api/projects/${PROJECT_ID}` && method === 'GET') {
       return json(route, state.journey);
+    }
+
+    // --- Decision (Discern) ---
+    const decisionMatch = path.match(/^\/api\/projects\/(.+)\/decision$/);
+    if (decisionMatch) {
+      if (method === 'GET') {
+        return json(route, state.decision);
+      }
+      if (method === 'PUT') {
+        const body = request.postDataJSON() as { chosenPath: string; rationale: string; prayedOverWith: string };
+        state.decision = { ...body, decidedAt: '2026-07-15T00:00:00Z' };
+        return json(route, state.decision);
+      }
+    }
+
+    // --- Impact (Demonstrate) ---
+    const impactMatch = path.match(/^\/api\/projects\/(.+)\/impact$/);
+    if (impactMatch && method === 'GET') {
+      return json(route, state.impact);
     }
 
     // --- Gate requirement toggle (recompute + unlock next phase) ---
@@ -165,6 +232,36 @@ export async function installFakeBackend(page: Page): Promise<FakeState> {
     // --- Board ---
     if (path === `/api/board/${PROJECT_ID}` && method === 'GET') {
       return json(route, state.board);
+    }
+
+    if (path === '/api/board/cards' && method === 'POST') {
+      const body = request.postDataJSON() as { title: string };
+      const newCard = {
+        id: `card-${state.board.cards.length + 1}`,
+        projectId: PROJECT_ID,
+        sprintId: 'sprint-6',
+        code: `LAN-${90 + state.board.cards.length}`,
+        title: body.title,
+        assigneeId: null,
+        assigneeInitials: null,
+        column: 'Backlog',
+        currentR: 'Request',
+        isBlocked: false,
+        loggedCount: 0,
+      };
+      state.board.cards.push(newCard);
+      return json(route, newCard);
+    }
+
+    const assignMatch = path.match(/^\/api\/board\/cards\/(.+)\/assign$/);
+    if (assignMatch && method === 'POST') {
+      const body = request.postDataJSON() as { assigneeId: string | null };
+      const card = state.board.cards.find((c: any) => c.id === assignMatch[1]);
+      if (card) {
+        card.assigneeId = body.assigneeId;
+        card.assigneeInitials = body.assigneeId ? 'JP' : null;
+      }
+      return json(route, card ?? {});
     }
 
     const moveMatch = path.match(/^\/api\/board\/cards\/(.+)\/move$/);

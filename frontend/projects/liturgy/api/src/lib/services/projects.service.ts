@@ -17,4 +17,8 @@ export class ProjectsService {
   get(projectId: string): Observable<ProjectJourney> {
     return this.http.get<ProjectJourney>(`${this.baseUrl}/api/projects/${projectId}`);
   }
+
+  create(name: string, tag: string): Observable<ProjectSummary> {
+    return this.http.post<ProjectSummary>(`${this.baseUrl}/api/projects`, { name, tag });
+  }
 }

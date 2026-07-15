@@ -1,7 +1,34 @@
 @if (board(); as b) {
-  <div class="section-title">
-    <span class="eyebrow eyebrow--lime">Develop · Sprint {{ b.sprintNumber }}</span>
-    <h2>Board</h2>
+  <div class="row" style="justify-content: space-between; align-items: flex-end; margin-bottom: var(--s3)">
+    <div>
+      <span class="eyebrow eyebrow--lime">03 · Develop</span>
+      <h1 style="font-size: 2rem; margin-top: var(--s2)">Sprint {{ b.sprintNumber }} board</h1>
+    </div>
+    <div class="row">
+      <span class="badge badge--develop badge--dot">5R avg {{ avgR() }} / 5</span>
+      @if (focusCard(); as focus) {
+        <a class="btn btn--primary" [routerLink]="['/loop', focus.id]">Open 5R loop</a>
+      }
+    </div>
+  </div>
+  <p class="muted" style="margin-bottom: var(--s5); max-width: 64ch">
+    Every card runs the 5R co-creation loop. The pips show how far each has moved.
+    <b style="color: var(--ink)">Done stays locked</b> until all five movements are logged — no card slips
+    through unfinished.
+  </p>
+
+  <div class="board-add">
+    <input
+      #titleInput
+      class="field__input"
+      type="text"
+      placeholder="Add a work item to the backlog…"
+      aria-label="New card title"
+      (keydown.enter)="addCard()"
+    />
+    <button class="btn btn--ghost btn--sm" type="button" [disabled]="adding()" (click)="addCard()">
+      {{ adding() ? 'Adding…' : 'Add card' }}
+    </button>
   </div>
 
   @if (rejected(); as message) {
@@ -37,7 +64,7 @@
         >
           @for (card of cardsIn(column.key); track card.id) {
             <div cdkDrag [cdkDragData]="card">
-              <lit-work-card [card]="card" (open)="openCard($event)" />
+              <lit-work-card [card]="card" [members]="members()" (open)="openCard($event)" (assign)="assign($event)" />
             </div>
           }
         </div>

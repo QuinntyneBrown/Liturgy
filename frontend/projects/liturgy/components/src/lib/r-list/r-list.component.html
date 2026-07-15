@@ -1,0 +1,13 @@
+<ul class="rlist">
+  @for (item of items(); track item.index) {
+    <li
+      class="rlist__item"
+      [class.is-done]="item.state === 'done'"
+      [class.is-current]="item.state === 'current'"
+      [class.is-locked]="item.state === 'locked'"
+    >
+      <span class="rlist__pip">{{ item.index }}</span>
+      <span class="rlist__name">{{ item.name }}</span>
+    </li>
+  }
+</ul>
