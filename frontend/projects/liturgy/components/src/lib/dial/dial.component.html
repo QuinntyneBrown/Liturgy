@@ -1,0 +1,22 @@
+<div class="dial" [class.dial--on-paper]="onPaper()" [style.--size.px]="size()">
+  <svg viewBox="0 0 120 120" role="img" [attr.aria-label]="ariaLabel()">
+    <circle class="dial__track" [attr.cx]="center" [attr.cy]="center" [attr.r]="r" />
+    @for (segment of segments(); track $index) {
+      <circle
+        class="dial__seg"
+        [attr.cx]="center"
+        [attr.cy]="center"
+        [attr.r]="r"
+        [attr.stroke]="segment.color"
+        [attr.stroke-dasharray]="segment.dash"
+        [attr.stroke-dashoffset]="segment.offset"
+      />
+    }
+  </svg>
+  <div class="dial__center">
+    <div class="dial__count">
+      {{ filled() }}<span style="color: var(--paper-45); font-size: 1rem">/5</span>
+    </div>
+    <div class="dial__label">{{ label() }}</div>
+  </div>
+</div>

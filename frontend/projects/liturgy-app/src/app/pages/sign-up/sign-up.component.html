@@ -1,0 +1,55 @@
+<div class="auth">
+  <div class="auth__card">
+    <div class="auth__brand">
+      <span class="rail__mark" style="border-color: var(--develop)"></span>
+      <span class="rail__wordmark" style="color: var(--ink)">Liturgy</span>
+    </div>
+    <h1 class="auth__title">Start in rhythm</h1>
+    <p class="auth__lede">Create an account to join your collective.</p>
+
+    @if (error()) {
+      <p class="auth__error" role="alert">{{ error() }}</p>
+    }
+
+    <form class="form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <div class="form__row">
+        <div class="form__field">
+          <label class="form__label" for="firstName">First name</label>
+          <input id="firstName" class="form__input" type="text" formControlName="firstName" autocomplete="given-name" />
+        </div>
+        <div class="form__field">
+          <label class="form__label" for="lastName">Last name</label>
+          <input id="lastName" class="form__input" type="text" formControlName="lastName" autocomplete="family-name" />
+        </div>
+      </div>
+
+      <div class="form__field">
+        <label class="form__label" for="email">Email</label>
+        <input id="email" class="form__input" type="email" formControlName="email" autocomplete="email" />
+        @if (form.controls.email.touched && form.controls.email.invalid) {
+          <span class="form__error">Enter a valid email.</span>
+        }
+      </div>
+
+      <div class="form__field">
+        <label class="form__label" for="password">Password</label>
+        <input
+          id="password"
+          class="form__input"
+          type="password"
+          formControlName="password"
+          autocomplete="new-password"
+        />
+        @if (form.controls.password.touched && form.controls.password.invalid) {
+          <span class="form__error">At least 12 characters.</span>
+        }
+      </div>
+
+      <button class="btn btn--primary" type="submit" [disabled]="submitting()">
+        {{ submitting() ? 'Creating…' : 'Create account' }}
+      </button>
+    </form>
+
+    <p class="auth__switch">Already have an account? <a routerLink="/sign-in">Sign in</a></p>
+  </div>
+</div>

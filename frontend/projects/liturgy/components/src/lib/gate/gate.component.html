@@ -1,0 +1,47 @@
+<section class="gate" [class.is-open]="gate().state === 'Open'" [class.is-blocked]="gate().state === 'Blocked'">
+  <header class="gate__bar">
+    <span class="gate__lock" aria-hidden="true">
+      @if (gate().state === 'Open') {
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 6L9 17l-5-5" />
+        </svg>
+      } @else {
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="5" y="11" width="14" height="10" rx="2" />
+          <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+        </svg>
+      }
+    </span>
+    <span class="gate__title">{{ gate().title }}</span>
+    <span class="gate__state">
+      @if (gate().state === 'Open') {
+        <span class="badge badge--done">Open</span>
+      } @else {
+        <span class="badge badge--blocked">{{ remaining() }} left</span>
+      }
+    </span>
+  </header>
+  <div class="gate__body">
+    <ul class="checklist">
+      @for (requirement of gate().requirements; track requirement.id) {
+        <li class="check" [class.is-done]="requirement.state === 'Done'" [class.is-todo]="requirement.state === 'Todo'">
+          <button
+            type="button"
+            class="check__box"
+            [attr.aria-pressed]="requirement.state === 'Done'"
+            [attr.aria-label]="'Toggle: ' + requirement.label"
+            (click)="onToggle(requirement)"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+              <path d="M20 6L9 17l-5-5" />
+            </svg>
+          </button>
+          <span class="check__label">{{ requirement.label }}</span>
+          @if (requirement.meta) {
+            <span class="check__meta">{{ requirement.meta }}</span>
+          }
+        </li>
+      }
+    </ul>
+  </div>
+</section>

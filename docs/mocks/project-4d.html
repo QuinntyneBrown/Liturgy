@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wellspring — 4D journey</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/liturgy.css">
+<style>
+  .phase { position:relative; }
+  .phase__panel { display:grid; grid-template-columns:56px 1fr; gap:var(--s5); }
+  .phase__spine { display:flex; flex-direction:column; align-items:center; }
+  .phase__node { width:44px; height:44px; border-radius:50%; display:grid; place-items:center; font-family:var(--display); font-weight:600; border:2px solid var(--ink-12); color:var(--ink-45); flex:none; }
+  .phase.is-done .phase__node { background:var(--ink); color:var(--paper); border-color:var(--ink); }
+  .phase.is-current .phase__node { background:var(--lime); border-color:var(--lime); color:var(--ink); }
+  .phase__line { flex:1; width:2px; background:var(--ink-12); margin:var(--s2) 0; min-height:24px; }
+  .phase__body { padding-bottom:var(--s6); min-width:0; }
+  .gate-row { margin:var(--s2) 0 var(--s6) 0; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="app">
+  <!-- RHYTHM RAIL — Wellspring, currently in Discern -->
+  <nav class="rail" aria-label="Project rhythm">
+    <div class="rail__brand">
+      <span class="rail__mark" aria-hidden="true"></span>
+      <div>
+        <div class="rail__wordmark">Wellspring</div>
+        <span class="rail__tag">Clean-water access</span>
+      </div>
+    </div>
+    <div class="rail__label">The 4D Cycle</div>
+    <ol class="stations">
+      <li class="station is-done">
+        <a class="station__link" href="#discover"><span class="station__node">01</span><span class="station__meta"><span class="station__name">Discover</span><span class="station__sub">Complete</span></span></a>
+      </li>
+      <div class="gate-latch is-open"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 11V8a5 5 0 019.9-1" stroke="currentColor" stroke-width="2"/><rect x="5" y="11" width="14" height="9" rx="1.5" stroke="currentColor" stroke-width="2"/></svg> Gate open</div>
+      <li class="station is-current">
+        <a class="station__link" href="#discern"><span class="station__node">02</span><span class="station__meta"><span class="station__name">Discern</span><span class="station__sub">In progress</span></span></a>
+      </li>
+      <div class="gate-latch is-blocked"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="1.5" stroke="currentColor" stroke-width="2"/><path d="M8 11V8a4 4 0 018 0v3" stroke="currentColor" stroke-width="2"/></svg> Gate blocked</div>
+      <li class="station is-locked">
+        <a class="station__link" href="#develop"><span class="station__node">03</span><span class="station__meta"><span class="station__name">Develop</span><span class="station__sub">Locked</span></span></a>
+      </li>
+      <div class="gate-latch"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="1.5" stroke="currentColor" stroke-width="2"/><path d="M8 11V8a4 4 0 018 0v3" stroke="currentColor" stroke-width="2"/></svg> Locked</div>
+      <li class="station is-locked">
+        <a class="station__link" href="#demonstrate"><span class="station__node">04</span><span class="station__meta"><span class="station__name">Demonstrate</span><span class="station__sub">Locked</span></span></a>
+      </li>
+    </ol>
+    <div class="rail__foot">
+      <a class="btn btn--on-dark btn--sm" href="dashboard.html">← Workspace</a>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <span class="topbar__crumbs"><a href="dashboard.html">Workspace</a> · <b>Wellspring</b></span>
+      <span class="topbar__spacer"></span>
+      <span class="topbar__pill"><span class="badge badge--discern badge--dot" style="background:transparent;padding:0">02 Discern</span></span>
+      <span class="avatar">QB</span>
+    </div>
+
+    <main id="main" class="content">
+      <span class="eyebrow">The journey</span>
+      <h1 style="font-size:2.2rem;margin:var(--s2) 0 var(--s4)">Wellspring moves through the 4D Cycle.</h1>
+      <p class="lede" style="max-width:60ch;margin-bottom:var(--s7)">Each movement opens only when the one before it is complete. This is how Liturgy keeps the Playbook honest — the process is the product, and the gates enforce it.</p>
+
+      <!-- 01 Discover -->
+      <section class="phase is-done" id="discover">
+        <div class="phase__panel">
+          <div class="phase__spine"><span class="phase__node">01</span><span class="phase__line"></span></div>
+          <div class="phase__body">
+            <div class="row" style="justify-content:space-between">
+              <h2 style="font-size:1.5rem">Discover</h2>
+              <span class="badge badge--done">Complete</span>
+            </div>
+            <p class="muted" style="margin:var(--s2) 0 var(--s4)">Reoriented through the lens of Christ. Sat with those the water crisis touches most.</p>
+            <div class="gate">
+              <div class="gate__body">
+                <ul class="checklist">
+                  <li class="check is-done"><span class="check__box"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3"/></svg></span><span class="check__label">Lament recorded — who carries this problem?</span><span class="check__meta">3 entries</span></li>
+                  <li class="check is-done"><span class="check__box"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3"/></svg></span><span class="check__label">Community interviews synthesized</span><span class="check__meta">9 people</span></li>
+                  <li class="check is-done"><span class="check__box"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3"/></svg></span><span class="check__label">Problem framed with a Christ-shaped lens</span><span class="check__meta">signed off</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 02 Discern (current) -->
+      <section class="phase is-current" id="discern">
+        <div class="phase__panel">
+          <div class="phase__spine"><span class="phase__node">02</span><span class="phase__line"></span></div>
+          <div class="phase__body">
+            <div class="row" style="justify-content:space-between">
+              <h2 style="font-size:1.5rem">Discern</h2>
+              <span class="badge badge--lime">Current</span>
+            </div>
+            <p class="muted" style="margin:var(--s2) 0 var(--s4)">Seek God's wisdom, then decide how — or whether — to build.</p>
+            <p class="scripture" style="margin-bottom:var(--s5)">"If any of you lacks wisdom, let him ask God, who gives generously." <cite>James 1:5</cite></p>
+            <div class="card" style="border-color:var(--develop);background:#32a4320a">
+              <div class="row" style="justify-content:space-between">
+                <div>
+                  <div class="eyebrow">Decision recorded</div>
+                  <div style="font-family:var(--display);font-weight:600;font-size:1.15rem;margin-top:var(--s1)">Reimagine an existing intervention</div>
+                </div>
+                <a class="btn btn--ghost btn--sm" href="discern-gate.html">Review decision</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Gate: Discern -> Develop (BLOCKED) -->
+      <div class="gate-row" style="margin-left:76px">
+        <div class="gate is-blocked">
+          <div class="gate__bar">
+            <span class="gate__lock" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="9" rx="1.5" stroke="currentColor" stroke-width="2"/><path d="M8 11V8a4 4 0 018 0v3" stroke="currentColor" stroke-width="2"/></svg></span>
+            <span class="gate__title">Gate · Discern → Develop</span>
+            <span class="gate__state"><span class="badge badge--blocked badge--dot">1 requirement left</span></span>
+          </div>
+          <div class="gate__body">
+            <ul class="checklist" style="margin-bottom:var(--s5)">
+              <li class="check is-done"><span class="check__box"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3"/></svg></span><span class="check__label">Discernment decision recorded</span><span class="check__meta">Reimagine</span></li>
+              <li class="check is-done"><span class="check__box"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3"/></svg></span><span class="check__label">Team &amp; roles confirmed</span><span class="check__meta">5 members</span></li>
+              <li class="check is-todo"><span class="check__box"></span><span class="check__label">Sprint goal defined for Develop</span><span class="check__meta">required</span></li>
+            </ul>
+            <div class="row" style="justify-content:space-between">
+              <span class="muted" style="font-size:.88rem">Develop unlocks automatically when every requirement is met.</span>
+              <button class="btn is-locked" aria-disabled="true">Advance to Develop
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="1.5" stroke="currentColor" stroke-width="2"/><path d="M8 11V8a4 4 0 018 0v3" stroke="currentColor" stroke-width="2"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 03 Develop (locked) -->
+      <section class="phase" id="develop" style="opacity:.55">
+        <div class="phase__panel">
+          <div class="phase__spine"><span class="phase__node">03</span><span class="phase__line"></span></div>
+          <div class="phase__body">
+            <div class="row" style="justify-content:space-between">
+              <h2 style="font-size:1.5rem">Develop</h2>
+              <span class="badge badge--dot">Locked</span>
+            </div>
+            <p class="muted" style="margin-top:var(--s2)">Co-create in sprints, running the 5R loop on every work item. Opens when the gate above clears.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 04 Demonstrate (locked) -->
+      <section class="phase" id="demonstrate" style="opacity:.55">
+        <div class="phase__panel">
+          <div class="phase__spine"><span class="phase__node">04</span></div>
+          <div class="phase__body">
+            <div class="row" style="justify-content:space-between">
+              <h2 style="font-size:1.5rem">Demonstrate</h2>
+              <span class="badge badge--dot">Locked</span>
+            </div>
+            <p class="muted" style="margin-top:var(--s2)">Measure impact as friendship compounded by time.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<script src="assets/liturgy.js"></script>
+</body>
+</html>

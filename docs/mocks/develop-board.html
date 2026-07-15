@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lantern — Develop board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/liturgy.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="app">
+  <!-- RHYTHM RAIL — Lantern, in Develop, 5R dial expanded -->
+  <nav class="rail" aria-label="Project rhythm">
+    <div class="rail__brand">
+      <span class="rail__mark" aria-hidden="true"></span>
+      <div><div class="rail__wordmark">Lantern</div><span class="rail__tag">After-hours crisis line</span></div>
+    </div>
+    <div class="rail__label">The 4D Cycle</div>
+    <ol class="stations">
+      <li class="station is-done"><a class="station__link" href="#"><span class="station__node">01</span><span class="station__meta"><span class="station__name">Discover</span><span class="station__sub">Complete</span></span></a></li>
+      <div class="gate-latch is-open"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 11V8a5 5 0 019.9-1" stroke="currentColor" stroke-width="2"/><rect x="5" y="11" width="14" height="9" rx="1.5" stroke="currentColor" stroke-width="2"/></svg> Gate open</div>
+      <li class="station is-done"><a class="station__link" href="#"><span class="station__node">02</span><span class="station__meta"><span class="station__name">Discern</span><span class="station__sub">Create</span></span></a></li>
+      <div class="gate-latch is-open"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 11V8a5 5 0 019.9-1" stroke="currentColor" stroke-width="2"/><rect x="5" y="11" width="14" height="9" rx="1.5" stroke="currentColor" stroke-width="2"/></svg> Gate open</div>
+      <li class="station is-current"><a class="station__link" href="develop-board.html"><span class="station__node">03</span><span class="station__meta"><span class="station__name">Develop</span><span class="station__sub">Sprint 6</span></span></a></li>
+
+      <!-- 5R dial nested under Develop -->
+      <div class="rail__fiveR">
+        <div class="rail__fiveR-title">5R loop · card LAN-24</div>
+        <div style="display:flex;justify-content:center;margin-bottom:var(--s4)"><div class="dial" data-filled="3" data-label="movements" style="--size:104px"></div></div>
+        <ul class="rlist">
+          <li class="rlist__item is-done"><span class="rlist__pip">1</span><span class="rlist__name">Request</span></li>
+          <li class="rlist__item is-done"><span class="rlist__pip">2</span><span class="rlist__name">Receive</span></li>
+          <li class="rlist__item is-done"><span class="rlist__pip">3</span><span class="rlist__name">Review</span></li>
+          <li class="rlist__item is-current"><span class="rlist__pip">4</span><span class="rlist__name">Render</span></li>
+          <li class="rlist__item is-locked"><span class="rlist__pip">5</span><span class="rlist__name">Rejoice</span></li>
+        </ul>
+      </div>
+
+      <div class="gate-latch"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="1.5" stroke="currentColor" stroke-width="2"/><path d="M8 11V8a4 4 0 018 0v3" stroke="currentColor" stroke-width="2"/></svg> Locked</div>
+      <li class="station is-locked"><a class="station__link" href="#"><span class="station__node">04</span><span class="station__meta"><span class="station__name">Demonstrate</span><span class="station__sub">Locked</span></span></a></li>
+    </ol>
+    <div class="rail__foot"><a class="btn btn--on-dark btn--sm" href="dashboard.html">← Workspace</a></div>
+  </nav>
+
+  <div class="main">
+    <div class="topbar">
+      <span class="topbar__crumbs"><a href="dashboard.html">Workspace</a> · <a href="#">Lantern</a> · <b>Develop board</b></span>
+      <span class="topbar__spacer"></span>
+      <span class="topbar__pill">Sprint 6 · 4 days left</span>
+      <span class="avatar">QB</span>
+    </div>
+
+    <main id="main" class="content content--wide">
+      <div class="row" style="justify-content:space-between;align-items:flex-end;margin-bottom:var(--s3)">
+        <div>
+          <span class="eyebrow eyebrow--lime">03 · Develop</span>
+          <h1 style="font-size:2rem;margin-top:var(--s2)">Sprint 6 board</h1>
+        </div>
+        <div class="row">
+          <span class="badge badge--develop badge--dot">5R avg 3.4 / 5</span>
+          <a class="btn btn--primary" href="5r-loop.html">Open 5R loop</a>
+        </div>
+      </div>
+      <p class="muted" style="margin-bottom:var(--s6);max-width:64ch">Every card runs the 5R co-creation loop. The pips show how far each has moved. <b style="color:var(--ink)">Done stays locked</b> until all five movements are logged — no card slips through unfinished.</p>
+
+      <div class="board">
+        <!-- Backlog -->
+        <section class="col" aria-label="Backlog">
+          <div class="col__head"><span class="col__title">Backlog</span><span class="col__count">3</span></div>
+          <article class="wcard">
+            <div class="wcard__top"><span class="wcard__id">LAN-31</span></div>
+            <div class="wcard__title">Route the call to the nearest on-shift volunteer</div>
+            <div class="wcard__foot"><div class="pipstrip"><span class="pipstrip__pip">Rq</span><span class="pipstrip__pip">Rc</span><span class="pipstrip__pip">Rv</span><span class="pipstrip__pip">Rn</span><span class="pipstrip__pip">Rj</span></div><span class="avatar" style="width:26px;height:26px;font-size:.65rem">AM</span></div>
+          </article>
+          <article class="wcard">
+            <div class="wcard__top"><span class="wcard__id">LAN-33</span></div>
+            <div class="wcard__title">Quiet-hours mode so no one is woken needlessly</div>
+            <div class="wcard__foot"><div class="pipstrip"><span class="pipstrip__pip">Rq</span><span class="pipstrip__pip">Rc</span><span class="pipstrip__pip">Rv</span><span class="pipstrip__pip">Rn</span><span class="pipstrip__pip">Rj</span></div><span class="avatar" style="width:26px;height:26px;font-size:.65rem">JP</span></div>
+          </article>
+        </section>
+
+        <!-- In 5R loop -->
+        <section class="col" aria-label="In the 5R loop">
+          <div class="col__head"><span class="col__title">In the 5R loop</span><span class="col__count">2</span></div>
+          <a class="wcard is-blocked" href="5r-loop.html" style="display:block">
+            <div class="wcard__top"><span class="wcard__id">LAN-24</span><span class="badge badge--develop" style="font-size:.6rem;margin-left:auto">Render</span></div>
+            <div class="wcard__title">Warm-handoff script when a caller is in danger</div>
+            <div class="wcard__foot"><div class="pipstrip"><span class="pipstrip__pip is-done">Rq</span><span class="pipstrip__pip is-done">Rc</span><span class="pipstrip__pip is-done">Rv</span><span class="pipstrip__pip is-current">Rn</span><span class="pipstrip__pip">Rj</span></div><span class="avatar" style="width:26px;height:26px;font-size:.65rem">QB</span></div>
+          </a>
+          <article class="wcard">
+            <div class="wcard__top"><span class="wcard__id">LAN-28</span><span class="badge badge--develop" style="font-size:.6rem;margin-left:auto">Receive</span></div>
+            <div class="wcard__title">Plain-language consent before a chat begins</div>
+            <div class="wcard__foot"><div class="pipstrip"><span class="pipstrip__pip is-done">Rq</span><span class="pipstrip__pip is-current">Rc</span><span class="pipstrip__pip">Rv</span><span class="pipstrip__pip">Rn</span><span class="pipstrip__pip">Rj</span></div><span class="avatar" style="width:26px;height:26px;font-size:.65rem">SD</span></div>
+          </article>
+        </section>
+
+        <!-- Review -->
+        <section class="col" aria-label="In review">
+          <div class="col__head"><span class="col__title">Review</span><span class="col__count">1</span></div>
+          <article class="wcard">
+            <div class="wcard__top"><span class="wcard__id">LAN-19</span><span class="badge badge--develop" style="font-size:.6rem;margin-left:auto">Rejoice</span></div>
+            <div class="wcard__title">Read-back so a caller knows they were heard</div>
+            <div class="wcard__foot"><div class="pipstrip"><span class="pipstrip__pip is-done">Rq</span><span class="pipstrip__pip is-done">Rc</span><span class="pipstrip__pip is-done">Rv</span><span class="pipstrip__pip is-done">Rn</span><span class="pipstrip__pip is-current">Rj</span></div><span class="avatar" style="width:26px;height:26px;font-size:.65rem">AM</span></div>
+          </article>
+        </section>
+
+        <!-- Done (gate) -->
+        <section class="col col--done col--locked" aria-label="Done">
+          <div class="col__head"><span class="col__title">Done</span><span class="col__count">4</span></div>
+          <div class="col__gate-note"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="1.5" stroke="currentColor" stroke-width="2"/><path d="M8 11V8a4 4 0 018 0v3" stroke="currentColor" stroke-width="2"/></svg> Needs all 5 R's to enter</div>
+          <article class="wcard">
+            <div class="wcard__top"><span class="wcard__id">LAN-12</span><span class="badge badge--done" style="font-size:.6rem;margin-left:auto">Done</span></div>
+            <div class="wcard__title">Volunteers see who's already responding</div>
+            <div class="wcard__foot"><div class="pipstrip"><span class="pipstrip__pip is-done">Rq</span><span class="pipstrip__pip is-done">Rc</span><span class="pipstrip__pip is-done">Rv</span><span class="pipstrip__pip is-done">Rn</span><span class="pipstrip__pip is-done">Rj</span></div><span class="avatar" style="width:26px;height:26px;font-size:.65rem">JP</span></div>
+          </article>
+          <article class="wcard" style="opacity:.85">
+            <div class="wcard__top"><span class="wcard__id">LAN-08</span><span class="badge badge--done" style="font-size:.6rem;margin-left:auto">Done</span></div>
+            <div class="wcard__title">One-tap "I'm safe now" to close a session</div>
+            <div class="wcard__foot"><div class="pipstrip"><span class="pipstrip__pip is-done">Rq</span><span class="pipstrip__pip is-done">Rc</span><span class="pipstrip__pip is-done">Rv</span><span class="pipstrip__pip is-done">Rn</span><span class="pipstrip__pip is-done">Rj</span></div><span class="avatar" style="width:26px;height:26px;font-size:.65rem">SD</span></div>
+          </article>
+        </section>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="assets/liturgy.js"></script>
+</body>
+</html>

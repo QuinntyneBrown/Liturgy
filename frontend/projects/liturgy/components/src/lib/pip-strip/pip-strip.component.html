@@ -1,0 +1,7 @@
+<div class="pipstrip" role="img" [attr.aria-label]="loggedCount() + ' of 5 movements logged'">
+  @for (pip of pips(); track pip.label) {
+    <span class="pipstrip__pip" [class.is-done]="pip.done" [class.is-current]="pip.current">
+      {{ pip.label }}
+    </span>
+  }
+</div>

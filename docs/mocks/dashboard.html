@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Liturgy — Workspace</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/liturgy.css">
+<style>
+  .wsnav { list-style:none; margin:0; padding:0 var(--s4); display:grid; gap:2px; }
+  .wsnav a { display:flex; align-items:center; gap:var(--s3); padding:var(--s3); border-radius:var(--radius); color:var(--paper-72); font-family:var(--display); font-weight:500; font-size:.95rem; }
+  .wsnav a:hover { background:#ffffff10; color:var(--paper); }
+  .wsnav a.is-active { background:var(--lime); color:var(--ink); }
+  .wsnav svg { width:18px; height:18px; }
+  .legend { display:grid; gap:var(--s2); }
+  .legend__row { display:flex; align-items:center; gap:var(--s2); font-size:.78rem; color:var(--paper-72); }
+  .legend__dot { width:9px; height:9px; border-radius:50%; }
+  .lane { background:var(--paper); border:1px solid var(--ink-12); border-radius:var(--radius-lg); overflow:hidden; }
+  .lane__head { padding:var(--s3) var(--s4); border-bottom:1px solid var(--ink-12); display:flex; align-items:center; gap:var(--s2); }
+  .lane__body { padding:var(--s3); display:grid; gap:var(--s2); min-height:120px; }
+  .pcard { border:1px solid var(--ink-12); border-radius:var(--radius); padding:var(--s3); background:var(--sand-100); }
+  .pcard__name { font-family:var(--display); font-weight:600; font-size:.92rem; }
+  .pcard__meta { font-size:.74rem; color:var(--ink-45); margin-top:2px; }
+  .attn { display:grid; grid-template-columns:auto 1fr auto; gap:var(--s4); align-items:center; padding:var(--s4) 0; border-bottom:1px solid var(--ink-12); }
+  .attn:last-child { border:0; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="app">
+  <!-- WORKSPACE RAIL -->
+  <nav class="rail" aria-label="Workspace">
+    <div class="rail__brand">
+      <span class="rail__mark" aria-hidden="true"></span>
+      <div>
+        <div class="rail__wordmark">Liturgy</div>
+        <span class="rail__tag">Redemptive tech</span>
+      </div>
+    </div>
+    <div class="rail__label">Workspace</div>
+    <ul class="wsnav">
+      <li><a class="is-active" href="dashboard.html"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/><rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/><rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/><rect x="14" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/></svg> Dashboard</a></li>
+      <li><a href="project-4d.html"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10" stroke="currentColor" stroke-width="2"/></svg> Projects</a></li>
+      <li><a href="develop-board.html"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="4" width="5" height="16" rx="1" stroke="currentColor" stroke-width="2"/><rect x="10" y="4" width="5" height="10" rx="1" stroke="currentColor" stroke-width="2"/><rect x="17" y="4" width="4" height="13" rx="1" stroke="currentColor" stroke-width="2"/></svg> Boards</a></li>
+      <li><a href="demonstrate.html"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Impact</a></li>
+    </ul>
+
+    <div class="rail__label" style="margin-top:var(--s6)">The 4D Cycle</div>
+    <div class="legend" style="padding:0 var(--s5)">
+      <div class="legend__row"><span class="legend__dot" style="background:var(--discover)"></span>01 Discover</div>
+      <div class="legend__row"><span class="legend__dot" style="background:var(--discern)"></span>02 Discern</div>
+      <div class="legend__row"><span class="legend__dot" style="background:var(--develop)"></span>03 Develop</div>
+      <div class="legend__row"><span class="legend__dot" style="background:var(--demo)"></span>04 Demonstrate</div>
+    </div>
+
+    <div class="rail__foot">
+      <p class="scripture" style="color:var(--paper-45);font-size:.9rem;margin:0">"Commit your work to the Lord, and your plans will be established." <cite>Proverbs 16:3</cite></p>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <span class="topbar__crumbs"><b>New Hope Collective</b> · workspace</span>
+      <span class="topbar__spacer"></span>
+      <span class="topbar__pill">Sprint 6 · 4 days left</span>
+      <span class="avatar" title="Quinn">QB</span>
+    </div>
+
+    <main id="main" class="content content--wide">
+      <div class="row" style="justify-content:space-between;align-items:flex-end;margin-bottom:var(--s6)">
+        <div>
+          <span class="eyebrow">Monday, 14 July</span>
+          <h1 style="font-size:2.2rem;margin-top:var(--s2)">Good morning, Quinn.</h1>
+        </div>
+        <a class="btn btn--primary" href="project-4d.html">New project</a>
+      </div>
+
+      <!-- momentum -->
+      <div class="grid grid--4" style="margin-bottom:var(--s7)">
+        <div class="card stat"><div class="stat__num">6</div><div class="stat__label">Active projects</div></div>
+        <div class="card stat"><div class="stat__num">3<span class="unit"> / 5</span></div><div class="stat__label">5R movements logged this week</div></div>
+        <div class="card stat" style="border-color:#f0522855"><div class="stat__num" style="color:var(--discern)">2</div><div class="stat__label">Gates blocked — need attention</div></div>
+        <div class="card stat"><div class="stat__num">17</div><div class="stat__label">Weeks of friendship compounded</div></div>
+      </div>
+
+      <!-- needs attention (enforcement surfaced) -->
+      <div class="card card--pad-lg" style="margin-bottom:var(--s7);border-color:#f0522840">
+        <div class="section-title"><span class="badge badge--blocked badge--dot">Blocked</span><h2 style="font-size:1.3rem">Gates that need attention</h2></div>
+        <div class="attn">
+          <span class="gate__lock" style="background:var(--discern)" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="9" rx="1.5" stroke="currentColor" stroke-width="2"/><path d="M8 11V8a4 4 0 018 0v3" stroke="currentColor" stroke-width="2"/></svg></span>
+          <div>
+            <div style="font-family:var(--display);font-weight:600">Wellspring · Discern → Develop</div>
+            <div class="muted" style="font-size:.86rem">Sprint goal not yet defined. Develop stays locked until it is.</div>
+          </div>
+          <a class="btn btn--ghost btn--sm" href="discern-gate.html">Open gate</a>
+        </div>
+        <div class="attn">
+          <span class="gate__lock" style="background:var(--discern)" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="9" rx="1.5" stroke="currentColor" stroke-width="2"/><path d="M8 11V8a4 4 0 018 0v3" stroke="currentColor" stroke-width="2"/></svg></span>
+          <div>
+            <div style="font-family:var(--display);font-weight:600">Lantern · card LAN-24 can't reach Done</div>
+            <div class="muted" style="font-size:.86rem">Render and Rejoice not logged. Two of five movements remain.</div>
+          </div>
+          <a class="btn btn--ghost btn--sm" href="5r-loop.html">Open 5R loop</a>
+        </div>
+      </div>
+
+      <!-- projects on the 4D cycle -->
+      <div class="section-title"><span class="eyebrow">Every project, on the cycle</span><h2 style="font-size:1.3rem">The 4D board</h2></div>
+      <div class="grid grid--4" style="align-items:start">
+        <div class="lane">
+          <div class="lane__head"><span class="badge badge--discover badge--dot">01 Discover</span></div>
+          <div class="lane__body">
+            <a class="pcard" href="project-4d.html"><div class="pcard__name">Refuge Finder</div><div class="pcard__meta">Lament workshop · day 3</div></a>
+            <div class="pcard"><div class="pcard__name">Sabbath</div><div class="pcard__meta">Interviews · 4 of 9</div></div>
+          </div>
+        </div>
+        <div class="lane">
+          <div class="lane__head"><span class="badge badge--discern badge--dot">02 Discern</span></div>
+          <div class="lane__body">
+            <a class="pcard" href="discern-gate.html" style="border-color:#f0522855"><div class="pcard__name">Wellspring <span class="badge badge--blocked" style="font-size:.6rem">gate</span></div><div class="pcard__meta">Decision pending</div></a>
+          </div>
+        </div>
+        <div class="lane">
+          <div class="lane__head"><span class="badge badge--develop badge--dot">03 Develop</span></div>
+          <div class="lane__body">
+            <a class="pcard" href="develop-board.html"><div class="pcard__name">Lantern</div><div class="pcard__meta">Sprint 6 · 3/5 R avg</div></a>
+            <a class="pcard" href="develop-board.html"><div class="pcard__name">Common Table</div><div class="pcard__meta">Sprint 2 · 5/5 R avg</div></a>
+          </div>
+        </div>
+        <div class="lane">
+          <div class="lane__head"><span class="badge badge--demo badge--dot">04 Demonstrate</span></div>
+          <div class="lane__body">
+            <a class="pcard" href="demonstrate.html"><div class="pcard__name">Bread &amp; Fish</div><div class="pcard__meta">17 weeks · 4 stories</div></a>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="assets/liturgy.js"></script>
+</body>
+</html>

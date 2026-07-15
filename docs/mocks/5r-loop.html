@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LAN-24 — 5R co-creation loop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/liturgy.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="app">
+  <nav class="rail" aria-label="Project rhythm">
+    <div class="rail__brand">
+      <span class="rail__mark" aria-hidden="true"></span>
+      <div><div class="rail__wordmark">Lantern</div><span class="rail__tag">After-hours crisis line</span></div>
+    </div>
+    <div class="rail__label">The 4D Cycle</div>
+    <ol class="stations">
+      <li class="station is-done"><a class="station__link" href="#"><span class="station__node">01</span><span class="station__meta"><span class="station__name">Discover</span><span class="station__sub">Complete</span></span></a></li>
+      <li class="station is-done"><a class="station__link" href="#"><span class="station__node">02</span><span class="station__meta"><span class="station__name">Discern</span><span class="station__sub">Create</span></span></a></li>
+      <li class="station is-current"><a class="station__link" href="develop-board.html"><span class="station__node">03</span><span class="station__meta"><span class="station__name">Develop</span><span class="station__sub">Sprint 6</span></span></a></li>
+      <div class="rail__fiveR">
+        <div class="rail__fiveR-title">5R loop · LAN-24</div>
+        <div style="display:flex;justify-content:center"><div class="dial" data-filled="3" data-label="movements" style="--size:112px"></div></div>
+      </div>
+      <li class="station is-locked"><a class="station__link" href="#"><span class="station__node">04</span><span class="station__meta"><span class="station__name">Demonstrate</span><span class="station__sub">Locked</span></span></a></li>
+    </ol>
+    <div class="rail__foot"><a class="btn btn--on-dark btn--sm" href="develop-board.html">← Board</a></div>
+  </nav>
+
+  <div class="main" data-ritual>
+    <div class="topbar">
+      <span class="topbar__crumbs"><a href="develop-board.html">Lantern board</a> · <b>LAN-24</b></span>
+      <span class="topbar__spacer"></span>
+      <span class="topbar__pill">5R loop</span>
+      <span class="avatar">QB</span>
+    </div>
+
+    <main id="main" class="content">
+      <span class="eyebrow eyebrow--lime">Co-creation with the Holy Spirit</span>
+      <h1 style="font-size:2rem;margin:var(--s2) 0 var(--s3);max-width:22ch">Warm-handoff script when a caller is in danger</h1>
+      <p class="lede" style="max-width:58ch">One work item, five movements. Liturgy holds the card open until each is logged — Request, Receive, Review, Render, Rejoice — then it may be marked Done.</p>
+      <p class="scripture" style="margin:var(--s5) 0 var(--s7);max-width:52ch">"Commit your work to the Lord, and your plans will be established." <cite>Proverbs 16:3</cite></p>
+
+      <div class="movements">
+        <!-- 1 Request (done) -->
+        <section class="movement is-done">
+          <div class="movement__num">1</div>
+          <div>
+            <div class="movement__r">Request</div>
+            <h2 class="movement__name">Invite the Spirit into the work</h2>
+            <p class="movement__desc">Name what you're seeking before you start. A short, honest ask.</p>
+            <div class="field"><div class="field__label">Logged</div><p class="scripture" style="margin:0">"Show us how to protect a caller without frightening them further."</p></div>
+          </div>
+        </section>
+
+        <!-- 2 Receive (done) -->
+        <section class="movement is-done">
+          <div class="movement__num">2</div>
+          <div>
+            <div class="movement__r">Receive</div>
+            <h2 class="movement__name">Wait, and write down what comes</h2>
+            <p class="movement__desc">Capture the ideas, nudges, and constraints that surface — without editing them yet.</p>
+            <div class="field"><div class="field__label">Logged</div><p style="margin:0;color:var(--ink-72)">Lead with the caller's consent · keep the volunteer visible · never transfer silently · a human voice stays on the line.</p></div>
+          </div>
+        </section>
+
+        <!-- 3 Review (done) -->
+        <section class="movement is-done">
+          <div class="movement__num">3</div>
+          <div>
+            <div class="movement__r">Review</div>
+            <h2 class="movement__name">Synthesize what emerged</h2>
+            <p class="movement__desc">Shape the raw ideas into a direction the team can build.</p>
+            <div class="field"><div class="field__label">Logged</div><p style="margin:0;color:var(--ink-72)">A three-step spoken script + a visible "staying with you" indicator, reviewed with two volunteers.</p></div>
+          </div>
+        </section>
+
+        <!-- 4 Render (current) -->
+        <section class="movement is-current">
+          <div class="movement__num">4</div>
+          <div>
+            <div class="movement__r">Render · current</div>
+            <h2 class="movement__name">Build toward what you saw</h2>
+            <p class="movement__desc">Make it real. Link the work, note what changed from the vision, and log the movement to continue.</p>
+            <div class="field">
+              <label class="field__label" for="artifact">Artifact</label>
+              <input class="field__input" id="artifact" placeholder="Paste a link to the PR, doc, or prototype" value="prs/lantern/handoff-script-v2">
+            </div>
+            <div class="field">
+              <label class="field__label" for="notes">What changed from the vision?</label>
+              <textarea class="field__input" id="notes" rows="3" placeholder="Where did the build teach you something?">Added a silent-fallback path for callers who can't speak — an idea that only surfaced in Render.</textarea>
+            </div>
+            <button class="btn btn--primary" data-log="3">Log Render &amp; continue</button>
+          </div>
+        </section>
+
+        <!-- 5 Rejoice (locked) -->
+        <section class="movement is-locked">
+          <div class="movement__num">5</div>
+          <div>
+            <div class="movement__r">Rejoice</div>
+            <h2 class="movement__name">Give thanks for what was made</h2>
+            <p class="movement__desc">Name the good in what came about — and who it serves. Rejoice closes the loop.</p>
+            <div class="field">
+              <label class="field__label" for="thanks">Thanksgiving</label>
+              <textarea class="field__input" id="thanks" rows="3" placeholder="What are you grateful for in this work?" disabled></textarea>
+            </div>
+            <button class="btn is-locked" aria-disabled="true">Log Rejoice
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="1.5" stroke="currentColor" stroke-width="2"/><path d="M8 11V8a4 4 0 018 0v3" stroke="currentColor" stroke-width="2"/></svg>
+            </button>
+          </div>
+        </section>
+      </div>
+
+      <!-- completion gate -->
+      <div class="gate is-blocked" style="margin-top:var(--s6)">
+        <div class="gate__bar">
+          <span class="gate__lock" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="9" rx="1.5" stroke="currentColor" stroke-width="2"/><path d="M8 11V8a4 4 0 018 0v3" stroke="currentColor" stroke-width="2"/></svg></span>
+          <span class="gate__title">Mark LAN-24 as Done</span>
+          <span class="gate__state"><span class="badge badge--blocked badge--dot">2 movements left</span></span>
+        </div>
+        <div class="gate__body row" style="justify-content:space-between">
+          <span class="muted" style="font-size:.9rem">Render and Rejoice remain. Done unlocks when all five are logged.</span>
+          <button class="btn is-locked" aria-disabled="true">Mark Done</button>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="assets/liturgy.js"></script>
+</body>
+</html>

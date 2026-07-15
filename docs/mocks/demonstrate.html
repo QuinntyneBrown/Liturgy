@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bread &amp; Fish — Demonstrate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/liturgy.css">
+<style>
+  .story { display:grid; grid-template-columns:auto 1fr; gap:var(--s4); padding:var(--s5) 0; border-bottom:1px solid var(--ink-12); }
+  .story:last-child { border:0; }
+  .story__when { font-family:var(--display); font-weight:600; color:var(--ink-45); font-size:.8rem; white-space:nowrap; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="app">
+  <nav class="rail" aria-label="Project rhythm">
+    <div class="rail__brand">
+      <span class="rail__mark" aria-hidden="true"></span>
+      <div><div class="rail__wordmark">Bread &amp; Fish</div><span class="rail__tag">Neighbourhood meal-share</span></div>
+    </div>
+    <div class="rail__label">The 4D Cycle</div>
+    <ol class="stations">
+      <li class="station is-done"><a class="station__link" href="#"><span class="station__node">01</span><span class="station__meta"><span class="station__name">Discover</span><span class="station__sub">Complete</span></span></a></li>
+      <li class="station is-done"><a class="station__link" href="#"><span class="station__node">02</span><span class="station__meta"><span class="station__name">Discern</span><span class="station__sub">Reimagine</span></span></a></li>
+      <li class="station is-done"><a class="station__link" href="develop-board.html"><span class="station__node">03</span><span class="station__meta"><span class="station__name">Develop</span><span class="station__sub">Shipped</span></span></a></li>
+      <div class="gate-latch is-open"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 11V8a5 5 0 019.9-1" stroke="currentColor" stroke-width="2"/><rect x="5" y="11" width="14" height="9" rx="1.5" stroke="currentColor" stroke-width="2"/></svg> Gate open</div>
+      <li class="station is-current"><a class="station__link" href="demonstrate.html"><span class="station__node">04</span><span class="station__meta"><span class="station__name">Demonstrate</span><span class="station__sub">Ongoing</span></span></a></li>
+    </ol>
+    <div class="rail__foot"><a class="btn btn--on-dark btn--sm" href="dashboard.html">← Workspace</a></div>
+  </nav>
+
+  <div class="main">
+    <div class="topbar">
+      <span class="topbar__crumbs"><a href="dashboard.html">Workspace</a> · <b>Bread &amp; Fish</b> · Demonstrate</span>
+      <span class="topbar__spacer"></span>
+      <span class="topbar__pill"><span class="badge badge--demo badge--dot" style="background:transparent;padding:0">04 Demonstrate</span></span>
+      <span class="avatar">QB</span>
+    </div>
+
+    <main id="main" class="content">
+      <span class="eyebrow">04 · Demonstrate</span>
+      <h1 style="font-size:2.2rem;margin:var(--s2) 0 var(--s4);max-width:20ch">Impact is friendship, compounded by time.</h1>
+      <p class="lede" style="max-width:60ch">Liturgy doesn't crown the fastest ship. In Demonstrate we measure what redemptive work is actually for — relationships that deepen, and communities that change because someone stayed.</p>
+
+      <!-- relationship-centered metrics -->
+      <div class="grid grid--4" style="margin:var(--s7) 0">
+        <div class="card stat"><div class="stat__num">17<span class="unit"> wks</span></div><div class="stat__label">Weeks walked alongside the same 6 families</div></div>
+        <div class="card stat"><div class="stat__num">41</div><div class="stat__label">Meals shared between neighbours who were strangers</div></div>
+        <div class="card stat"><div class="stat__num">9</div><div class="stat__label">Volunteers still serving past the pilot</div></div>
+        <div class="card stat" style="background:var(--ink);color:var(--paper);border:0"><div class="stat__num" style="color:var(--lime)">4</div><div class="stat__label" style="color:var(--paper-45)">Stories of change, in their own words</div></div>
+      </div>
+
+      <div class="grid grid--2" style="align-items:start;gap:var(--s7)">
+        <!-- stories -->
+        <div>
+          <div class="section-title"><span class="eyebrow">Kept, not counted</span><h2 style="font-size:1.3rem">Stories over time</h2></div>
+          <div class="card card--pad-lg">
+            <div class="story"><span class="story__when">Week 2</span><p style="margin:0;color:var(--ink-72)">Maria signed up for a meal. She didn't know a single name on her street.</p></div>
+            <div class="story"><span class="story__when">Week 7</span><p style="margin:0;color:var(--ink-72)">Maria started cooking on Thursdays. Two neighbours now have her number.</p></div>
+            <div class="story"><span class="story__when">Week 14</span><p style="margin:0;color:var(--ink-72)">The Thursday table outgrew Maria's kitchen. They moved it to the church hall.</p></div>
+            <div class="story"><span class="story__when">Week 17</span><p style="margin:0;color:var(--ink-72)">Maria is training two others to host. The app now just quietly keeps the rota.</p></div>
+          </div>
+        </div>
+
+        <!-- gratitude wall -->
+        <div>
+          <div class="section-title"><span class="eyebrow">5R · Rejoice</span><h2 style="font-size:1.3rem">Wall of thanksgiving</h2></div>
+          <div class="gwall" style="columns:1">
+            <figure class="gnote"><blockquote class="gnote__text" style="margin:0">"We prayed for a way to reach the isolated. He gave us a table, not a feature."</blockquote><figcaption class="gnote__by">— Team retro, week 12</figcaption></figure>
+            <figure class="gnote"><blockquote class="gnote__text" style="margin:0">"Grateful the rota code was boring so the meals could be beautiful."</blockquote><figcaption class="gnote__by">— Sam, developer</figcaption></figure>
+            <figure class="gnote"><blockquote class="gnote__text" style="margin:0">"I came for food. I stayed for the people. Thank you for building the door."</blockquote><figcaption class="gnote__by">— A guest, week 15</figcaption></figure>
+          </div>
+        </div>
+      </div>
+
+      <hr class="rule">
+      <div class="row" style="justify-content:space-between">
+        <p class="scripture" style="margin:0;max-width:44ch">"Let your light shine before others, that they may see your good works and give glory to your Father." <cite>Matthew 5:16</cite></p>
+        <a class="btn btn--dark" href="index.html">Back to all mocks</a>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="assets/liturgy.js"></script>
+</body>
+</html>

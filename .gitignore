@@ -1,0 +1,28 @@
+# .NET build output
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+*.user
+*.suo
+.vs/
+[Dd]ebug/
+[Rr]elease/
+TestResults/
+[Tt]est[Rr]esults/
+*.trx
+project.lock.json
+artifacts/
+
+# EF Core / local databases
+*.mdf
+*.ldf
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+
+# Environment / secrets
+*.env
+.env
+appsettings.*.local.json

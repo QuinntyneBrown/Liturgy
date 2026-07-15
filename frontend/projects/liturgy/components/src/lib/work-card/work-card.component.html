@@ -1,0 +1,24 @@
+<article class="wcard" [class.is-blocked]="card().isBlocked">
+  <div class="wcard__top">
+    <span class="wcard__id">{{ card().code }}</span>
+    @if (card().currentR) {
+      <span class="badge badge--develop">{{ card().currentR }}</span>
+    }
+  </div>
+  <button
+    type="button"
+    class="wcard__title"
+    style="all: unset; cursor: pointer; display: block; width: 100%"
+    (click)="open.emit(card())"
+  >
+    {{ card().title }}
+  </button>
+  <div class="wcard__foot">
+    <lit-pip-strip [loggedCount]="card().loggedCount" [currentR]="card().currentR" />
+    @if (card().assigneeInitials) {
+      <span class="avatar avatar--sm" [attr.title]="card().assigneeInitials">
+        {{ card().assigneeInitials }}
+      </span>
+    }
+  </div>
+</article>

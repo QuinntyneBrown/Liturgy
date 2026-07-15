@@ -1,0 +1,49 @@
+@if (board(); as b) {
+  <div class="section-title">
+    <span class="eyebrow eyebrow--lime">Develop · Sprint {{ b.sprintNumber }}</span>
+    <h2>Board</h2>
+  </div>
+
+  @if (rejected(); as message) {
+    <p class="col__gate-note" role="alert" style="max-width: 520px; margin-bottom: var(--s4)">
+      {{ message }}
+    </p>
+  }
+
+  <div class="board" cdkDropListGroup>
+    @for (column of columns; track column.key) {
+      <section class="col" [class.col--done]="column.key === 'Done'" [class.col--locked]="column.locked">
+        <header class="col__head">
+          <span class="col__title">{{ column.title }}</span>
+          <span class="col__count">{{ cardsIn(column.key).length }}</span>
+        </header>
+
+        @if (column.locked) {
+          <div class="col__gate-note">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="5" y="11" width="14" height="10" rx="2" />
+              <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+            </svg>
+            Needs all 5 R's to enter
+          </div>
+        }
+
+        <div
+          class="col__list"
+          cdkDropList
+          [cdkDropListData]="cardsIn(column.key)"
+          [cdkDropListEnterPredicate]="column.key === 'Done' ? doneEnterPredicate : allowAll"
+          (cdkDropListDropped)="drop($event, column.key)"
+        >
+          @for (card of cardsIn(column.key); track card.id) {
+            <div cdkDrag [cdkDragData]="card">
+              <lit-work-card [card]="card" (open)="openCard($event)" />
+            </div>
+          }
+        </div>
+      </section>
+    }
+  </div>
+} @else {
+  <p class="muted">Loading board…</p>
+}

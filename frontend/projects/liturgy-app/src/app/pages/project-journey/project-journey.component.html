@@ -1,0 +1,49 @@
+@if (journey(); as j) {
+  <div class="section-title">
+    <span class="eyebrow eyebrow--lime">4D journey</span>
+    <h2>{{ j.name }}</h2>
+    <span class="muted">{{ j.tag }}</span>
+  </div>
+
+  <div class="journey">
+    @for (phase of j.phases; track phase.id) {
+      <div
+        class="phase-row"
+        [class.is-done]="phase.state === 'Done'"
+        [class.is-current]="phase.state === 'Current'"
+        [class.is-locked]="phase.state === 'Locked'"
+      >
+        <div class="phase-row__rail">
+          <div class="phase-row__node">
+            @if (phase.state === 'Done') {
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M20 6L9 17l-5-5" />
+              </svg>
+            } @else {
+              {{ phase.order + 1 }}
+            }
+          </div>
+          @if (!$last) {
+            <div class="phase-row__spine"></div>
+          }
+        </div>
+
+        <div class="phase-row__body">
+          <div class="phase-row__head">
+            <span class="phase-row__name">{{ phase.kind }}</span>
+            <span [class]="'badge badge--' + phase.kind.toLowerCase()">{{ phase.state }}</span>
+            @if (phase.kind === 'Develop' && phase.state !== 'Locked') {
+              <a class="btn btn--ghost btn--sm" [routerLink]="['/board', j.id]">Open board →</a>
+            }
+          </div>
+
+          @if (phase.gate) {
+            <lit-gate [gate]="phase.gate" (toggle)="onToggle($event)" />
+          }
+        </div>
+      </div>
+    }
+  </div>
+} @else {
+  <p class="muted">Loading journey…</p>
+}

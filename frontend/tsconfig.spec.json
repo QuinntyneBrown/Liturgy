@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/spec",
+    "module": "commonjs",
+    "target": "ES2022",
+    "esModuleInterop": true,
+    "types": ["jest", "node"]
+  },
+  "include": ["projects/**/*.spec.ts", "projects/**/*.d.ts", "setup-jest.ts"]
+}

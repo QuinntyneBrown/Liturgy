@@ -1,0 +1,89 @@
+@if (loop(); as l) {
+  <div class="loop">
+    <div class="loop__head">
+      <lit-dial class="loop__dial" [filled]="l.loggedCount" [size]="96" [onPaper]="true" />
+      <div>
+        <span class="eyebrow eyebrow--lime">5R loop</span>
+        <h2 style="font-size: 1.5rem">{{ l.code }} · {{ l.title }}</h2>
+      </div>
+      <span class="topbar__spacer"></span>
+      <button
+        class="btn btn--primary"
+        type="button"
+        [class.is-locked]="!l.canMarkDone"
+        [disabled]="!l.canMarkDone"
+        (click)="markDone()"
+      >
+        Mark done
+      </button>
+    </div>
+
+    <div class="movements">
+      @for (movement of l.movements; track movement.id) {
+        <article
+          class="movement"
+          [class.is-done]="movement.state === 'Done'"
+          [class.is-current]="movement.state === 'Current'"
+          [class.is-locked]="movement.state === 'Locked'"
+        >
+          <div class="movement__num">{{ movement.order }}</div>
+          <div>
+            <div class="movement__r">{{ describe(movement.kind).name }}</div>
+            <h3 class="movement__name">{{ describe(movement.kind).name }}</h3>
+            <p class="movement__desc">{{ describe(movement.kind).desc }}</p>
+
+            @if (movement.state === 'Current') {
+              <form [formGroup]="form" (ngSubmit)="log()">
+                @switch (movement.kind) {
+                  @case ('Request') {
+                    <div class="field">
+                      <label class="field__label" for="ask">Your ask</label>
+                      <textarea id="ask" class="field__input" rows="3" formControlName="ask"></textarea>
+                    </div>
+                  }
+                  @case ('Receive') {
+                    <div class="field">
+                      <label class="field__label" for="received">What came</label>
+                      <textarea id="received" class="field__input" rows="3" formControlName="received"></textarea>
+                    </div>
+                  }
+                  @case ('Review') {
+                    <div class="field">
+                      <label class="field__label" for="synthesis">Synthesis</label>
+                      <textarea id="synthesis" class="field__input" rows="3" formControlName="synthesis"></textarea>
+                    </div>
+                  }
+                  @case ('Render') {
+                    <div class="field">
+                      <label class="field__label" for="artifactUrl">Artifact link</label>
+                      <input id="artifactUrl" class="field__input" formControlName="artifactUrl" placeholder="prs/lantern/…" />
+                    </div>
+                    <div class="field">
+                      <label class="field__label" for="whatChanged">What changed from the vision?</label>
+                      <textarea id="whatChanged" class="field__input" rows="3" formControlName="whatChanged"></textarea>
+                    </div>
+                  }
+                  @case ('Rejoice') {
+                    <div class="field">
+                      <label class="field__label" for="thanksgiving">Thanksgiving</label>
+                      <textarea id="thanksgiving" class="field__input" rows="3" formControlName="thanksgiving"></textarea>
+                    </div>
+                  }
+                }
+                <div class="loop__actions">
+                  <button class="btn btn--dark" type="submit" [disabled]="submitting()">
+                    {{ submitting() ? 'Logging…' : 'Log & continue' }}
+                  </button>
+                </div>
+              </form>
+            } @else if (movement.state === 'Done') {
+              <p class="scripture">{{ content(movement) }}</p>
+            }
+          </div>
+        </article>
+      }
+    </div>
+  </div>
+} @else {
+  <p class="muted">Loading loop…</p>
+}

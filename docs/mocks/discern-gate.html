@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wellspring — Discern</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/liturgy.css">
+<style>
+  .choice { text-align:left; width:100%; background:var(--paper); border:1.5px solid var(--ink-12); border-radius:var(--radius-lg); padding:var(--s5); transition:border-color .15s ease, transform .12s ease; }
+  .choice:hover { transform:translateY(-2px); border-color:var(--ink-45); }
+  .choice.is-chosen { border-color:var(--develop); box-shadow:0 0 0 3px #32a43222; }
+  .choice__r { font-family:var(--display); font-weight:600; font-size:.7rem; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-45); }
+  .choice__name { font-family:var(--display); font-weight:600; font-size:1.35rem; margin:var(--s2) 0; }
+  .choice__desc { font-size:.9rem; color:var(--ink-72); margin:0; }
+  .choice__pick { margin-top:var(--s4); font-size:.8rem; font-weight:600; color:var(--ink-45); display:flex; align-items:center; gap:var(--s2); }
+  .choice.is-chosen .choice__pick { color:var(--develop); }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="app">
+  <nav class="rail" aria-label="Project rhythm">
+    <div class="rail__brand">
+      <span class="rail__mark" aria-hidden="true"></span>
+      <div><div class="rail__wordmark">Wellspring</div><span class="rail__tag">Clean-water access</span></div>
+    </div>
+    <div class="rail__label">The 4D Cycle</div>
+    <ol class="stations">
+      <li class="station is-done"><a class="station__link" href="project-4d.html#discover"><span class="station__node">01</span><span class="station__meta"><span class="station__name">Discover</span><span class="station__sub">Complete</span></span></a></li>
+      <div class="gate-latch is-open"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 11V8a5 5 0 019.9-1" stroke="currentColor" stroke-width="2"/><rect x="5" y="11" width="14" height="9" rx="1.5" stroke="currentColor" stroke-width="2"/></svg> Gate open</div>
+      <li class="station is-current"><a class="station__link" href="discern-gate.html"><span class="station__node">02</span><span class="station__meta"><span class="station__name">Discern</span><span class="station__sub">In progress</span></span></a></li>
+      <div class="gate-latch is-blocked"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="1.5" stroke="currentColor" stroke-width="2"/><path d="M8 11V8a4 4 0 018 0v3" stroke="currentColor" stroke-width="2"/></svg> Gate blocked</div>
+      <li class="station is-locked"><a class="station__link" href="project-4d.html#develop"><span class="station__node">03</span><span class="station__meta"><span class="station__name">Develop</span><span class="station__sub">Locked</span></span></a></li>
+      <div class="gate-latch"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="1.5" stroke="currentColor" stroke-width="2"/><path d="M8 11V8a4 4 0 018 0v3" stroke="currentColor" stroke-width="2"/></svg> Locked</div>
+      <li class="station is-locked"><a class="station__link" href="project-4d.html#demonstrate"><span class="station__node">04</span><span class="station__meta"><span class="station__name">Demonstrate</span><span class="station__sub">Locked</span></span></a></li>
+    </ol>
+    <div class="rail__foot"><a class="btn btn--on-dark btn--sm" href="project-4d.html">← Journey</a></div>
+  </nav>
+
+  <div class="main">
+    <div class="topbar">
+      <span class="topbar__crumbs"><a href="dashboard.html">Workspace</a> · <a href="project-4d.html">Wellspring</a> · <b>Discern</b></span>
+      <span class="topbar__spacer"></span>
+      <span class="topbar__pill">Step 2 of 4</span>
+      <span class="avatar">QB</span>
+    </div>
+
+    <main id="main" class="content">
+      <span class="eyebrow">02 · Discern</span>
+      <h1 style="font-size:2.1rem;margin:var(--s2) 0 var(--s4);max-width:20ch">Before we build, we discern.</h1>
+      <p class="lede" style="max-width:58ch">True discernment often comes from beyond our own frame of reference. Sit with the problem prayerfully, then choose one path. Liturgy records the choice — and won't open Develop until you do.</p>
+      <p class="scripture" style="margin:var(--s5) 0 var(--s7);max-width:52ch">"Trust in the Lord with all your heart, and do not lean on your own understanding." <cite>Proverbs 3:5</cite></p>
+
+      <div class="section-title"><span class="eyebrow">Choose one</span><h2 style="font-size:1.3rem">The four discernment paths</h2></div>
+      <div class="grid grid--2" style="margin-bottom:var(--s7)">
+        <button class="choice" type="button">
+          <div class="choice__r">Path 01</div>
+          <div class="choice__name">Reject</div>
+          <p class="choice__desc">The most redemptive answer may be no technology at all. Name why, and close the loop with peace.</p>
+          <div class="choice__pick"><span class="check__box" style="width:18px;height:18px"></span> Choose Reject</div>
+        </button>
+        <button class="choice" type="button">
+          <div class="choice__r">Path 02</div>
+          <div class="choice__name">Receive</div>
+          <p class="choice__desc">A good solution already exists. Adopt it, support its makers, and point people to it.</p>
+          <div class="choice__pick"><span class="check__box" style="width:18px;height:18px"></span> Choose Receive</div>
+        </button>
+        <button class="choice is-chosen" type="button" aria-pressed="true">
+          <div class="choice__r">Path 03</div>
+          <div class="choice__name">Reimagine</div>
+          <p class="choice__desc">An existing intervention almost fits. Adapt it redemptively for the people Wellspring serves.</p>
+          <div class="choice__pick"><span class="check__box" style="width:18px;height:18px;background:var(--develop);border-color:var(--develop);color:#fff;display:grid;place-items:center"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3"/></svg></span> Chosen</div>
+        </button>
+        <button class="choice" type="button">
+          <div class="choice__r">Path 04</div>
+          <div class="choice__name">Create</div>
+          <p class="choice__desc">Nothing fits. Build something new — cautiously, guarding against misuse from the first line.</p>
+          <div class="choice__pick"><span class="check__box" style="width:18px;height:18px"></span> Choose Create</div>
+        </button>
+      </div>
+
+      <!-- reflection + advance -->
+      <div class="grid grid--2" style="align-items:start">
+        <div class="card card--pad-lg">
+          <div class="eyebrow" style="margin-bottom:var(--s3)">Discernment note</div>
+          <div class="field">
+            <label class="field__label" for="why">Why this path?</label>
+            <textarea class="field__input" id="why" rows="4" placeholder="What did the team hear? What confirmed this direction?">A borehole-monitoring tool already exists but ignores the women who walk for water. We'll reimagine it around their route and their voice.</textarea>
+          </div>
+          <div class="field">
+            <label class="field__label" for="pray">Prayed over with</label>
+            <input class="field__input" id="pray" value="Whole team · 11 July" aria-label="Prayed over with">
+          </div>
+        </div>
+
+        <div class="gate is-blocked">
+          <div class="gate__bar">
+            <span class="gate__lock" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="9" rx="1.5" stroke="currentColor" stroke-width="2"/><path d="M8 11V8a4 4 0 018 0v3" stroke="currentColor" stroke-width="2"/></svg></span>
+            <span class="gate__title">Gate · Discern → Develop</span>
+          </div>
+          <div class="gate__body">
+            <ul class="checklist" style="margin-bottom:var(--s5)">
+              <li class="check is-done"><span class="check__box"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3"/></svg></span><span class="check__label">Path chosen — Reimagine</span><span class="check__meta">done</span></li>
+              <li class="check is-done"><span class="check__box"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3"/></svg></span><span class="check__label">Discernment note written</span><span class="check__meta">done</span></li>
+              <li class="check is-todo"><span class="check__box"></span><span class="check__label">Sprint goal defined</span><span class="check__meta">required</span></li>
+            </ul>
+            <button class="btn is-locked" aria-disabled="true" style="width:100%;justify-content:center">Open Develop
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="1.5" stroke="currentColor" stroke-width="2"/><path d="M8 11V8a4 4 0 018 0v3" stroke="currentColor" stroke-width="2"/></svg>
+            </button>
+            <p class="muted" style="font-size:.82rem;margin:var(--s3) 0 0;text-align:center">One requirement left before the gate opens.</p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="assets/liturgy.js"></script>
+</body>
+</html>

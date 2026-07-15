@@ -1,0 +1,20 @@
+<div class="section-title">
+  <span class="eyebrow eyebrow--lime">Workspace</span>
+  <h2>Projects</h2>
+</div>
+
+@if (loading()) {
+  <p class="muted">Loading projects…</p>
+} @else if (projects().length === 0) {
+  <p class="muted">No projects yet.</p>
+} @else {
+  <div class="projects">
+    @for (project of projects(); track project.id) {
+      <a class="card project-tile" [routerLink]="['/projects', project.id]">
+        <div class="project-tile__name">{{ project.name }}</div>
+        <div class="project-tile__tag">{{ project.tag }}</div>
+        <span [class]="phaseBadge(project.currentPhase)">{{ project.currentPhase }}</span>
+      </a>
+    }
+  </div>
+}
