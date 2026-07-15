@@ -35,6 +35,7 @@ public class GetBoardQueryHandler : IRequestHandler<GetBoardQuery, BoardDto>
         var cards = await _db.Cards
             .AsNoTracking()
             .Where(c => c.ProjectId == project.Id)
+            .Where(c => c.Status == Domain.CardStatus.Open)
             .OrderBy(c => c.CreatedAt)
             .ToListAsync(cancellationToken);
 

@@ -7,6 +7,7 @@ import { SignInComponent } from './pages/sign-in/sign-in.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ProjectsComponent } from './pages/projects/projects.component';
+import { MembersComponent } from './pages/members/members.component';
 import { ProjectJourneyComponent } from './pages/project-journey/project-journey.component';
 import { DiscernComponent } from './pages/discern/discern.component';
 import { DevelopBoardComponent } from './pages/develop-board/develop-board.component';
@@ -28,6 +29,7 @@ export const routes: Routes = [
     children: [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'projects', component: ProjectsComponent },
+      { path: 'members', component: MembersComponent },
       { path: 'projects/:id', component: ProjectJourneyComponent },
       { path: 'discern/:projectId', component: DiscernComponent },
       { path: 'board/:projectId', component: DevelopBoardComponent },

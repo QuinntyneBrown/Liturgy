@@ -23,9 +23,12 @@ public static class CardMapper
         card.SprintId,
         card.Code,
         card.Title,
+        card.Description,
+        card.Points,
         card.AssigneeId,
         assigneeInitials,
         card.Column,
+        card.Status,
         card.CurrentR,
         card.IsBlocked,
         loggedCount);

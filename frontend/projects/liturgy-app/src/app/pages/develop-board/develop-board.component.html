@@ -26,6 +26,14 @@
       aria-label="New card title"
       (keydown.enter)="addCard()"
     />
+    <input
+      #descInput
+      class="field__input"
+      type="text"
+      placeholder="Description (optional)…"
+      aria-label="New card description"
+      (keydown.enter)="addCard()"
+    />
     <button class="btn btn--ghost btn--sm" type="button" [disabled]="adding()" (click)="addCard()">
       {{ adding() ? 'Adding…' : 'Add card' }}
     </button>
@@ -64,7 +72,17 @@
         >
           @for (card of cardsIn(column.key); track card.id) {
             <div cdkDrag [cdkDragData]="card">
-              <lit-work-card [card]="card" [members]="members()" (open)="openCard($event)" (assign)="assign($event)" />
+              <lit-work-card
+                [card]="card"
+                [members]="members()"
+                (open)="openCard($event)"
+                (assign)="assign($event)"
+                (point)="point($event)"
+                (cancel)="cancelCard($event)"
+                (close)="closeCard($event)"
+                (reopen)="reopenCard($event)"
+                (remove)="deleteCard($event)"
+              />
             </div>
           }
         </div>

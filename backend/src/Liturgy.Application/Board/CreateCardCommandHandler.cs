@@ -55,8 +55,10 @@ public class CreateCardCommandHandler : IRequestHandler<CreateCardCommand, CardD
             SprintId = sprint?.Id ?? Guid.Empty,
             Code = code,
             Title = request.Title.Trim(),
+            Description = string.IsNullOrWhiteSpace(request.Description) ? null : request.Description.Trim(),
             AssigneeId = request.AssigneeId,
             Column = BoardColumn.Backlog,
+            Status = CardStatus.Open,
             CurrentR = RKind.Request,
             IsBlocked = false,
             CreatedAt = now

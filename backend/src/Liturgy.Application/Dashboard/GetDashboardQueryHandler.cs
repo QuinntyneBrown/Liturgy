@@ -100,7 +100,7 @@ public class GetDashboardQueryHandler : IRequestHandler<GetDashboardQuery, Dashb
                 project.Id));
         }
 
-        foreach (var card in cards.Where(c => c.Column is BoardColumn.InLoop or BoardColumn.Review))
+        foreach (var card in cards.Where(c => c.Status == CardStatus.Open && c.Column is BoardColumn.InLoop or BoardColumn.Review))
         {
             var loggedKinds = movements
                 .Where(m => m.CardId == card.Id && m.LoggedAt.HasValue)
@@ -162,7 +162,7 @@ public class GetDashboardQueryHandler : IRequestHandler<GetDashboardQuery, Dashb
     private static string DevelopMeta(Project project, List<Sprint> sprints, List<Card> cards, List<RMovement> movements)
     {
         var latestSprint = sprints.Where(s => s.ProjectId == project.Id).OrderByDescending(s => s.Number).FirstOrDefault();
-        var projectCards = cards.Where(c => c.ProjectId == project.Id).ToList();
+        var projectCards = cards.Where(c => c.ProjectId == project.Id && c.Status == CardStatus.Open).ToList();
         var avgLoggedR = projectCards.Count == 0
             ? 0d
             : projectCards.Average(c => movements.Count(m => m.CardId == c.Id && m.LoggedAt.HasValue));

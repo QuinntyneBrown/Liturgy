@@ -15,11 +15,13 @@ export class SignalrBoardRealtimeService extends BoardRealtime {
   private readonly auth = inject(AuthStateService);
 
   private readonly cardChanged = new Subject<Card>();
+  private readonly cardDeleted = new Subject<string>();
   private readonly movementLogged = new Subject<CardLoop>();
   private readonly gateChanged = new Subject<Gate>();
   private readonly phaseUnlocked = new Subject<Phase>();
 
   readonly cardChanged$: Observable<Card> = this.cardChanged.asObservable();
+  readonly cardDeleted$: Observable<string> = this.cardDeleted.asObservable();
   readonly movementLogged$: Observable<CardLoop> = this.movementLogged.asObservable();
   readonly gateChanged$: Observable<Gate> = this.gateChanged.asObservable();
   readonly phaseUnlocked$: Observable<Phase> = this.phaseUnlocked.asObservable();
@@ -42,6 +44,8 @@ export class SignalrBoardRealtimeService extends BoardRealtime {
     connection.on('CardMoved', (card: Card) => this.cardChanged.next(card));
     connection.on('CardCreated', (card: Card) => this.cardChanged.next(card));
     connection.on('CardAssigned', (card: Card) => this.cardChanged.next(card));
+    connection.on('CardUpdated', (card: Card) => this.cardChanged.next(card));
+    connection.on('CardDeleted', (cardId: string) => this.cardDeleted.next(cardId));
     connection.on('MovementLogged', (loop: CardLoop) => this.movementLogged.next(loop));
     connection.on('RequirementToggled', (gate: Gate) => this.gateChanged.next(gate));
     connection.on('GateChanged', (gate: Gate) => this.gateChanged.next(gate));

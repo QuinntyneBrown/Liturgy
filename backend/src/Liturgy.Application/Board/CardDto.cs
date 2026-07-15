@@ -8,9 +8,12 @@ public record CardDto(
     Guid SprintId,
     string Code,
     string Title,
+    string? Description,
+    int? Points,
     Guid? AssigneeId,
     string? AssigneeInitials,
     BoardColumn Column,
+    CardStatus Status,
     RKind? CurrentR,
     bool IsBlocked,
     int LoggedCount);

@@ -15,8 +15,13 @@ export class BoardService {
     return this.http.get<Board>(`${this.baseUrl}/api/board/${projectId}`);
   }
 
-  createCard(projectId: string, title: string, assigneeId: string | null = null): Observable<Card> {
-    return this.http.post<Card>(`${this.baseUrl}/api/board/cards`, { projectId, title, assigneeId });
+  createCard(
+    projectId: string,
+    title: string,
+    description: string | null = null,
+    assigneeId: string | null = null,
+  ): Observable<Card> {
+    return this.http.post<Card>(`${this.baseUrl}/api/board/cards`, { projectId, title, description, assigneeId });
   }
 
   moveCard(cardId: string, column: BoardColumn): Observable<Card> {
@@ -25,5 +30,25 @@ export class BoardService {
 
   assignCard(cardId: string, assigneeId: string | null): Observable<Card> {
     return this.http.post<Card>(`${this.baseUrl}/api/board/cards/${cardId}/assign`, { assigneeId });
+  }
+
+  pointCard(cardId: string, points: number | null): Observable<Card> {
+    return this.http.post<Card>(`${this.baseUrl}/api/board/cards/${cardId}/point`, { points });
+  }
+
+  cancelCard(cardId: string): Observable<Card> {
+    return this.http.post<Card>(`${this.baseUrl}/api/board/cards/${cardId}/cancel`, {});
+  }
+
+  closeCard(cardId: string): Observable<Card> {
+    return this.http.post<Card>(`${this.baseUrl}/api/board/cards/${cardId}/close`, {});
+  }
+
+  reopenCard(cardId: string): Observable<Card> {
+    return this.http.post<Card>(`${this.baseUrl}/api/board/cards/${cardId}/reopen`, {});
+  }
+
+  deleteCard(cardId: string): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/api/board/cards/${cardId}`);
   }
 }

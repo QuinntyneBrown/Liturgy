@@ -1,6 +1,11 @@
-<div class="section-title">
-  <span class="eyebrow eyebrow--lime">Workspace</span>
-  <h2>Projects</h2>
+<div class="section-title" style="display: flex; justify-content: space-between; align-items: flex-end">
+  <div>
+    <span class="eyebrow eyebrow--lime">Workspace</span>
+    <h2>Projects</h2>
+  </div>
+  <button class="btn btn--ghost btn--sm" type="button" (click)="toggleClosed()">
+    {{ includeClosed() ? 'Hide closed' : 'Show closed' }}
+  </button>
 </div>
 
 @if (loading()) {
@@ -10,11 +15,36 @@
 } @else {
   <div class="projects">
     @for (project of projects(); track project.id) {
-      <a class="card project-tile" [routerLink]="['/projects', project.id]">
-        <div class="project-tile__name">{{ project.name }}</div>
-        <div class="project-tile__tag">{{ project.tag }}</div>
-        <span [class]="phaseBadge(project.currentPhase)">{{ project.currentPhase }}</span>
-      </a>
+      <div class="card project-tile" [class.project-tile--closed]="project.status === 'Closed'">
+        @if (editingId() === project.id) {
+          <input #nameInput class="field__input" type="text" [value]="project.name" aria-label="Project name" />
+          <input #tagInput class="field__input" type="text" [value]="project.tag" aria-label="Project tag" style="margin-top: var(--s2)" />
+          <div class="row" style="gap: var(--s2); margin-top: var(--s2)">
+            <button class="btn btn--primary btn--sm" type="button" [disabled]="busyId() === project.id" (click)="saveEdit(project, nameInput.value, tagInput.value)">Save</button>
+            <button class="btn btn--ghost btn--sm" type="button" (click)="cancelEdit()">Cancel</button>
+          </div>
+        } @else {
+          <a class="project-tile__link" [routerLink]="['/projects', project.id]">
+            <div class="project-tile__name">{{ project.name }}</div>
+            <div class="project-tile__tag">{{ project.tag }}</div>
+          </a>
+          <div class="row" style="justify-content: space-between; align-items: center; margin-top: var(--s2)">
+            <span [class]="phaseBadge(project.currentPhase)">{{ project.currentPhase }}</span>
+            @if (project.status === 'Closed') {
+              <span class="badge badge--status">Closed</span>
+            }
+          </div>
+          <div class="row project-tile__actions" style="gap: var(--s2); margin-top: var(--s2)">
+            <button class="btn btn--ghost btn--sm" type="button" (click)="startEdit(project)">Edit</button>
+            @if (project.status === 'Closed') {
+              <button class="btn btn--ghost btn--sm" type="button" [disabled]="busyId() === project.id" (click)="reopen(project)">Reopen</button>
+            } @else {
+              <button class="btn btn--ghost btn--sm" type="button" [disabled]="busyId() === project.id" (click)="close(project)">Close</button>
+            }
+            <button class="btn btn--ghost btn--sm project-tile__delete" type="button" [disabled]="busyId() === project.id" (click)="remove(project)">Delete</button>
+          </div>
+        }
+      </div>
     }
   </div>
 }

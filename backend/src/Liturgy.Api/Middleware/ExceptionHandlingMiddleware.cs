@@ -1,6 +1,7 @@
 using FluentValidation;
 using Liturgy.Application.Auth;
 using Liturgy.Application.Enforcement;
+using Liturgy.Application.Invitations;
 using Liturgy.Application.Loop;
 using Microsoft.AspNetCore.Mvc;
 
@@ -70,6 +71,18 @@ public class ExceptionHandlingMiddleware
         catch (RequirementNotFoundException ex)
         {
             await WriteProblem(context, StatusCodes.Status404NotFound, "Requirement not found.", ex.Message);
+        }
+        catch (InvitationNotFoundException ex)
+        {
+            await WriteProblem(context, StatusCodes.Status404NotFound, "Invitation not found.", ex.Message);
+        }
+        catch (InvitationNotPendingException ex)
+        {
+            await WriteProblem(context, StatusCodes.Status409Conflict, "Invitation is no longer pending.", ex.Message);
+        }
+        catch (NotWorkspaceLeadException ex)
+        {
+            await WriteProblem(context, StatusCodes.Status403Forbidden, "Only a workspace Lead can do that.", ex.Message);
         }
         catch (UnauthorizedAccessException)
         {

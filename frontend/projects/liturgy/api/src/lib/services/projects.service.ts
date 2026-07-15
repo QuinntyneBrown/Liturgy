@@ -10,8 +10,9 @@ export class ProjectsService {
   private readonly http = inject(HttpClient);
   private readonly baseUrl = inject(API_BASE_URL);
 
-  list(): Observable<ProjectSummary[]> {
-    return this.http.get<ProjectSummary[]>(`${this.baseUrl}/api/projects`);
+  list(includeClosed = false): Observable<ProjectSummary[]> {
+    const query = includeClosed ? '?includeClosed=true' : '';
+    return this.http.get<ProjectSummary[]>(`${this.baseUrl}/api/projects${query}`);
   }
 
   get(projectId: string): Observable<ProjectJourney> {
@@ -20,5 +21,21 @@ export class ProjectsService {
 
   create(name: string, tag: string): Observable<ProjectSummary> {
     return this.http.post<ProjectSummary>(`${this.baseUrl}/api/projects`, { name, tag });
+  }
+
+  update(projectId: string, name: string, tag: string): Observable<ProjectSummary> {
+    return this.http.put<ProjectSummary>(`${this.baseUrl}/api/projects/${projectId}`, { name, tag });
+  }
+
+  close(projectId: string): Observable<ProjectSummary> {
+    return this.http.post<ProjectSummary>(`${this.baseUrl}/api/projects/${projectId}/close`, {});
+  }
+
+  reopen(projectId: string): Observable<ProjectSummary> {
+    return this.http.post<ProjectSummary>(`${this.baseUrl}/api/projects/${projectId}/reopen`, {});
+  }
+
+  delete(projectId: string): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/api/projects/${projectId}`);
   }
 }

@@ -20,9 +20,11 @@ public class ProjectsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IReadOnlyList<ProjectSummaryDto>>> List(CancellationToken cancellationToken)
+    public async Task<ActionResult<IReadOnlyList<ProjectSummaryDto>>> List(
+        [FromQuery] bool includeClosed,
+        CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new ListProjectsQuery(), cancellationToken);
+        var result = await _mediator.Send(new ListProjectsQuery(includeClosed), cancellationToken);
         return Ok(result);
     }
 
@@ -31,6 +33,37 @@ public class ProjectsController : ControllerBase
     {
         var result = await _mediator.Send(new CreateProjectCommand(request.Name, request.Tag), cancellationToken);
         return Ok(result);
+    }
+
+    [HttpPut("{id:guid}")]
+    public async Task<ActionResult<ProjectSummaryDto>> Update(
+        Guid id,
+        [FromBody] UpdateProjectRequest request,
+        CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new UpdateProjectCommand(id, request.Name, request.Tag), cancellationToken);
+        return Ok(result);
+    }
+
+    [HttpPost("{id:guid}/close")]
+    public async Task<ActionResult<ProjectSummaryDto>> Close(Guid id, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new CloseProjectCommand(id), cancellationToken);
+        return Ok(result);
+    }
+
+    [HttpPost("{id:guid}/reopen")]
+    public async Task<ActionResult<ProjectSummaryDto>> Reopen(Guid id, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new ReopenProjectCommand(id), cancellationToken);
+        return Ok(result);
+    }
+
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
+    {
+        await _mediator.Send(new DeleteProjectCommand(id), cancellationToken);
+        return NoContent();
     }
 
     [HttpGet("{id:guid}")]

@@ -13,6 +13,7 @@ import { BoardRealtime } from './board-realtime';
 @Injectable()
 export class NoopBoardRealtimeService extends BoardRealtime {
   readonly cardChanged$: Observable<Card> = new Subject<Card>().asObservable();
+  readonly cardDeleted$: Observable<string> = new Subject<string>().asObservable();
   readonly movementLogged$: Observable<CardLoop> = new Subject<CardLoop>().asObservable();
   readonly gateChanged$: Observable<Gate> = new Subject<Gate>().asObservable();
   readonly phaseUnlocked$: Observable<Phase> = new Subject<Phase>().asObservable();

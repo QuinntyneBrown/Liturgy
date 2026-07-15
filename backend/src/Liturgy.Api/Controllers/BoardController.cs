@@ -1,4 +1,5 @@
 using Liturgy.Application.Board;
+using Liturgy.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -27,7 +28,9 @@ public class BoardController : ControllerBase
     [HttpPost("cards")]
     public async Task<ActionResult<CardDto>> CreateCard([FromBody] CreateCardRequest request, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new CreateCardCommand(request.ProjectId, request.Title, request.AssigneeId), cancellationToken);
+        var result = await _mediator.Send(
+            new CreateCardCommand(request.ProjectId, request.Title, request.Description, request.AssigneeId),
+            cancellationToken);
         return Ok(result);
     }
 
@@ -49,5 +52,43 @@ public class BoardController : ControllerBase
     {
         var result = await _mediator.Send(new AssignCardCommand(cardId, request.AssigneeId), cancellationToken);
         return Ok(result);
+    }
+
+    [HttpPost("cards/{cardId:guid}/point")]
+    public async Task<ActionResult<CardDto>> PointCard(
+        Guid cardId,
+        [FromBody] PointCardRequest request,
+        CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new PointCardCommand(cardId, request.Points), cancellationToken);
+        return Ok(result);
+    }
+
+    [HttpPost("cards/{cardId:guid}/cancel")]
+    public async Task<ActionResult<CardDto>> CancelCard(Guid cardId, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new SetCardStatusCommand(cardId, CardStatus.Cancelled), cancellationToken);
+        return Ok(result);
+    }
+
+    [HttpPost("cards/{cardId:guid}/close")]
+    public async Task<ActionResult<CardDto>> CloseCard(Guid cardId, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new SetCardStatusCommand(cardId, CardStatus.Closed), cancellationToken);
+        return Ok(result);
+    }
+
+    [HttpPost("cards/{cardId:guid}/reopen")]
+    public async Task<ActionResult<CardDto>> ReopenCard(Guid cardId, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new SetCardStatusCommand(cardId, CardStatus.Open), cancellationToken);
+        return Ok(result);
+    }
+
+    [HttpDelete("cards/{cardId:guid}")]
+    public async Task<IActionResult> DeleteCard(Guid cardId, CancellationToken cancellationToken)
+    {
+        await _mediator.Send(new DeleteCardCommand(cardId), cancellationToken);
+        return NoContent();
     }
 }

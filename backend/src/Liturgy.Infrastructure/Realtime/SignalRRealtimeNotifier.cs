@@ -25,6 +25,12 @@ public class SignalRRealtimeNotifier : IRealtimeNotifier
     public Task CardAssignedAsync(Guid projectId, CardDto card, CancellationToken cancellationToken) =>
         Send(projectId, "CardAssigned", card, cancellationToken);
 
+    public Task CardUpdatedAsync(Guid projectId, CardDto card, CancellationToken cancellationToken) =>
+        Send(projectId, "CardUpdated", card, cancellationToken);
+
+    public Task CardDeletedAsync(Guid projectId, Guid cardId, CancellationToken cancellationToken) =>
+        Send(projectId, "CardDeleted", cardId, cancellationToken);
+
     public Task MovementLoggedAsync(Guid projectId, CardLoopDto loop, CancellationToken cancellationToken) =>
         Send(projectId, "MovementLogged", loop, cancellationToken);
 
