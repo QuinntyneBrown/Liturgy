@@ -28,16 +28,23 @@ form so they translate directly into acceptance tests. Acceptance test files mus
 Enum values travel over the wire as **strings**: `PhaseKind {Discover, Discern, Develop,
 Demonstrate}`, `PhaseState {Locked, Current, Done}`, `GateState {Blocked, Open}`,
 `RequirementState {Todo, Done}`, `BoardColumn {Backlog, InLoop, Review, Done}`, `RKind {Request,
-Receive, Review, Render, Rejoice}`, `MovementState {Locked, Current, Done}`.
+Receive, Review, Render, Rejoice}`, `MovementState {Locked, Current, Done}`, `CardStatus {Open,
+Closed, Cancelled}`, `ProjectStatus {Active, Closed}`, `InvitationStatus {Pending, Accepted,
+Revoked}`.
+
+A `Card` additionally carries `Description` (nullable string) and `Points` (nullable int — a free
+story-point value); a `Project` carries `Status` (`ProjectStatus`, default `Active`). Two
+product nouns are synonyms for existing domain nouns: an **Account** is a `Workspace`, and a
+**Ticket** is a `Card` — the specs keep `Workspace` and `Card` as the canonical names.
 
 ## Capabilities
 
 | Code | Capability | L1s | L2s |
 |------|------------|-----|-----|
-| `AUTH` | [Authentication](./authentication/L1.md) | [1](./authentication/L1.md) | [14](./authentication/L2.md) |
-| `WKSP` | [Workspace Management](./workspace-management/L1.md) | [2](./workspace-management/L1.md) | [5](./workspace-management/L2.md) |
+| `AUTH` | [Authentication](./authentication/L1.md) | [1](./authentication/L1.md) | [16](./authentication/L2.md) |
+| `WKSP` | [Workspace Management](./workspace-management/L1.md) | [3](./workspace-management/L1.md) | [16](./workspace-management/L2.md) |
 | `PLAY` | [Playbook Enforcement](./playbook-enforcement/L1.md) | [4](./playbook-enforcement/L1.md) | [18](./playbook-enforcement/L2.md) |
-| `WORK` | [Work Management](./work-management/L1.md) | [2](./work-management/L1.md) | [13](./work-management/L2.md) |
+| `WORK` | [Work Management](./work-management/L1.md) | [2](./work-management/L1.md) | [20](./work-management/L2.md) |
 | `COLLAB` | [Collaboration](./collaboration/L1.md) | [1](./collaboration/L1.md) | [4](./collaboration/L2.md) |
 | `IMPACT` | [Impact](./impact/L1.md) | [1](./impact/L1.md) | [3](./impact/L2.md) |
 | `UX` | [User Experience](./user-experience/L1.md) | [2](./user-experience/L1.md) | [10](./user-experience/L2.md) |

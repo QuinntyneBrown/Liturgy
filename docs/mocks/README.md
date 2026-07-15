@@ -23,7 +23,8 @@ and a work item cannot reach **Done** until all five R's are logged.
 |------|--------|
 | `index.html` | Cover + gallery |
 | `design-system.html` | Style guide (tokens, type, components) |
-| `dashboard.html` | Workspace home — projects plotted on the 4D cycle |
+| `dashboard.html` | Workspace home — projects plotted on the 4D cycle (with project edit/close/delete) |
+| `members.html` | Account members, invite-by-email panel, and pending invitations |
 | `project-4d.html` | A project's 4D journey with enforced phase gates |
 | `discern-gate.html` | The Discern decision (Reject/Receive/Reimagine/Create) |
 | `develop-board.html` | Agile Kanban with 5R pips and a locked Done column |

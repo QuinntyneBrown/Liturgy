@@ -22,8 +22,9 @@ public class ListProjectsQueryHandler : IRequestHandler<ListProjectsQuery, IRead
         return await _db.Projects
             .AsNoTracking()
             .Where(p => workspaceIds.Contains(p.WorkspaceId))
+            .Where(p => request.IncludeClosed || p.Status == Domain.ProjectStatus.Active)
             .OrderBy(p => p.CreatedAt)
-            .Select(p => new ProjectSummaryDto(p.Id, p.Name, p.Tag, p.CurrentPhase))
+            .Select(p => new ProjectSummaryDto(p.Id, p.Name, p.Tag, p.CurrentPhase, p.Status))
             .ToListAsync(cancellationToken);
     }
 }

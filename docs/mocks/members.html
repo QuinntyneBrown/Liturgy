@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Liturgy — Members &amp; invitations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/liturgy.css">
+<style>
+  .wsnav { list-style:none; margin:0; padding:0 var(--s4); display:grid; gap:2px; }
+  .wsnav a { display:flex; align-items:center; gap:var(--s3); padding:var(--s3); border-radius:var(--radius); color:var(--paper-72); font-family:var(--display); font-weight:500; font-size:.95rem; }
+  .wsnav a:hover { background:#ffffff10; color:var(--paper); }
+  .wsnav a.is-active { background:var(--lime); color:var(--ink); }
+  .wsnav svg { width:18px; height:18px; }
+  .members { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:var(--s3); margin-bottom:var(--s6); }
+  .member { display:flex; align-items:center; justify-content:space-between; gap:var(--s3); }
+  .member__name { font-weight:600; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="app">
+  <!-- WORKSPACE RAIL -->
+  <nav class="rail" aria-label="Workspace">
+    <div class="rail__brand">
+      <span class="rail__mark" aria-hidden="true"></span>
+      <div>
+        <div class="rail__wordmark">Liturgy</div>
+        <span class="rail__tag">Redemptive tech</span>
+      </div>
+    </div>
+    <div class="rail__label">Workspace</div>
+    <ul class="wsnav">
+      <li><a href="dashboard.html"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/><rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/><rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/><rect x="14" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/></svg> Dashboard</a></li>
+      <li><a href="project-4d.html"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10" stroke="currentColor" stroke-width="2"/></svg> Projects</a></li>
+      <li><a class="is-active" href="members.html"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="2"/><path d="M4 20c0-3 2.5-5 5-5s5 2 5 5" stroke="currentColor" stroke-width="2"/><path d="M16 4a3 3 0 010 6M18 20c0-2-.8-3.7-2-5" stroke="currentColor" stroke-width="2"/></svg> Members</a></li>
+      <li><a href="develop-board.html"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="4" width="5" height="16" rx="1" stroke="currentColor" stroke-width="2"/><rect x="10" y="4" width="5" height="10" rx="1" stroke="currentColor" stroke-width="2"/><rect x="17" y="4" width="4" height="13" rx="1" stroke="currentColor" stroke-width="2"/></svg> Boards</a></li>
+    </ul>
+    <div class="rail__foot">
+      <p class="scripture" style="color:var(--paper-45);font-size:.9rem;margin:0">"So in Christ we, though many, form one body." <cite>Romans 12:5</cite></p>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <span class="topbar__crumbs"><b>New Hope Collective</b> · members</span>
+      <span class="topbar__spacer"></span>
+      <span class="avatar" title="Quinn">QB</span>
+    </div>
+
+    <main id="main" class="content content--wide">
+      <div class="section-title"><span class="eyebrow eyebrow--lime">Workspace</span><h2>Members</h2></div>
+      <div class="members">
+        <div class="card member"><span class="avatar">QB</span><div><div class="member__name">Quinn Brown</div><div class="muted">Lead</div></div></div>
+        <div class="card member"><span class="avatar">AM</span><div><div class="member__name">Amara Mensah</div><div class="muted">Designer</div></div></div>
+        <div class="card member"><span class="avatar">JP</span><div><div class="member__name">Jonah Park</div><div class="muted">Developer</div></div></div>
+        <div class="card member"><span class="avatar">SD</span><div><div class="member__name">Sam Doyle</div><div class="muted">Developer</div></div></div>
+      </div>
+
+      <!-- Invite panel (Lead only) -->
+      <div class="card card--pad-lg" style="max-width:640px;margin-bottom:var(--s6)">
+        <h3 style="margin-top:0">Invite someone</h3>
+        <p class="muted" style="margin-top:0">Only a workspace Lead can invite. New members join <b style="color:var(--ink)">this account</b> — they never land in an empty personal workspace.</p>
+        <div class="row" style="gap:var(--s2);flex-wrap:wrap;align-items:center">
+          <input class="field__input" type="email" placeholder="name@example.com" style="min-width:220px">
+          <select class="field__input"><option>Member</option><option>Developer</option><option>Designer</option><option>Lead</option></select>
+          <button class="btn btn--primary btn--sm" type="button">Send invite</button>
+        </div>
+        <div style="margin-top:var(--s4)">
+          <p class="muted" style="margin-bottom:var(--s2)">Share this link with river@newhope.dev:</p>
+          <div class="row" style="gap:var(--s2);flex-wrap:wrap">
+            <input class="field__input" readonly value="https://liturgy.app/sign-up?token=demo-invite-river" style="min-width:320px;flex:1">
+            <button class="btn btn--ghost btn--sm" type="button">Copy link</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pending invitations -->
+      <div class="section-title"><h3>Pending invitations</h3></div>
+      <div class="members">
+        <div class="card member"><div><div class="member__name">river@newhope.dev</div><div class="muted">Developer · pending</div></div><button class="btn btn--ghost btn--sm" type="button">Revoke</button></div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="assets/liturgy.js"></script>
+</body>
+</html>

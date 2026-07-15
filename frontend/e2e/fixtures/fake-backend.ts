@@ -12,6 +12,7 @@ export interface FakeState {
   loops: Record<string, any>;
   decision: any;
   impact: any;
+  invitations: any[];
 }
 
 const PROJECT_ID = 'p-lantern';
@@ -22,6 +23,7 @@ function initialState(): FakeState {
     name: 'Lantern',
     tag: 'After-hours crisis line',
     currentPhase: 'Develop',
+    status: 'Active',
     phases: [
       { id: 'ph-0', kind: 'Discover', state: 'Done', order: 0, gate: null },
       { id: 'ph-1', kind: 'Discern', state: 'Done', order: 1, gate: null },
@@ -46,15 +48,28 @@ function initialState(): FakeState {
     ],
   };
 
-  const card = (id: string, code: string, title: string, column: string, logged: number, currentR: string | null) => ({
+  const card = (
+    id: string,
+    code: string,
+    title: string,
+    column: string,
+    logged: number,
+    currentR: string | null,
+    description: string | null = null,
+    points: number | null = null,
+    status: 'Open' | 'Closed' | 'Cancelled' = 'Open',
+  ) => ({
     id,
     projectId: PROJECT_ID,
     sprintId: 'sprint-6',
     code,
     title,
+    description,
+    points,
     assigneeId: null,
     assigneeInitials: 'JP',
     column,
+    status,
     currentR,
     isBlocked: false,
     loggedCount: logged,
@@ -65,8 +80,8 @@ function initialState(): FakeState {
     sprintId: 'sprint-6',
     sprintNumber: 6,
     cards: [
-      card('card-24', 'LAN-24', 'Warm-handoff script when a caller is in danger', 'InLoop', 3, 'Render'),
-      card('card-33', 'LAN-33', 'Crisis resource directory by region', 'Backlog', 0, 'Request'),
+      card('card-24', 'LAN-24', 'Warm-handoff script when a caller is in danger', 'InLoop', 3, 'Render', 'Escalate a call in danger without severing the relationship.', 5),
+      card('card-33', 'LAN-33', 'Crisis resource directory by region', 'Backlog', 0, 'Request', null, 3),
       card('card-12', 'LAN-12', 'Quiet-hours routing rules', 'Done', 5, null),
     ],
   };
@@ -116,11 +131,16 @@ function initialState(): FakeState {
       ],
       gratitude: [{ quote: 'He gave us a table, not a feature.', attribution: 'Team retro, week 12' }],
     },
+    invitations: [],
   };
 }
 
 function json(route: Route, body: unknown, status = 200): Promise<void> {
   return route.fulfill({ status, contentType: 'application/json', body: JSON.stringify(body) });
+}
+
+function noContent(route: Route): Promise<void> {
+  return route.fulfill({ status: 204, body: '' });
 }
 
 export async function installFakeBackend(page: Page): Promise<FakeState> {
@@ -158,6 +178,49 @@ export async function installFakeBackend(page: Page): Promise<FakeState> {
       ]);
     }
 
+    // --- Invitations ---
+    if (path === '/api/invitations' && method === 'GET') {
+      return json(route, state.invitations.filter((i) => i.status === 'Pending'));
+    }
+    if (path === '/api/invitations' && method === 'POST') {
+      const body = request.postDataJSON() as { email: string; role: string | null };
+      const token = `tok-${state.invitations.length + 1}`;
+      const invite = {
+        id: `inv-${state.invitations.length + 1}`,
+        email: body.email,
+        role: body.role || 'Member',
+        status: 'Pending',
+        token,
+        invitePath: `/sign-up?token=${token}`,
+        createdAt: '2026-07-15T00:00:00Z',
+      };
+      state.invitations.push(invite);
+      return json(route, invite);
+    }
+    const inviteAcceptMatch = path.match(/^\/api\/invitations\/(.+)\/accept$/);
+    if (inviteAcceptMatch && method === 'POST') {
+      const invite = state.invitations.find((i) => i.token === inviteAcceptMatch[1]);
+      if (invite) {
+        invite.status = 'Accepted';
+      }
+      return noContent(route);
+    }
+    const inviteTokenMatch = path.match(/^\/api\/invitations\/([^/]+)$/);
+    if (inviteTokenMatch && method === 'GET') {
+      const invite = state.invitations.find((i) => i.token === inviteTokenMatch[1] && i.status === 'Pending');
+      if (!invite) {
+        return json(route, { title: 'Invitation not found.' }, 404);
+      }
+      return json(route, { workspaceName: 'New Hope Collective', invitedByName: 'Quinn Brown', email: invite.email });
+    }
+    if (inviteTokenMatch && method === 'DELETE') {
+      const invite = state.invitations.find((i) => i.id === inviteTokenMatch[1]);
+      if (invite) {
+        invite.status = 'Revoked';
+      }
+      return noContent(route);
+    }
+
     // --- Dashboard ---
     if (path === '/api/dashboard' && method === 'GET') {
       return json(route, {
@@ -180,14 +243,32 @@ export async function installFakeBackend(page: Page): Promise<FakeState> {
 
     // --- Projects / journey ---
     if (path === '/api/projects' && method === 'GET') {
-      return json(route, [{ id: PROJECT_ID, name: 'Lantern', tag: 'After-hours crisis line', currentPhase: state.journey.currentPhase }]);
+      const includeClosed = url.searchParams.get('includeClosed') === 'true';
+      const list = [
+        { id: PROJECT_ID, name: state.journey.name, tag: state.journey.tag, currentPhase: state.journey.currentPhase, status: state.journey.status },
+      ];
+      return json(route, includeClosed ? list : list.filter((p) => p.status === 'Active'));
     }
     if (path === '/api/projects' && method === 'POST') {
       const body = request.postDataJSON() as { name: string; tag: string };
-      return json(route, { id: 'p-new', name: body.name, tag: body.tag, currentPhase: 'Discover' });
+      return json(route, { id: 'p-new', name: body.name, tag: body.tag, currentPhase: 'Discover', status: 'Active' });
     }
     if (path === `/api/projects/${PROJECT_ID}` && method === 'GET') {
       return json(route, state.journey);
+    }
+    if (path === `/api/projects/${PROJECT_ID}` && method === 'PUT') {
+      const body = request.postDataJSON() as { name: string; tag: string };
+      state.journey.name = body.name;
+      state.journey.tag = body.tag;
+      return json(route, { id: PROJECT_ID, name: body.name, tag: body.tag, currentPhase: state.journey.currentPhase, status: state.journey.status });
+    }
+    if (path === `/api/projects/${PROJECT_ID}` && method === 'DELETE') {
+      return noContent(route);
+    }
+    const projClose = path.match(/^\/api\/projects\/([^/]+)\/(close|reopen)$/);
+    if (projClose && method === 'POST') {
+      state.journey.status = projClose[2] === 'close' ? 'Closed' : 'Active';
+      return json(route, { id: projClose[1], name: state.journey.name, tag: state.journey.tag, currentPhase: state.journey.currentPhase, status: state.journey.status });
     }
 
     // --- Decision (Discern) ---
@@ -231,20 +312,23 @@ export async function installFakeBackend(page: Page): Promise<FakeState> {
 
     // --- Board ---
     if (path === `/api/board/${PROJECT_ID}` && method === 'GET') {
-      return json(route, state.board);
+      return json(route, { ...state.board, cards: state.board.cards.filter((c: any) => c.status === 'Open') });
     }
 
     if (path === '/api/board/cards' && method === 'POST') {
-      const body = request.postDataJSON() as { title: string };
+      const body = request.postDataJSON() as { title: string; description: string | null };
       const newCard = {
         id: `card-${state.board.cards.length + 1}`,
         projectId: PROJECT_ID,
         sprintId: 'sprint-6',
         code: `LAN-${90 + state.board.cards.length}`,
         title: body.title,
+        description: body.description ?? null,
+        points: null,
         assigneeId: null,
         assigneeInitials: null,
         column: 'Backlog',
+        status: 'Open',
         currentR: 'Request',
         isBlocked: false,
         loggedCount: 0,
@@ -262,6 +346,31 @@ export async function installFakeBackend(page: Page): Promise<FakeState> {
         card.assigneeInitials = body.assigneeId ? 'JP' : null;
       }
       return json(route, card ?? {});
+    }
+
+    const pointMatch = path.match(/^\/api\/board\/cards\/(.+)\/point$/);
+    if (pointMatch && method === 'POST') {
+      const body = request.postDataJSON() as { points: number | null };
+      const card = state.board.cards.find((c: any) => c.id === pointMatch[1]);
+      if (card) {
+        card.points = body.points;
+      }
+      return json(route, card ?? {});
+    }
+
+    const statusMatch = path.match(/^\/api\/board\/cards\/(.+)\/(cancel|close|reopen)$/);
+    if (statusMatch && method === 'POST') {
+      const card = state.board.cards.find((c: any) => c.id === statusMatch[1]);
+      if (card) {
+        card.status = statusMatch[2] === 'cancel' ? 'Cancelled' : statusMatch[2] === 'close' ? 'Closed' : 'Open';
+      }
+      return json(route, card ?? {});
+    }
+
+    const cardDeleteMatch = path.match(/^\/api\/board\/cards\/([^/]+)$/);
+    if (cardDeleteMatch && method === 'DELETE') {
+      state.board.cards = state.board.cards.filter((c: any) => c.id !== cardDeleteMatch[1]);
+      return noContent(route);
     }
 
     const moveMatch = path.match(/^\/api\/board\/cards\/(.+)\/move$/);

@@ -15,6 +15,12 @@ public interface IRealtimeNotifier
     Task CardMovedAsync(Guid projectId, CardDto card, CancellationToken cancellationToken);
     Task CardCreatedAsync(Guid projectId, CardDto card, CancellationToken cancellationToken);
     Task CardAssignedAsync(Guid projectId, CardDto card, CancellationToken cancellationToken);
+
+    /// <summary>A card changed in place (points, status, description). Clients upsert it if still Open, else drop it from the board.</summary>
+    Task CardUpdatedAsync(Guid projectId, CardDto card, CancellationToken cancellationToken);
+
+    /// <summary>A card was permanently deleted. Clients remove it by id.</summary>
+    Task CardDeletedAsync(Guid projectId, Guid cardId, CancellationToken cancellationToken);
     Task MovementLoggedAsync(Guid projectId, CardLoopDto loop, CancellationToken cancellationToken);
     Task RequirementToggledAsync(Guid projectId, GateDto gate, CancellationToken cancellationToken);
     Task GateChangedAsync(Guid projectId, GateDto gate, CancellationToken cancellationToken);

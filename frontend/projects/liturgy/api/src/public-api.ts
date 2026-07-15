@@ -8,6 +8,8 @@ export * from './lib/models/phase-state';
 export * from './lib/models/gate-state';
 export * from './lib/models/requirement-state';
 export * from './lib/models/board-column';
+export * from './lib/models/card-status';
+export * from './lib/models/project-status';
 export * from './lib/models/r-kind';
 export * from './lib/models/movement-state';
 export * from './lib/models/auth-result';
@@ -29,6 +31,7 @@ export * from './lib/models/decision';
 export * from './lib/models/impact';
 export * from './lib/models/dashboard';
 export * from './lib/models/member';
+export * from './lib/models/invitation';
 
 // Services
 export * from './lib/services/api-config';
@@ -41,6 +44,7 @@ export * from './lib/services/decision.service';
 export * from './lib/services/impact.service';
 export * from './lib/services/dashboard.service';
 export * from './lib/services/members.service';
+export * from './lib/services/invitations.service';
 
 // Auth
 export * from './lib/auth/auth-state.service';

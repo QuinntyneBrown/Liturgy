@@ -93,6 +93,20 @@ public class DevDataSeeder
         SeedDiscoveryProject(workspace.Id, "Sabbath", "Rhythms of rest", now);
         SeedCommonTable(workspace.Id, now);
 
+        // A pending invitation so the join-by-invite flow is demonstrable out of the box.
+        // The token is stable, so the demo link /sign-up?token=demo-invite-river always works.
+        _db.Invitations.Add(new Invitation
+        {
+            Id = Guid.NewGuid(),
+            WorkspaceId = workspace.Id,
+            Email = "river@newhope.dev",
+            Token = "demo-invite-river",
+            Role = "Developer",
+            Status = InvitationStatus.Pending,
+            InvitedByUserId = quinn.user.Id,
+            CreatedAt = now
+        });
+
         await _db.SaveChangesAsync(cancellationToken);
     }
 
@@ -413,19 +427,33 @@ public class DevDataSeeder
     private void SeedCards(
         Guid projectId, Guid sprintId, Guid quinn, Guid amara, Guid jonah, Guid sam, DateTimeOffset now)
     {
-        // (code, title, assignee, column, moves logged)
-        AddCard("LAN-24", "Warm-handoff script when a caller is in danger", jonah, BoardColumn.InLoop, 3, now, projectId, sprintId);
-        AddCard("LAN-31", "Volunteer availability calendar", amara, BoardColumn.InLoop, 1, now, projectId, sprintId);
-        AddCard("LAN-33", "Crisis resource directory by region", quinn, BoardColumn.Backlog, 0, now, projectId, sprintId);
-        AddCard("LAN-28", "After-call reflection prompt", sam, BoardColumn.Review, 4, now, projectId, sprintId);
-        AddCard("LAN-19", "Anonymized call summary export", jonah, BoardColumn.Backlog, 0, now, projectId, sprintId);
-        AddCard("LAN-12", "Quiet-hours routing rules", amara, BoardColumn.Done, 5, now, projectId, sprintId);
-        AddCard("LAN-08", "Consent copy for first-time callers", quinn, BoardColumn.Done, 5, now, projectId, sprintId);
+        // (code, title, assignee, column, moves logged, description, points)
+        AddCard("LAN-24", "Warm-handoff script when a caller is in danger", jonah, BoardColumn.InLoop, 3, now, projectId, sprintId,
+            "When a caller signals immediate danger, the volunteer needs a calm, scripted path to escalate to emergency services without severing the relationship.", 5);
+        AddCard("LAN-31", "Volunteer availability calendar", amara, BoardColumn.InLoop, 1, now, projectId, sprintId,
+            "Volunteers set the hours they can hold the line so routing never sends a crisis to an empty seat.", 3);
+        AddCard("LAN-33", "Crisis resource directory by region", quinn, BoardColumn.Backlog, 0, now, projectId, sprintId,
+            "A searchable directory of local shelters, hotlines, and clinics so a caller is met with options near them.", 5);
+        AddCard("LAN-28", "After-call reflection prompt", sam, BoardColumn.Review, 4, now, projectId, sprintId,
+            "A short, gentle prompt that helps a volunteer decompress and note anything the team should follow up on.", 2);
+        AddCard("LAN-19", "Anonymized call summary export", jonah, BoardColumn.Backlog, 0, now, projectId, sprintId,
+            "Export call summaries with every identifying detail stripped, so the team can learn patterns without exposing callers.", 8);
+        AddCard("LAN-12", "Quiet-hours routing rules", amara, BoardColumn.Done, 5, now, projectId, sprintId,
+            "Route overnight calls to the on-call responders who have opted into quiet hours.", 3);
+        AddCard("LAN-08", "Consent copy for first-time callers", quinn, BoardColumn.Done, 5, now, projectId, sprintId,
+            "Plain-language consent a first-time caller hears up front, explaining what is and isn't recorded.", 1);
+
+        // Two work items that have left the active board: one resolved-and-closed, one abandoned.
+        AddCard("LAN-05", "Legacy SMS gateway spike", sam, BoardColumn.Done, 5, now, projectId, sprintId,
+            "Investigated an older SMS provider; wrapped up and closed once the newer gateway proved sufficient.", 2, CardStatus.Closed);
+        AddCard("LAN-17", "Native mobile app prototype", jonah, BoardColumn.Backlog, 0, now, projectId, sprintId,
+            "Explored a standalone mobile app; cancelled in favour of a responsive web experience the whole team can maintain.", 8, CardStatus.Cancelled);
     }
 
     private void AddCard(
         string code, string title, Guid assigneeId, BoardColumn column, int loggedMoves,
-        DateTimeOffset now, Guid projectId, Guid sprintId)
+        DateTimeOffset now, Guid projectId, Guid sprintId,
+        string? description = null, int? points = null, CardStatus status = CardStatus.Open)
     {
         var card = new Card
         {
@@ -434,8 +462,11 @@ public class DevDataSeeder
             SprintId = sprintId,
             Code = code,
             Title = title,
+            Description = description,
+            Points = points,
             AssigneeId = assigneeId,
             Column = column,
+            Status = status,
             IsBlocked = false,
             CreatedAt = now
         };

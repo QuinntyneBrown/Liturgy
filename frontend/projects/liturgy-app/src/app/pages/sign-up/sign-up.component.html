@@ -6,7 +6,14 @@
       <span class="rail__wordmark" style="color: var(--ink)">Liturgy</span>
     </div>
     <h1 class="auth__title">Start in rhythm</h1>
-    <p class="auth__lede">Create an account to join your collective.</p>
+    @if (invitePreview(); as invite) {
+      <p class="auth__lede">
+        <strong>{{ invite.invitedByName }}</strong> invited you to join
+        <strong>{{ invite.workspaceName }}</strong>. Create your account to accept.
+      </p>
+    } @else {
+      <p class="auth__lede">Create an account to join your collective.</p>
+    }
 
     @if (error()) {
       <p class="auth__error" role="alert">{{ error() }}</p>

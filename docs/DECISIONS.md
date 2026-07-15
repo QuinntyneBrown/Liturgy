@@ -65,3 +65,19 @@ A running log of technical and product decisions worth recording. Each entry sta
 **Why.** Proving the enforcement engine end to end de-risks the product's differentiator before investing in the marketing cover, dashboard aggregation, the standalone Discern screen, and the Demonstrate surfaces.
 
 **Consequences.** Some screens shown in `docs/mocks` are intentionally deferred; see the [implementation plan](implementation-plan.md).
+
+## 9. Lifecycle operations: keep the domain names, soft-hide via Status, hard-delete separately
+
+**Decision.** Add lifecycle operations to accounts, projects, and cards without renaming the domain. The product's "Account" stays the `Workspace` entity and the "Ticket" stays the `Card`. Projects and cards gain a lifecycle `Status` — `ProjectStatus {Active, Closed}` and `CardStatus {Open, Closed, Cancelled}` — with a **soft-hide** semantics (Close/Cancel retain the record but drop it from the default project list or active board), kept distinct from an explicit, irreversible **hard delete** (`DELETE`, which removes the entity and its children). `CardStatus` is **independent of `BoardColumn`**: Close and Cancel are allowed from any 5R state and do not assert a complete loop, whereas the `Done` column remains reachable only through a complete 5R loop.
+
+**Why.** Keeping `Workspace`/`Card` as the canonical nouns avoids a churny rename across the domain, DTOs, and Angular contract while still letting the UI speak "Account"/"Ticket". Soft-hide preserves history and is reversible (Reopen), which fits the reflective, relationship-oriented product; hard delete stays available for genuine removal. Making `CardStatus` orthogonal to the Done gate keeps the enforcement engine's one hard rule — Done requires a complete loop — intact, while letting teams retire work that will never finish without pretending it did.
+
+**Consequences.** Default project-list and board queries filter by `Status` (an `includeClosed` option reveals closed projects); Reopen restores a soft-hidden item to its list/board with its state intact. Delete cascades to children (phases/gates/requirements/sprints/cards/movements for a project; the five movements for a card). Close/Cancel must not run the Done-gate check.
+
+## 10. Token-based in-app invitations, no email infrastructure
+
+**Decision.** Grow an account by invitation: a workspace `Lead` creates an `Invitation` (email, optional role, a token, and `InvitationStatus {Pending, Accepted, Revoked}`) through `/api/invitations`. There is **no email delivery** — the API returns the token and an invite URL that the Lead shares out of band. An existing authenticated user accepts via `POST /api/invitations/{token}/accept`; a brand-new user joins by passing the token as `RegisterRequest.invitationToken`, which adds them to the inviting account instead of provisioning a personal one. An anonymous `GET /api/invitations/{token}` returns just `{ workspaceName, invitedByName, email }` so the sign-up screen can show invite context.
+
+**Why.** In-app tokens let us prove the full multi-user, multi-account membership flow without standing up (or securing) mail infrastructure in the slice. Supporting both accept-as-existing-user and join-on-registration covers the two real entry points, and the anonymous context lookup lets the sign-up screen explain who invited whom without exposing anything sensitive.
+
+**Consequences.** Invite URLs must be treated as secrets (anyone with the token can view its context and, if the email matches, join on registration). Registration branches on the token: valid + email-matching → join inviting account (role from the invite); otherwise → provision a personal root account. Accept and revoke are guarded — only a Lead invites or revokes — and a `404` is returned for tokens that are missing, already accepted, or revoked. Adding real email delivery later is an additive change behind the same endpoints.

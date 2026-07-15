@@ -10,12 +10,19 @@ export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly baseUrl = inject(API_BASE_URL);
 
-  register(email: string, firstName: string, lastName: string, password: string): Observable<AuthResult> {
+  register(
+    email: string,
+    firstName: string,
+    lastName: string,
+    password: string,
+    invitationToken: string | null = null,
+  ): Observable<AuthResult> {
     return this.http.post<AuthResult>(`${this.baseUrl}/api/auth/register`, {
       email,
       firstName,
       lastName,
       password,
+      invitationToken,
     });
   }
 

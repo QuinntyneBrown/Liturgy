@@ -79,7 +79,7 @@ public class CreateProjectCommandHandler : IRequestHandler<CreateProjectCommand,
 
         await _db.SaveChangesAsync(cancellationToken);
 
-        return new ProjectSummaryDto(project.Id, project.Name, project.Tag, project.CurrentPhase);
+        return new ProjectSummaryDto(project.Id, project.Name, project.Tag, project.CurrentPhase, project.Status);
     }
 
     private Phase AddPhase(Guid projectId, PhaseKind kind, PhaseState state, int order, DateTimeOffset now)

@@ -1,0 +1,29 @@
+:host {
+  display: block;
+}
+
+.members {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--s3);
+  margin-bottom: var(--s5);
+}
+.member {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s3);
+}
+.member__name {
+  font-weight: 600;
+}
+.invite {
+  max-width: 640px;
+}
+.invite__link {
+  margin-top: var(--s3);
+}
+.invite__url {
+  min-width: 280px;
+  flex: 1;
+}

@@ -1,9 +1,51 @@
-<article class="wcard" [class.is-blocked]="card().isBlocked">
+<article class="wcard" [class.is-blocked]="card().isBlocked" [class.wcard--inactive]="card().status !== 'Open'">
   <div class="wcard__top">
     <span class="wcard__id">{{ card().code }}</span>
-    @if (card().currentR) {
-      <span class="badge badge--develop">{{ card().currentR }}</span>
-    }
+    <div class="wcard__tags">
+      @if (card().points !== null) {
+        <span class="badge badge--points" [attr.title]="card().points + ' story points'">{{ card().points }} pt</span>
+      }
+      @if (card().status !== 'Open') {
+        <span class="badge badge--status">{{ card().status }}</span>
+      }
+      @if (card().currentR) {
+        <span class="badge badge--develop">{{ card().currentR }}</span>
+      }
+      <div class="wcard__menu">
+        <button
+          type="button"
+          class="wcard__menu-btn"
+          aria-label="Card actions"
+          [attr.aria-expanded]="menuOpen()"
+          (pointerdown)="$event.stopPropagation()"
+          (click)="$event.stopPropagation(); toggleMenu()"
+        >
+          &#8943;
+        </button>
+        @if (menuOpen()) {
+          <div class="wcard__menu-list" role="menu" (pointerdown)="$event.stopPropagation()" (click)="$event.stopPropagation()">
+            <label class="wcard__menu-points">
+              Points
+              <input
+                type="number"
+                min="0"
+                class="wcard__points-input"
+                [value]="card().points ?? ''"
+                aria-label="Story points"
+                (change)="onPoint($any($event.target).value)"
+              />
+            </label>
+            @if (card().status === 'Open') {
+              <button type="button" role="menuitem" (click)="emitAndClose('close')">Close</button>
+              <button type="button" role="menuitem" (click)="emitAndClose('cancel')">Cancel</button>
+            } @else {
+              <button type="button" role="menuitem" (click)="emitAndClose('reopen')">Reopen</button>
+            }
+            <button type="button" role="menuitem" class="wcard__menu-danger" (click)="emitAndClose('remove')">Delete</button>
+          </div>
+        }
+      </div>
+    </div>
   </div>
   <button
     type="button"
@@ -13,6 +55,9 @@
   >
     {{ card().title }}
   </button>
+  @if (card().description) {
+    <p class="wcard__desc">{{ card().description }}</p>
+  }
   <div class="wcard__foot">
     <lit-pip-strip [loggedCount]="card().loggedCount" [currentR]="card().currentR" />
     <div class="wcard__assignee">

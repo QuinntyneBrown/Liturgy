@@ -65,16 +65,36 @@
           <a class="btn btn--primary" href="5r-loop.html">Open 5R loop</a>
         </div>
       </div>
-      <p class="muted" style="margin-bottom:var(--s6);max-width:64ch">Every card runs the 5R co-creation loop. The pips show how far each has moved. <b style="color:var(--ink)">Done stays locked</b> until all five movements are logged — no card slips through unfinished.</p>
+      <p class="muted" style="margin-bottom:var(--s4);max-width:64ch">Every card runs the 5R co-creation loop. The pips show how far each has moved. <b style="color:var(--ink)">Done stays locked</b> until all five movements are logged — no card slips through unfinished. Each card carries a title, an optional description and story points, and a <b style="color:var(--ink)">⋯</b> menu to point, cancel, close, or delete it. <b style="color:var(--ink)">Cancelled and closed cards leave the board</b> — a terminal state that doesn't touch the 5R gate.</p>
+
+      <!-- Add a work item: title + optional description -->
+      <div class="row" style="gap:var(--s2);margin-bottom:var(--s6);flex-wrap:wrap">
+        <input class="field__input" type="text" placeholder="Add a work item to the backlog…" style="min-width:220px">
+        <input class="field__input" type="text" placeholder="Description (optional)…" style="min-width:220px">
+        <button class="btn btn--ghost btn--sm" type="button">Add card</button>
+      </div>
 
       <div class="board">
         <!-- Backlog -->
         <section class="col" aria-label="Backlog">
           <div class="col__head"><span class="col__title">Backlog</span><span class="col__count">3</span></div>
-          <article class="wcard">
-            <div class="wcard__top"><span class="wcard__id">LAN-31</span></div>
+          <article class="wcard" style="position:relative">
+            <div class="wcard__top">
+              <span class="wcard__id">LAN-31</span>
+              <span style="display:flex;align-items:center;gap:4px;margin-left:auto">
+                <span class="badge" style="font-size:.6rem;background:rgba(22,22,12,.06);color:var(--ink-72);border:1px solid var(--ink-12)">3 pt</span>
+                <span aria-hidden="true" title="Card actions" style="cursor:pointer;color:var(--ink);padding:0 2px">⋯</span>
+              </span>
+            </div>
             <div class="wcard__title">Route the call to the nearest on-shift volunteer</div>
             <div class="wcard__foot"><div class="pipstrip"><span class="pipstrip__pip">Rq</span><span class="pipstrip__pip">Rc</span><span class="pipstrip__pip">Rv</span><span class="pipstrip__pip">Rn</span><span class="pipstrip__pip">Rj</span></div><span class="avatar" style="width:26px;height:26px;font-size:.65rem">AM</span></div>
+            <!-- Actions menu (shown open for illustration) -->
+            <div style="position:absolute;top:34px;right:10px;z-index:5;min-width:150px;display:flex;flex-direction:column;gap:2px;padding:6px;background:var(--paper);border:1px solid var(--ink-12);border-radius:var(--radius);box-shadow:0 8px 24px rgba(22,22,12,.14)">
+              <label style="display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:.72rem;color:var(--ink-72);padding:4px 6px">Points <input type="number" value="3" style="width:48px;font:inherit;font-size:.72rem;border:1px solid var(--ink-12);border-radius:var(--radius);background:var(--paper);padding:2px 4px"></label>
+              <button class="btn btn--ghost btn--sm" type="button" style="justify-content:flex-start">Close</button>
+              <button class="btn btn--ghost btn--sm" type="button" style="justify-content:flex-start">Cancel</button>
+              <button class="btn btn--ghost btn--sm" type="button" style="justify-content:flex-start;color:#b3261e">Delete</button>
+            </div>
           </article>
           <article class="wcard">
             <div class="wcard__top"><span class="wcard__id">LAN-33</span></div>
@@ -86,11 +106,19 @@
         <!-- In 5R loop -->
         <section class="col" aria-label="In the 5R loop">
           <div class="col__head"><span class="col__title">In the 5R loop</span><span class="col__count">2</span></div>
-          <a class="wcard is-blocked" href="5r-loop.html" style="display:block">
-            <div class="wcard__top"><span class="wcard__id">LAN-24</span><span class="badge badge--develop" style="font-size:.6rem;margin-left:auto">Render</span></div>
+          <article class="wcard is-blocked">
+            <div class="wcard__top">
+              <span class="wcard__id">LAN-24</span>
+              <span style="display:flex;align-items:center;gap:4px;margin-left:auto">
+                <span class="badge" style="font-size:.6rem;background:rgba(22,22,12,.06);color:var(--ink-72);border:1px solid var(--ink-12)">5 pt</span>
+                <span class="badge badge--develop" style="font-size:.6rem">Render</span>
+                <span aria-hidden="true" title="Card actions" style="cursor:pointer;color:var(--ink-72);padding:0 2px">⋯</span>
+              </span>
+            </div>
             <div class="wcard__title">Warm-handoff script when a caller is in danger</div>
+            <p class="muted" style="font-size:.72rem;margin:2px 0 0">Escalate a call in danger to emergency services without severing the relationship.</p>
             <div class="wcard__foot"><div class="pipstrip"><span class="pipstrip__pip is-done">Rq</span><span class="pipstrip__pip is-done">Rc</span><span class="pipstrip__pip is-done">Rv</span><span class="pipstrip__pip is-current">Rn</span><span class="pipstrip__pip">Rj</span></div><span class="avatar" style="width:26px;height:26px;font-size:.65rem">QB</span></div>
-          </a>
+          </article>
           <article class="wcard">
             <div class="wcard__top"><span class="wcard__id">LAN-28</span><span class="badge badge--develop" style="font-size:.6rem;margin-left:auto">Receive</span></div>
             <div class="wcard__title">Plain-language consent before a chat begins</div>

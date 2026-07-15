@@ -8,7 +8,7 @@ import {
   CdkDropListGroup,
 } from '@angular/cdk/drag-drop';
 import { Board, BoardColumn, BoardRealtime, BoardService, Card, Member, MembersService } from '@liturgy/api';
-import { CardAssign, WorkCardComponent } from '@liturgy/components';
+import { CardAssign, CardPoint, WorkCardComponent } from '@liturgy/components';
 import { RailContextService } from '../../shell/rail-context.service';
 
 interface ColumnDef {
@@ -46,6 +46,7 @@ export class DevelopBoardComponent {
   readonly rejected = signal<string | null>(null);
   readonly adding = signal(false);
   private readonly titleInput = viewChild.required<ElementRef<HTMLInputElement>>('titleInput');
+  private readonly descInput = viewChild.required<ElementRef<HTMLInputElement>>('descInput');
 
   /** The card whose 5R loop the rail nest and "Open 5R loop" CTA focus on. */
   readonly focusCard = computed<Card | null>(() => {
@@ -66,6 +67,7 @@ export class DevelopBoardComponent {
 
   constructor() {
     this.realtime.cardChanged$.pipe(takeUntilDestroyed()).subscribe(() => this.reload());
+    this.realtime.cardDeleted$.pipe(takeUntilDestroyed()).subscribe(() => this.reload());
 
     effect(() => {
       const id = this.projectId();
@@ -111,14 +113,17 @@ export class DevelopBoardComponent {
 
   addCard(): void {
     const el = this.titleInput().nativeElement;
+    const descEl = this.descInput().nativeElement;
     const title = el.value.trim();
     if (!title || this.adding()) {
       return;
     }
+    const description = descEl.value.trim() || null;
     this.adding.set(true);
-    this.boardService.createCard(this.projectId(), title).subscribe({
+    this.boardService.createCard(this.projectId(), title, description).subscribe({
       next: (created) => {
         el.value = '';
+        descEl.value = '';
         this.adding.set(false);
         // Show the new card immediately, then reconcile from the server.
         this.board.update((b) => (b ? { ...b, cards: [...b.cards, created] } : b));
@@ -132,6 +137,31 @@ export class DevelopBoardComponent {
     this.boardService.assignCard(event.card.id, event.assigneeId).subscribe({
       next: () => this.reload(),
     });
+  }
+
+  point(event: CardPoint): void {
+    this.boardService.pointCard(event.card.id, event.points).subscribe({
+      next: () => this.reload(),
+    });
+  }
+
+  cancelCard(card: Card): void {
+    this.boardService.cancelCard(card.id).subscribe({ next: () => this.reload() });
+  }
+
+  closeCard(card: Card): void {
+    this.boardService.closeCard(card.id).subscribe({ next: () => this.reload() });
+  }
+
+  reopenCard(card: Card): void {
+    this.boardService.reopenCard(card.id).subscribe({ next: () => this.reload() });
+  }
+
+  deleteCard(card: Card): void {
+    if (!confirm(`Delete ${card.code}? This can't be undone.`)) {
+      return;
+    }
+    this.boardService.deleteCard(card.id).subscribe({ next: () => this.reload() });
   }
 
   openCard(card: Card): void {

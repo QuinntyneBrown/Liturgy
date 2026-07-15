@@ -36,7 +36,7 @@ The backend follows Clean Architecture. The dependency direction is inward only:
 
 ### Domain (`Liturgy.Domain`)
 
-The model of the Playbook. A `Workspace` contains `Project`s; each project holds four `Phase`s (`PhaseKind`: Discover, Discern, Develop, Demonstrate) separated by `Gate`s (`GateState`). A gate carries `Requirement`s (`RequirementState`) that must be complete before it opens. The Develop phase holds a `Sprint` and a board of `Card`s (`BoardColumn`), and each card runs five `RMovement`s (`RKind`: Request, Receive, Review, Render, Rejoice; `MovementState`). `User` and `Membership` model identity and access.
+The model of the Playbook. A `Workspace` (the "Account") contains `Project`s; each project holds four `Phase`s (`PhaseKind`: Discover, Discern, Develop, Demonstrate) separated by `Gate`s (`GateState`). A gate carries `Requirement`s (`RequirementState`) that must be complete before it opens. The Develop phase holds a `Sprint` and a board of `Card`s (the "tickets"; `BoardColumn`), and each card runs five `RMovement`s (`RKind`: Request, Receive, Review, Render, Rejoice; `MovementState`). Projects and cards also carry a lifecycle `Status` — a `Project` is `Active` or `Closed` (`ProjectStatus`) and a `Card` is `Open`, `Closed`, or `Cancelled` (`CardStatus`); Closed/Cancelled items are soft-hidden from their default list or board, distinct from a hard delete. `User` and `Membership` model identity and access, and an `Invitation` (`InvitationStatus`) lets a Lead grow the account by inviting people by email via an in-app token.
 
 ### Application (`Liturgy.Application`)
 

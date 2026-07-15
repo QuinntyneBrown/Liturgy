@@ -46,22 +46,27 @@ Plain classes with `Id: Guid` + `CreatedAt: DateTimeOffset`, following
 `Forge.Domain/WorkoutSession.cs` style. Enforcement state lives in enums.
 
 - `User`, `RefreshToken`, `SignInAttempt` — **ported verbatim from Forge** (auth).
-- `Workspace` (Name, Slug).
+- `Workspace` (Name, Slug) — the root tenant, surfaced in-product as the "Account".
 - `Membership` (WorkspaceId, UserId, Role, Initials) — links a User to a Workspace.
-- `Project` (WorkspaceId, Name, Tag, CurrentPhase: `PhaseKind`).
+- `Invitation` (WorkspaceId, Email, Role, Token, Status: `InvitationStatus`, InvitedByUserId) —
+  an in-app invite to join an account; no email delivery, the token/URL is shared out of band.
+- `Project` (WorkspaceId, Name, Tag, CurrentPhase: `PhaseKind`, Status: `ProjectStatus`
+  default `Active`).
 - `Phase` (ProjectId, Kind: `PhaseKind`, State: `PhaseState`, Order).
 - `Gate` (PhaseId, Title, State: `GateState`).
 - `Requirement` (GateId, Label, Meta, State: `RequirementState`, Order).
 - `Sprint` (ProjectId, Number, EndsAt).
-- `Card` (ProjectId, SprintId, Code e.g. "LAN-24", Title, AssigneeId?, Column:
-  `BoardColumn`, CurrentR: `RKind?`, IsBlocked).
+- `Card` (ProjectId, SprintId, Code e.g. "LAN-24", Title, Description?, Points?, AssigneeId?,
+  Column: `BoardColumn`, CurrentR: `RKind?`, IsBlocked, Status: `CardStatus` default `Open`).
 - `RMovement` (CardId, Kind: `RKind`, Order 1-5, State: `MovementState`, plus
   content: `Ask`, `Received`, `Synthesis`, `ArtifactUrl`, `WhatChanged`,
   `Thanksgiving`).
 - Enums (one file each): `PhaseKind {Discover,Discern,Develop,Demonstrate}`,
   `PhaseState {Locked,Current,Done}`, `GateState {Blocked,Open}`,
   `RequirementState {Todo,Done}`, `BoardColumn {Backlog,InLoop,Review,Done}`,
-  `RKind {Request,Receive,Review,Render,Rejoice}`, `MovementState {Locked,Current,Done}`.
+  `RKind {Request,Receive,Review,Render,Rejoice}`, `MovementState {Locked,Current,Done}`,
+  `CardStatus {Open,Closed,Cancelled}`, `ProjectStatus {Active,Closed}`,
+  `InvitationStatus {Pending,Accepted,Revoked}`.
 
 ### `Liturgy.Application` — MediatR/CQS
 Copy the structure of `Forge.Application`:

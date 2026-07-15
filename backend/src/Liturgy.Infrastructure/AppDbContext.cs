@@ -11,6 +11,7 @@ public class AppDbContext : DbContext, IAppDbContext
     public DbSet<User> Users => Set<User>();
     public DbSet<Workspace> Workspaces => Set<Workspace>();
     public DbSet<Membership> Memberships => Set<Membership>();
+    public DbSet<Invitation> Invitations => Set<Invitation>();
     public DbSet<Project> Projects => Set<Project>();
     public DbSet<Phase> Phases => Set<Phase>();
     public DbSet<Gate> Gates => Set<Gate>();
@@ -52,12 +53,27 @@ public class AppDbContext : DbContext, IAppDbContext
             b.HasIndex(m => new { m.WorkspaceId, m.UserId }).IsUnique();
         });
 
+        modelBuilder.Entity<Invitation>(b =>
+        {
+            b.HasKey(i => i.Id);
+            b.Property(i => i.Email).HasMaxLength(254).IsRequired();
+            b.Property(i => i.Token).HasMaxLength(64).IsRequired();
+            b.Property(i => i.Role).HasMaxLength(32).IsRequired();
+            b.Property(i => i.Status).HasConversion<int>();
+            b.HasIndex(i => i.Token).IsUnique();
+            // At most one pending invite per (workspace, email); accepted/revoked rows don't collide.
+            b.HasIndex(i => new { i.WorkspaceId, i.Email })
+                .IsUnique()
+                .HasFilter("[Status] = 0");
+        });
+
         modelBuilder.Entity<Project>(b =>
         {
             b.HasKey(p => p.Id);
             b.Property(p => p.Name).HasMaxLength(120).IsRequired();
             b.Property(p => p.Tag).HasMaxLength(160).IsRequired();
             b.Property(p => p.CurrentPhase).HasConversion<int>();
+            b.Property(p => p.Status).HasConversion<int>();
             b.HasIndex(p => p.WorkspaceId);
         });
 
@@ -97,7 +113,9 @@ public class AppDbContext : DbContext, IAppDbContext
             b.HasKey(c => c.Id);
             b.Property(c => c.Code).HasMaxLength(16).IsRequired();
             b.Property(c => c.Title).HasMaxLength(200).IsRequired();
+            b.Property(c => c.Description).HasMaxLength(2000);
             b.Property(c => c.Column).HasConversion<int>();
+            b.Property(c => c.Status).HasConversion<int>();
             b.Property(c => c.CurrentR).HasConversion<int?>();
             b.HasIndex(c => c.ProjectId);
             b.HasIndex(c => c.Code).IsUnique();

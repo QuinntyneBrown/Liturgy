@@ -44,6 +44,7 @@
     <ul class="wsnav">
       <li><a class="is-active" href="dashboard.html"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/><rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/><rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/><rect x="14" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/></svg> Dashboard</a></li>
       <li><a href="project-4d.html"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10" stroke="currentColor" stroke-width="2"/></svg> Projects</a></li>
+      <li><a href="members.html"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="2"/><path d="M4 20c0-3 2.5-5 5-5s5 2 5 5" stroke="currentColor" stroke-width="2"/><path d="M16 4a3 3 0 010 6M18 20c0-2-.8-3.7-2-5" stroke="currentColor" stroke-width="2"/></svg> Members</a></li>
       <li><a href="develop-board.html"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="4" width="5" height="16" rx="1" stroke="currentColor" stroke-width="2"/><rect x="10" y="4" width="5" height="10" rx="1" stroke="currentColor" stroke-width="2"/><rect x="17" y="4" width="4" height="13" rx="1" stroke="currentColor" stroke-width="2"/></svg> Boards</a></li>
       <li><a href="demonstrate.html"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Impact</a></li>
     </ul>
@@ -127,7 +128,14 @@
         <div class="lane">
           <div class="lane__head"><span class="badge badge--develop badge--dot">03 Develop</span></div>
           <div class="lane__body">
-            <a class="pcard" href="develop-board.html"><div class="pcard__name">Lantern</div><div class="pcard__meta">Sprint 6 · 3/5 R avg</div></a>
+            <div class="pcard">
+              <a href="develop-board.html" style="display:block;color:inherit"><div class="pcard__name">Lantern</div><div class="pcard__meta">Sprint 6 · 3/5 R avg</div></a>
+              <div class="row" style="gap:6px;margin-top:6px">
+                <a class="btn btn--ghost btn--sm" href="#">Edit</a>
+                <a class="btn btn--ghost btn--sm" href="#">Close</a>
+                <a class="btn btn--ghost btn--sm" href="#" style="color:#b3261e">Delete</a>
+              </div>
+            </div>
             <a class="pcard" href="develop-board.html"><div class="pcard__name">Common Table</div><div class="pcard__meta">Sprint 2 · 5/5 R avg</div></a>
           </div>
         </div>

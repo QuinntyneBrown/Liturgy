@@ -16,5 +16,6 @@ public class RegisterCommandValidator : AbstractValidator<RegisterCommand>
             .Matches("[a-z]").WithMessage("Password must contain a lowercase letter.")
             .Matches("[0-9]").WithMessage("Password must contain a digit.")
             .Matches("[^A-Za-z0-9]").WithMessage("Password must contain a symbol.");
+        RuleFor(x => x.InvitationToken).MaximumLength(64);
     }
 }

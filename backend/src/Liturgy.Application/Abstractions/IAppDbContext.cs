@@ -8,6 +8,7 @@ public interface IAppDbContext
     DbSet<User> Users { get; }
     DbSet<Workspace> Workspaces { get; }
     DbSet<Membership> Memberships { get; }
+    DbSet<Invitation> Invitations { get; }
     DbSet<Project> Projects { get; }
     DbSet<Phase> Phases { get; }
     DbSet<Gate> Gates { get; }
