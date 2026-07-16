@@ -9,7 +9,8 @@
           <span class="rail__mark" aria-hidden="true"></span>
           <div><div class="rail__wordmark">Liturgy</div><span class="rail__tag">Loading…</span></div>
         </div>
-        <div class="rail__foot">
+        <div class="rail__foot rail__foot--actions">
+          <a class="btn btn--on-dark btn--sm" routerLink="/dashboard">← Dashboard</a>
           <button class="btn btn--on-dark btn--sm" type="button" (click)="signOut()">Sign out</button>
         </div>
       </nav>
@@ -77,9 +78,13 @@
   <main class="main" id="main">
     <header class="topbar">
       <span class="topbar__crumbs">
-        @if (mode() === 'project' && journey(); as j) {
-          Workspace · <b>{{ j.name }}</b> · {{ screenLabel() }}
+        @if (screenLabel() === 'Dashboard') {
+          <b>Dashboard</b>
         } @else {
+          <a routerLink="/dashboard">Workspace</a> ·
+          @if (mode() === 'project' && journey(); as j) {
+            <b>{{ j.name }}</b> ·
+          }
           <b>{{ screenLabel() }}</b>
         }
       </span>

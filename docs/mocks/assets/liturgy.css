@@ -301,6 +301,7 @@ p  { margin: 0 0 var(--s4); }
   color: var(--paper-45); margin-bottom: var(--s3); font-weight: 600; font-family: var(--display);
 }
 .rail__foot { margin-top: auto; padding: var(--s5) var(--s5) 0; }
+.rail__foot--actions { display: flex; flex-wrap: wrap; gap: var(--s2); }
 
 /* ============================================================================
    Canonical-hours 5R dial (SVG-driven; JS sets --filled)
