@@ -556,7 +556,7 @@ p  { margin: 0 0 var(--s4); }
   .gwall { columns: 1; }
   .hero__inner { padding: var(--s8) var(--s4); }
   .cover-nav { flex-wrap: wrap; padding: var(--s3) var(--s4); gap: var(--s2); }
-  .cover-nav a[href^="#"] { display: none; }
+  .cover-nav a[href^="#"], .cover-nav a[data-secondary] { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
