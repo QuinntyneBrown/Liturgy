@@ -301,7 +301,9 @@ movement in one, confirm the other updates live via the `board` hub.
 A completeness + mock-fidelity audit closed the originally-deferred gaps:
 
 - **New screens** (all mock-faithful, against real endpoints): marketing landing
-  (`index.html`), design-system page, workspace **dashboard** (momentum stats + "gates
+  (`index.html`; superseded — the marketing landing ships as a static page, not an
+  Angular screen, see [marketing-deployment.md](marketing-deployment.md)),
+  design-system page, workspace **dashboard** (momentum stats + "gates
   that need attention" feed + 4-lane 4D board), the dedicated **Discern** decision screen
   (four paths + rationale, backed by a `Decision` entity), and **Demonstrate/Impact**
   (relationship metrics, week-ordered stories, gratitude wall — `ImpactMetric`/`Story`/

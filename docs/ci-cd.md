@@ -16,8 +16,11 @@ The pipeline lives in [`.github/workflows/ci-cd.yml`](../.github/workflows/ci-cd
    container** backs the integration tests; the job sets `LITURGY_TEST_SQLSERVER`
    so `AcceptanceSqlServer` connects to it instead of local SQLEXPRESS.
 2. Installs the frontend (`npm ci`) and runs the Jest unit tests.
-3. Builds the Angular app for production and copies `frontend/dist/liturgy-app/browser/`
-   into `backend/src/Liturgy.Api/wwwroot/`.
+3. Builds the Angular app for production (entry emitted as `app.html`) and copies
+   `frontend/dist/liturgy-app/browser/` into `backend/src/Liturgy.Api/wwwroot/`,
+   then copies the static marketing site (`marketing/`) in beside it —
+   `marketing/index.html` owns the web root. The model is described in
+   [marketing-deployment.md](marketing-deployment.md).
 4. `dotnet publish`es the API — which now embeds the SPA — and uploads it as the
    `app` artifact.
 

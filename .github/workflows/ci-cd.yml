@@ -83,12 +83,17 @@ jobs:
         working-directory: frontend
         run: npm run build
 
-      # --- Bundle SPA into the API and publish ------------------------------
+      # --- Bundle SPA + marketing site into the API and publish -------------
+      # The SPA entry is emitted as app.html (angular.json "index.output"), so the
+      # static marketing site owns index.html at the web root.
       - name: Copy SPA into API wwwroot
         run: |
           rm -rf backend/src/Liturgy.Api/wwwroot
           mkdir -p backend/src/Liturgy.Api/wwwroot
           cp -r frontend/dist/liturgy-app/browser/. backend/src/Liturgy.Api/wwwroot/
+
+      - name: Copy marketing site into API wwwroot
+        run: cp -r marketing/. backend/src/Liturgy.Api/wwwroot/
 
       - name: Publish (API + bundled SPA)
         run: dotnet publish backend/src/Liturgy.Api/Liturgy.Api.csproj -c Release --no-restore -o ${{ env.PUBLISH_DIR }}

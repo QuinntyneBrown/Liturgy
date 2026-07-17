@@ -4,8 +4,9 @@ Static, high-fidelity design mocks for **Liturgy**, an agile-development workspa
 *enforces* the [FaithTech Playbook](https://www.faithtech.com/playbook): the **4D Cycle** as
 its spine and the **5R co-creation loop** inside every build.
 
-Open `index.html` in a browser — it's the cover and gallery for the whole set. No build step;
-the only external dependency is Google Fonts.
+Open `index.html` in a browser — it's the public marketing splash page. `gallery.html` is the
+internal cover + gallery for the whole mock set. No build step; the only external dependency
+is Google Fonts.
 
 ## The framework these screens model
 
@@ -21,7 +22,9 @@ and a work item cannot reach **Done** until all five R's are logged.
 
 | File | Screen |
 |------|--------|
-| `index.html` | Cover + gallery |
+| `index.html` | Marketing splash page (design source — the deployable copy lives in `marketing/`, see [marketing-deployment.md](../marketing-deployment.md)) |
+| `gallery.html` | Internal cover + gallery for the mock set |
+| `brochure/liturgy-overview.html` | Print-CSS source for the downloadable PDF product overview |
 | `design-system.html` | Style guide (tokens, type, components) |
 | `dashboard.html` | Workspace home — projects plotted on the 4D cycle (with project edit/close/delete) |
 | `members.html` | Account members, invite-by-email panel, and pending invitations |
@@ -45,3 +48,19 @@ Colors and type are taken **directly from FaithTech's live design system**
 
 The **Rhythm Rail** — the vertical 4D spine with gate-latches, expanding into a
 canonical-hours 5R dial during Develop — is the signature element carrying the "liturgy" idea.
+
+## Brochure PDF
+
+The marketing splash links to a downloadable product overview, rendered from
+`brochure/liturgy-overview.html` (print CSS in `brochure/brochure.css`). The generator
+writes to the deployable site at `marketing/assets/liturgy-overview.pdf` (the copy in
+`docs/mocks/assets/` is a frozen design-reference snapshot). To regenerate after editing
+the brochure source:
+
+```
+cd frontend
+npm run brochure:pdf     # one-time prereq: npx playwright install chromium
+```
+
+Generate while online so the Google-hosted brand webfonts embed. The PDF is committed so the
+splash page's download links work from a plain checkout.

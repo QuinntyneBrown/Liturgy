@@ -44,8 +44,8 @@ test.describe('live screenshots', () => {
     await page.waitForTimeout(900);
     await page.screenshot({ path: `${DIR}/04-board.png`, fullPage: true });
 
-    await page.goto('/');
-    await page.waitForTimeout(700);
-    await page.screenshot({ path: `${DIR}/05-landing.png`, fullPage: true });
+    // The marketing splash at "/" is a static page served by the API from wwwroot
+    // (see docs/marketing-deployment.md) — it never renders through ng serve, so it
+    // is not captured here. View it via the published wwwroot or marketing/index.html.
   });
 });

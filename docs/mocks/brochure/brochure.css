@@ -1,0 +1,92 @@
+/* ============================================================================
+   LITURGY — Product overview brochure (print source)
+   Rendered to PDF via frontend/tools/generate-brochure.mjs (Chromium page.pdf).
+   Layers on top of ../assets/liturgy.css.
+   ========================================================================= */
+
+@page { size: Letter; margin: 0; }
+
+html, body {
+  margin: 0;
+  background: var(--paper);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.page {
+  width: 8.5in;
+  height: 11in;
+  padding: .75in;
+  break-after: page;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--paper);
+}
+.page:last-child { break-after: auto; }
+.page--ink { background: var(--ink); color: var(--paper); }
+
+.page__folio {
+  position: absolute;
+  bottom: .4in; left: .75in; right: .75in;
+  display: flex; justify-content: space-between;
+  font-family: var(--display);
+  font-size: .65rem; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink-45);
+}
+.page--ink .page__folio { color: var(--paper-45); }
+
+/* Bordered panel for UI compositions */
+.figure {
+  border: 1px solid var(--ink-12);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--sand-100);
+  padding: var(--s4);
+}
+
+/* Numbered brochure headings */
+.b-eyebrow {
+  font-family: var(--display); font-weight: 600;
+  font-size: .72rem; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--develop);
+  margin-bottom: var(--s3);
+}
+.b-h2 { font-size: 2.1rem; margin-bottom: var(--s5); max-width: 22ch; }
+
+/* Pull quote */
+.pull {
+  font-family: var(--accent); font-style: italic;
+  font-size: 1.5rem; line-height: 1.35; color: var(--ink);
+  border-left: 3px solid var(--lime);
+  padding-left: var(--s5);
+  margin: var(--s6) 0;
+  max-width: 30ch;
+}
+
+/* Capability / movement listings */
+.b-list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s4); }
+.b-list__item { display: grid; grid-template-columns: 34px 1fr; gap: var(--s4); align-items: start; }
+.b-list__num {
+  width: 34px; height: 34px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--sand-200);
+  font-family: var(--display); font-weight: 600; font-size: .85rem;
+}
+.b-list__title { font-family: var(--display); font-weight: 600; font-size: 1.02rem; }
+.b-list__desc { font-size: .9rem; color: var(--ink-72); margin: 2px 0 0; }
+
+/* "Gates that need attention" rows (page-local in dashboard.html, inlined here) */
+.attn { display: grid; grid-template-columns: auto 1fr; gap: var(--s4); align-items: center; padding: var(--s4) 0; border-bottom: 1px solid var(--ink-12); }
+.attn:last-child { border: 0; }
+
+/* Compact print board: no horizontal scroll, columns share the width */
+.board--print { grid-auto-columns: minmax(0, 1fr); overflow: visible; padding-bottom: 0; }
+.board--print .col { min-width: 0; }
+
+/* Screen preview: iterate in a browser before regenerating the PDF */
+@media screen {
+  body { background: var(--sand-300); padding: 2rem 0; }
+  .page { margin: 0 auto 2rem; box-shadow: 0 10px 40px #16160c33; }
+}

@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from '@liturgy/api';
 import { ShellComponent } from './shell/shell.component';
-import { LandingComponent } from './pages/landing/landing.component';
 import { DesignSystemComponent } from './pages/design-system/design-system.component';
 import { SignInComponent } from './pages/sign-in/sign-in.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
@@ -14,9 +13,10 @@ import { DevelopBoardComponent } from './pages/develop-board/develop-board.compo
 import { LoopComponent } from './pages/loop/loop.component';
 import { DemonstrateComponent } from './pages/demonstrate/demonstrate.component';
 
+// The marketing splash is a static page served by the API at "/" (see
+// docs/marketing-deployment.md) — it is not an Angular route.
 export const routes: Routes = [
   // Public
-  { path: '', component: LandingComponent, pathMatch: 'full' },
   { path: 'design-system', component: DesignSystemComponent },
   { path: 'sign-in', component: SignInComponent },
   { path: 'sign-up', component: SignUpComponent },
@@ -37,5 +37,5 @@ export const routes: Routes = [
       { path: 'demonstrate/:projectId', component: DemonstrateComponent },
     ],
   },
-  { path: '**', redirectTo: '' },
+  { path: '**', redirectTo: 'dashboard' },
 ];

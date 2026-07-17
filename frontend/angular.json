@@ -43,6 +43,10 @@
           "builder": "@angular/build:application",
           "options": {
             "browser": "projects/liturgy-app/src/main.ts",
+            "index": {
+              "input": "projects/liturgy-app/src/index.html",
+              "output": "app.html"
+            },
             "tsConfig": "projects/liturgy-app/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [

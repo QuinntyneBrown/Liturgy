@@ -8,7 +8,8 @@
     "watch": "ng build liturgy-app --watch --configuration development",
     "test": "jest",
     "test:watch": "jest --watch",
-    "e2e": "playwright test"
+    "e2e": "playwright test",
+    "brochure:pdf": "node tools/generate-brochure.mjs"
   },
   "private": true,
   "packageManager": "npm@10.9.4",

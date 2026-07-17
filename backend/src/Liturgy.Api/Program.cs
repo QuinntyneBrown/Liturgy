@@ -1,5 +1,6 @@
 using System.Text;
 using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 using Liturgy.Api.Middleware;
 using Liturgy.Application;
 using Liturgy.Infrastructure;
@@ -101,12 +102,29 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// Serve the bundled Angular SPA from wwwroot. The CI pipeline copies the built
-// frontend here before publish, so a single App Service hosts both API and UI.
-// In local development wwwroot is empty and the Angular dev server (ng serve) is
-// used instead, so these calls are simply no-ops.
+// Serve the static marketing site and the bundled Angular SPA from wwwroot. The CI
+// pipeline copies both here before publish (marketing/index.html owns "/", the SPA
+// entry is emitted as app.html), so a single App Service hosts marketing, UI, and
+// API. In local development wwwroot is empty and the Angular dev server (ng serve)
+// is used instead, so these calls are simply no-ops.
+// Angular bundles are content-hashed (e.g. main-7X2KQ5RD.js) and safe to cache
+// forever; everything unhashed (app.html, index.html, liturgy.css, the PDF) must
+// revalidate so deploys take effect immediately.
+var hashedAsset = new Regex(@"-[A-Z0-9]{8,}\.[a-z0-9]+$", RegexOptions.IgnoreCase);
 app.UseDefaultFiles();
-app.UseStaticFiles();
+app.UseStaticFiles(new StaticFileOptions
+{
+    OnPrepareResponse = ctx =>
+        ctx.Context.Response.Headers.CacheControl = hashedAsset.IsMatch(ctx.File.Name)
+            ? "public, max-age=31536000, immutable"
+            : "no-cache",
+});
+
+// Route matching must happen AFTER the static-file middleware: WebApplication's
+// implicit UseRouting runs first in the pipeline, where the SPA fallback endpoint
+// ({*path:nonfile}) would match "/" and stop UseDefaultFiles from rewriting it to
+// the marketing index.html.
+app.UseRouting();
 
 app.UseCors("web");
 app.UseAuthentication();
@@ -116,9 +134,11 @@ app.MapGet("/health", () => Results.Ok(new { status = "ok" }));
 app.MapControllers();
 app.MapHub<BoardHub>("/hubs/board");
 
-// Any request that isn't an API/hub route falls through to the SPA entry point so
-// Angular's client-side router can handle deep links (e.g. /board/123 on refresh).
-app.MapFallbackToFile("index.html");
+// Any request that isn't an API/hub route or an existing static file falls through
+// to the SPA entry point so Angular's client-side router can handle deep links
+// (e.g. /board/123 on refresh). The entry is app.html — index.html is the
+// marketing splash.
+app.MapFallbackToFile("app.html");
 
 app.Run();
 
