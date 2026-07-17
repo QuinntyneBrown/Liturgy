@@ -8,7 +8,7 @@ test('signing in lands on the dashboard', async ({ page }) => {
   await signIn.signIn('quinn@newhope.dev', 'Liturgy!2026');
 
   await expect(page).toHaveURL(/\/dashboard$/);
-  await expect(page.getByRole('heading', { name: /Good morning/ })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Good (morning|afternoon|evening)/ })).toBeVisible();
 });
 
 test('an unauthenticated visit redirects to sign-in', async ({ page }) => {

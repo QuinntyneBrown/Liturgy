@@ -20,6 +20,13 @@ interface Lane {
   readonly projects: ProjectLane[];
 }
 
+/** The salutation for a local hour: morning 5–11, afternoon 12–16, evening otherwise. */
+function greetingForHour(hour: number): string {
+  if (hour >= 5 && hour < 12) return 'Good morning';
+  if (hour >= 12 && hour < 17) return 'Good afternoon';
+  return 'Good evening';
+}
+
 @Component({
   selector: 'lit-dashboard',
   imports: [ReactiveFormsModule, RouterLink],
@@ -44,10 +51,11 @@ export class DashboardComponent implements OnInit {
     tag: ['', [Validators.required]],
   });
 
-  /** "Good morning, Quinn." once the session is known, else the plain greeting. */
+  /** "Good afternoon, Quinn." — salutation by local time, named once the session is known. */
   readonly greeting = computed(() => {
+    const salutation = greetingForHour(new Date().getHours());
     const firstName = this.authState.user()?.firstName;
-    return firstName ? `Good morning, ${firstName}.` : 'Good morning.';
+    return firstName ? `${salutation}, ${firstName}.` : `${salutation}.`;
   });
 
   /** The 4D board's four lanes, in cycle order, each holding its projects. */
