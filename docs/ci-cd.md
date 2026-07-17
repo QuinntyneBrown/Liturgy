@@ -26,7 +26,11 @@ The pipeline lives in [`.github/workflows/ci-cd.yml`](../.github/workflows/ci-cd
 
 **Deploy** (`deploy` job) — runs only on a push to `main` after the tests are green.
 It logs into Azure with a passwordless **OIDC federated credential** and deploys the
-published bundle to a single **Azure App Service**.
+published bundle to a single **Azure App Service**. After the deploy, a **smoke
+test** polls `/health` (up to 5 minutes — the restart runs EF migrations before
+serving, and the Free-tier plan cold-starts), then asserts the marketing page is
+served at `/` and the SPA shell (`<lit-root>`) answers a deep link
+(`/design-system`). The job fails if any check does.
 
 > Playwright E2E tests (`npm run e2e`) are **not** part of the gate — they need a
 > running app and browser binaries. Run them locally or add a dedicated job later.
@@ -43,17 +47,57 @@ az appservice plan create -g liturgy-rg -n liturgy-plan --sku B1 --is-linux
 az webapp create -g liturgy-rg -p liturgy-plan -n <your-webapp-name> --runtime "DOTNETCORE:9.0"
 ```
 
+Then enforce HTTPS (the SPA carries a JWT; never serve it over plain http):
+
+```bash
+az webapp update -g liturgy-rg -n <your-webapp-name> --set httpsOnly=true
+```
+
+> The current deployment runs on the **F1 (Free)** plan, which does not support
+> Always On — expect a cold start (~8 s) after idle; the deploy smoke test
+> tolerates this. On Basic (B1) or higher, eliminate cold starts with
+> `az webapp config set -g liturgy-rg -n <your-webapp-name> --always-on true`.
+
 ### 2. Configure the database connection string
 
 The API runs EF Core migrations against `ConnectionStrings:DefaultConnection` on
-startup, so the App Service must have a reachable SQL database. Set it as a
-**connection string** app setting (type `SQLAzure`):
+startup, so the App Service must have a reachable SQL database. Production uses
+**managed-identity auth** — no password anywhere in configuration. The setup, in
+order:
+
+```bash
+# 1. Give the web app a system-assigned managed identity
+az webapp identity assign -g liturgy-rg -n <your-webapp-name>
+
+# 2. Make yourself the Entra admin of the SQL server (SQL-auth logins keep working)
+az sql server ad-admin create -g liturgy-rg -s <sql-server> \
+  --display-name "<your-email>" --object-id "<your-entra-object-id>"
+```
+
+Then, connected to the database *as that Entra admin*, create a contained user for
+the identity. Least privilege is enough — startup migrations need DDL, the app
+needs read/write; `db_owner` is not required:
+
+```sql
+CREATE USER [<your-webapp-name>] FROM EXTERNAL PROVIDER;
+ALTER ROLE db_ddladmin  ADD MEMBER [<your-webapp-name>];
+ALTER ROLE db_datareader ADD MEMBER [<your-webapp-name>];
+ALTER ROLE db_datawriter ADD MEMBER [<your-webapp-name>];
+```
+
+Finally set the password-free **connection string** app setting (type `SQLAzure`).
+This restarts the app — watch `/health` until it returns 200 (the restart re-runs
+migrations; allow a couple of minutes):
 
 ```bash
 az webapp config connection-string set -g liturgy-rg -n <your-webapp-name> \
   --connection-string-type SQLAzure \
-  --settings DefaultConnection="Server=tcp:<sql-server>.database.windows.net,1433;Initial Catalog=<db>;Authentication=Active Directory Default;Encrypt=True;"
+  --settings DefaultConnection="Server=tcp:<sql-server>.database.windows.net,1433;Initial Catalog=<db>;Authentication=Active Directory Default;Encrypt=True;TrustServerCertificate=False;"
 ```
+
+> **Rollback:** if `/health` doesn't recover, re-set `DefaultConnection` to a
+> SQL-auth string — one command, no code change. Keep a copy of the old string
+> somewhere safe (not in the repo) until managed identity has proven itself.
 
 Also set the JWT settings the API requires (`Jwt:Issuer`, `Jwt:Audience`,
 `Jwt:SigningKey`) and, since the SPA is served same-origin, optionally
@@ -117,3 +161,16 @@ Add these under **Settings → Secrets and variables → Actions**.
 
 Once these are in place, every push to `main` runs the tests and — if they pass —
 deploys the bundled API + SPA to Azure.
+
+## Hardened configuration checklist
+
+The live deployment carries this posture (verify with `az` after any re-provision):
+
+| Setting | State | Check |
+| --- | --- | --- |
+| HTTPS only | enforced | `az webapp show ... --query httpsOnly` → `true` |
+| DB auth | managed identity, no password | `az webapp config connection-string list ...` contains `Active Directory Default`, no `Password=` |
+| DB roles | `db_ddladmin`, `db_datareader`, `db_datawriter` on the contained user | query `sys.database_role_members` |
+| Deploy auth | OIDC federated credential (no publish profile / secret) | workflow uses `azure/login@v2` with `id-token: write` |
+| Post-deploy gate | smoke test: `/health`, `/` (marketing), `/design-system` (SPA) | deploy job step "Smoke test" |
+| Always On | off — F1 plan doesn't support it (cold starts tolerated) | upgrade to B1+ and `--always-on true` to change |
