@@ -141,6 +141,34 @@ jobs:
           slot-name: ${{ vars.AZURE_WEBAPP_SLOT || 'production' }}
           package: ${{ env.PUBLISH_DIR }}
 
+      # Fail the deploy if the site doesn't come back healthy. The poll window is
+      # generous (up to 5 min) because the app restarts after deploy, runs EF
+      # migrations before serving, and the Free-tier plan cold-starts.
+      - name: Smoke test (health + marketing + SPA)
+        run: |
+          base="https://${{ vars.AZURE_WEBAPP_NAME }}.azurewebsites.net"
+          code=''
+          for i in $(seq 1 30); do
+            code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 "$base/health" || true)
+            [ "$code" = "200" ] && break
+            echo "attempt $i: /health -> ${code:-no-response}; retrying in 10s"
+            sleep 10
+          done
+          if [ "$code" != "200" ]; then
+            echo "::error::Smoke test failed: /health never returned 200 (last: $code)"
+            exit 1
+          fi
+          root=$(curl -s --max-time 15 "$base/")
+          if ! printf '%s' "$root" | grep -q 'Build redemptive technology in rhythm'; then
+            echo "::error::Smoke test failed: marketing page not served at /"
+            exit 1
+          fi
+          spa=$(curl -s --max-time 15 "$base/design-system")
+          if ! printf '%s' "$spa" | grep -q '<lit-root'; then
+            echo "::error::Smoke test failed: SPA shell (<lit-root>) not served at /design-system"
+            exit 1
+          fi
+
       - name: Azure logout
         if: always()
         run: az logout || true
