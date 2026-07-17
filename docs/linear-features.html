@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Liturgy × Linear — What to borrow, and how agents join the board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="mocks/assets/liturgy.css">
+<style>
+  /* Page-local helpers, built on liturgy.css tokens */
+  .feature-num {
+    font-family: var(--display); font-weight: 600; font-size: .72rem;
+    letter-spacing: .12em; color: var(--ink-45);
+  }
+  .feature h3 { font-size: 1.15rem; margin: var(--s1) 0 var(--s2); }
+  .feature p { font-size: .92rem; color: var(--ink-72); margin-bottom: var(--s3); }
+  .feature__builds {
+    font-size: .74rem; color: var(--ink-45); border-top: 1px dashed var(--ink-12);
+    padding-top: var(--s3); margin-top: auto;
+  }
+  .feature { display: flex; flex-direction: column; }
+  .srcs { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s2); font-size: .9rem; }
+  .srcs a { text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--ink-12); }
+  .srcs a:hover { text-decoration-color: var(--ink); }
+  .roadmap { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 900px) { .roadmap { grid-template-columns: 1fr; } }
+  .delegate-chip {
+    display: inline-flex; align-items: center; gap: var(--s2);
+    font-size: .74rem; color: var(--ink-72);
+    border: 1px solid var(--ink-12); border-radius: 999px; padding: 2px 10px 2px 2px;
+  }
+  .delegate-chip .avatar { width: 22px; height: 22px; font-size: .6rem; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header>
+  <nav class="cover-nav" aria-label="Primary">
+    <span class="rail__mark" style="border-color:var(--ink)" aria-hidden="true"></span>
+    <strong style="font-family:var(--display);font-size:1.15rem">Liturgy</strong>
+    <span class="badge">Research brief · July 2026</span>
+    <span class="cover-nav__spacer"></span>
+    <a class="btn btn--ghost btn--sm" href="mocks/gallery.html">Mock gallery</a>
+    <a class="btn btn--ghost btn--sm" href="mocks/develop-board.html">Develop board</a>
+    <a class="btn btn--dark btn--sm" href="https://linear.app/agents">Linear for Agents ↗</a>
+  </nav>
+</header>
+
+<main id="main">
+
+  <!-- ═══════════════ Hero ═══════════════ -->
+  <section class="hero">
+    <div class="hero__inner">
+      <span class="eyebrow eyebrow--on-dark">What Liturgy should borrow from Linear</span>
+      <h1 style="margin-top:var(--s4)">Agents that keep <span class="hero__lime">the&nbsp;rhythm</span></h1>
+      <p class="hero__lede">
+        Linear's deepest idea isn't a feature — it's a stance: <b style="color:var(--paper)">agents are
+        first-class members of the workspace, but they are delegates, never owners.</b>
+        Liturgy is unusually well-placed to adopt it, because the board already has a
+        server-authoritative rule engine. The liturgy itself becomes the guardrail that
+        teaches agents how to work.
+      </p>
+      <div class="row">
+        <span class="badge--live badge">Agents on the board</span>
+        <span class="badge badge--develop">7 agent features</span>
+        <span class="badge badge--demo">7 board fundamentals</span>
+        <span class="badge badge--discover">3-phase roadmap</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ How Linear does it ═══════════════ -->
+  <section class="section-pad">
+    <div class="wrap">
+      <div class="section-title">
+        <span class="eyebrow">Field notes</span>
+        <h2>How Linear lets agents work</h2>
+      </div>
+      <div class="cycle-strip" style="margin-bottom:var(--s5)">
+        <div class="cycle-cell">
+          <div class="cycle-cell__n">01 · IDENTITY</div>
+          <div class="cycle-cell__name">Agents are members</div>
+          <p class="cycle-cell__desc">Each agent authenticates as itself (OAuth <code>actor=app</code>) with its own
+          token and scoped permissions — <code>app:assignable</code>, <code>app:mentionable</code>. It appears in
+          assignee dropdowns, clearly badged as an agent, never impersonating a human.</p>
+        </div>
+        <div class="cycle-cell">
+          <div class="cycle-cell__n">02 · ACCOUNTABILITY</div>
+          <div class="cycle-cell__name">Delegation, not assignment</div>
+          <p class="cycle-cell__desc">When work goes to an agent, a human stays the assignee — accountable for the
+          result — while the agent is added as a delegate who does the work. Linear's rule: “agents cannot be
+          held accountable.”</p>
+        </div>
+        <div class="cycle-cell">
+          <div class="cycle-cell__n">03 · TRANSPARENCY</div>
+          <div class="cycle-cell__name">Sessions with visible state</div>
+          <p class="cycle-cell__desc">Every agent interaction is a session — waiting, working, completed, errored —
+          with structured activities: thoughts, tool calls, and elicitations (questions back to humans).
+          Instant acknowledgment is a design principle.</p>
+        </div>
+        <div class="cycle-cell">
+          <div class="cycle-cell__n">04 · ACCESS</div>
+          <div class="cycle-cell__name">A standard tool surface</div>
+          <p class="cycle-cell__desc">An MCP server exposes the product as tools — list, create, update, move,
+          assign, comment — so any MCP-capable agent (Claude, Cursor, Codex…) can operate the board without
+          bespoke integration.</p>
+        </div>
+      </div>
+      <p class="scripture" style="max-width:60ch">Rather than direct assignment — which implies accountability — agents
+        are delegated work. Issues retain human assignees, who remain accountable, while agents handle delegated tasks.
+        <cite>Linear — Agent Interaction SDK design notes</cite>
+      </p>
+    </div>
+  </section>
+
+  <hr class="rule" style="margin:0">
+
+  <!-- ═══════════════ Where Liturgy stands ═══════════════ -->
+  <section class="section-pad">
+    <div class="wrap">
+      <div class="section-title">
+        <span class="eyebrow">The starting line</span>
+        <h2>Where Liturgy stands today</h2>
+      </div>
+      <div class="grid grid--2">
+        <div class="card">
+          <div class="card__head">
+            <span class="card__title">Already in place</span>
+            <span class="badge badge--done">Strong foundation</span>
+          </div>
+          <ul class="checklist">
+            <li class="check is-done"><span class="check__box">✓</span>
+              <span class="check__label">A real kanban board with drag-and-drop (Backlog · In loop · Review · Done)</span>
+              <span class="check__meta">CDK drag-drop</span></li>
+            <li class="check is-done"><span class="check__box">✓</span>
+              <span class="check__label">Server-authoritative rules — Done stays locked until all five movements are logged, moves rejected with 409</span>
+              <span class="check__meta">EnforcementEngine</span></li>
+            <li class="check is-done"><span class="check__box">✓</span>
+              <span class="check__label">Realtime on both ends: per-project groups, nine event types (CardMoved, CardCreated, GateChanged…)</span>
+              <span class="check__meta">SignalR /hubs/board</span></li>
+            <li class="check is-done"><span class="check__box">✓</span>
+              <span class="check__label">Workspace scoping — every card operation checks membership</span>
+              <span class="check__meta">IWorkspaceAccess</span></li>
+            <li class="check is-done"><span class="check__box">✓</span>
+              <span class="check__label">Sprints and story points already on the model</span>
+              <span class="check__meta">Sprint · Card.Points</span></li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card__head">
+            <span class="card__title">Missing for agents</span>
+            <span class="badge badge--blocked">The gap</span>
+          </div>
+          <ul class="checklist">
+            <li class="check is-todo"><span class="check__box"></span>
+              <span class="check__label">Machine auth — the only credential is a human's password → 60-minute JWT</span>
+              <span class="check__meta">No API keys / PATs</span></li>
+            <li class="check is-todo"><span class="check__box"></span>
+              <span class="check__label">No way to trigger an agent — no webhooks, no @mentions, no comments</span>
+              <span class="check__meta">Inbound SignalR only</span></li>
+            <li class="check is-todo"><span class="check__box"></span>
+              <span class="check__label">No activity log — nothing records who changed what, when</span>
+              <span class="check__meta">No audit trail</span></li>
+            <li class="check is-todo"><span class="check__box"></span>
+              <span class="check__label">Cards can't be re-ordered (creation order only) or even re-titled after creation</span>
+              <span class="check__meta">No rank · no edit endpoint</span></li>
+            <li class="check is-todo"><span class="check__box"></span>
+              <span class="check__label">No priority, labels, or real card relations (blocked is a bare flag)</span>
+              <span class="check__meta">Card model gaps</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" style="margin:0">
+
+  <!-- ═══════════════ Track A — agent-operable board ═══════════════ -->
+  <section class="section-pad">
+    <div class="wrap">
+      <div class="section-title">
+        <span class="eyebrow">Track A · The headline</span>
+        <h2>The agent-operable board</h2>
+      </div>
+      <p class="lede" style="max-width:62ch;margin-bottom:var(--s6)">Seven features, in dependency order, that let an
+        agent pick up a card, move it through the columns, log its movements — and stay legible to the humans
+        it serves.</p>
+
+      <div class="grid grid--2">
+        <div class="card feature">
+          <span class="feature-num">A1 · FOUNDATION</span>
+          <h3>Agent members &amp; machine auth</h3>
+          <p>Introduce agent identities as workspace members: created by a Lead, badged as agents everywhere they
+            appear, authenticated with revocable API keys or personal access tokens instead of passwords. Scope them
+            the way Linear scopes OAuth apps — <i>assignable</i> and <i>mentionable</i> are opt-in grants, not
+            defaults.</p>
+          <div class="feature__builds">Builds on: JWT issuer &amp; Membership model — adds a credential type and an
+            <code>IsAgent</code> member kind. Everything else in this track depends on it.</div>
+        </div>
+
+        <div class="card feature">
+          <span class="feature-num">A2 · ACCOUNTABILITY</span>
+          <h3>Delegation, never ownership</h3>
+          <p>Keep the human as the card's assignee; add a <i>delegate</i> field for the agent doing the work. This is
+            Linear's cleanest idea and it fits Liturgy's theology exactly: an agent may Render, but a human still
+            Rejoices. The 5R loop keeps a person accountable for every card by design.</p>
+          <div class="feature__builds" style="display:flex;align-items:center;gap:var(--s3);flex-wrap:wrap">
+            <span>On the card:</span>
+            <span class="delegate-chip"><span class="avatar">QB</span> assignee</span>
+            <span class="delegate-chip"><span class="avatar" style="background:var(--develop)">◇</span> claude · delegate</span>
+          </div>
+        </div>
+
+        <div class="card feature">
+          <span class="feature-num">A3 · ACCESS</span>
+          <h3>An MCP server for the board</h3>
+          <p>Expose the existing board API as MCP tools — <code>get_board</code>, <code>create_card</code>,
+            <code>move_card</code>, <code>assign_card</code>, <code>point_card</code>, <code>log_movement</code>,
+            <code>mark_done</code> — so Claude Code or any MCP client can operate Liturgy directly. The enforcement
+            engine already rejects illegal moves server-side; the 409 <i>is</i> the guardrail. The engine teaches
+            agents the liturgy.</p>
+          <div class="feature__builds">Builds on: BoardController + LoopController endpoints (they already exist
+            1:1) and A1 for authentication.</div>
+        </div>
+
+        <div class="card feature">
+          <span class="feature-num">A4 · TRANSPARENCY</span>
+          <h3>Agent sessions &amp; the activity feed</h3>
+          <p>Every delegation opens a session with a visible state — waiting · working · completed · errored — and
+            writes structured activities: what the agent thought, which tools it called, what it asked. Pair this
+            with a per-card activity log (currently absent) so humans can audit any change, agent or not.</p>
+          <div class="feature__builds">New: <code>AgentSession</code> + <code>ActivityEntry</code> entities; the audit
+            log benefits every feature in Track B too.</div>
+        </div>
+
+        <div class="card feature">
+          <span class="feature-num">A5 · CONVERSATION</span>
+          <h3>Comments &amp; @mentions</h3>
+          <p>Cards need a thread. Comments give agents a place to report progress and ask questions (Linear's
+            “elicitations”), and @mentioning an agent becomes the second trigger besides delegation. Mentions of
+            humans feed a notification inbox later.</p>
+          <div class="feature__builds">New: <code>Comment</code> entity + SignalR <code>CommentAdded</code> event;
+            mention parsing triggers A6 webhooks.</div>
+        </div>
+
+        <div class="card feature">
+          <span class="feature-num">A6 · TRIGGERS</span>
+          <h3>Webhooks out</h3>
+          <p>SignalR pushes to browsers, but agents live elsewhere. Outbound webhooks —
+            <code>card.delegated</code>, <code>agent.mentioned</code>, <code>card.moved</code>,
+            <code>gate.opened</code> — with signed payloads let an agent wake up when work arrives, exactly how
+            Linear's agent sessions are triggered.</p>
+          <div class="feature__builds">Builds on: IRealtimeNotifier seam — add a webhook dispatcher beside the
+            SignalR notifier.</div>
+        </div>
+
+        <div class="card feature" style="grid-column: 1 / -1">
+          <span class="feature-num">A7 · PRESENCE</span>
+          <h3>Agents visible on the board</h3>
+          <p style="max-width:70ch">When an agent holds a card, show it: a pulsing live badge on the work card, the
+            agent's mark beside the assignee avatar, and a toast when it finishes. The design system already has the
+            vocabulary (<code>.badge--live</code>, <code>.toast</code>) and SignalR already has per-project groups —
+            this is UI wiring, not new infrastructure.</p>
+          <div class="row" style="margin-top:var(--s2)">
+            <div class="wcard" style="max-width:300px;margin:0">
+              <div class="wcard__top">
+                <span class="wcard__id">LAN-24</span>
+                <span class="badge badge--develop">In loop</span>
+                <span class="badge--live badge">agent · render</span>
+              </div>
+              <div class="wcard__title">Wire offline mode for the resource directory</div>
+              <div class="wcard__foot">
+                <div class="pipstrip">
+                  <span class="pipstrip__pip is-done">R</span><span class="pipstrip__pip is-done">R</span>
+                  <span class="pipstrip__pip is-done">R</span><span class="pipstrip__pip is-current">R</span>
+                  <span class="pipstrip__pip">R</span>
+                </div>
+                <span class="avatar" style="width:26px;height:26px;font-size:.66rem">QB</span>
+              </div>
+            </div>
+            <span class="toast">◇ <b>claude</b> logged <b>Render</b> on LAN-24 — one movement to go</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" style="margin:0">
+
+  <!-- ═══════════════ Track B — board fundamentals ═══════════════ -->
+  <section class="section-pad">
+    <div class="wrap">
+      <div class="section-title">
+        <span class="eyebrow">Track B · Fundamentals</span>
+        <h2>Board features Linear gets right</h2>
+      </div>
+      <p class="lede" style="max-width:62ch;margin-bottom:var(--s6)">Less glamorous, but several are prerequisites —
+        an agent can't “use the board” well if cards can't be edited, ordered, or prioritized.</p>
+      <div class="grid grid--3">
+        <div class="card feature">
+          <span class="feature-num">B1</span><h3>Card editing</h3>
+          <p>There is no endpoint to change a title or description after creation. Agents (and humans) need
+            <code>PATCH /cards/{id}</code> before anything else.</p>
+        </div>
+        <div class="card feature">
+          <span class="feature-num">B2</span><h3>Manual ordering</h3>
+          <p>Columns sort by creation date only, so drag order doesn't survive a reload. Add a persisted rank
+            (LexoRank-style) and a reorder endpoint — the board's biggest structural gap.</p>
+        </div>
+        <div class="card feature">
+          <span class="feature-num">B3</span><h3>Priority &amp; labels</h3>
+          <p>Urgent → Low priority plus workspace labels. This is how humans tell agents what to pick up next —
+            “take the top of the queue” needs a queue.</p>
+        </div>
+        <div class="card feature">
+          <span class="feature-num">B4</span><h3>Triage inbox</h3>
+          <p>Agent- and intake-created cards land in a triage lane for a human to route — Liturgy's version of
+            Linear's Triage, and a natural home for the Request movement.</p>
+        </div>
+        <div class="card feature">
+          <span class="feature-num">B5</span><h3>Real card relations</h3>
+          <p>Blocked-by, relates-to, sub-cards. Today “blocked” is a bare flag with no cause — agents can't reason
+            about what unblocks a card.</p>
+        </div>
+        <div class="card feature">
+          <span class="feature-num">B6</span><h3>Command palette</h3>
+          <p>Linear's signature Cmd+K — every board action (move, assign, point, delegate) as a keyboard command.
+            Bonus: the same action registry can back the MCP tools.</p>
+        </div>
+        <div class="card feature" style="grid-column: span 1">
+          <span class="feature-num">B7</span><h3>Cycle analytics</h3>
+          <p>Sprints already exist — add cycle-time and throughput per sprint, split human vs. agent, echoing
+            Linear's per-agent cycle metrics and the dashboard's momentum stats.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" style="margin:0">
+
+  <!-- ═══════════════ Roadmap ═══════════════ -->
+  <section class="section-pad">
+    <div class="wrap">
+      <div class="section-title">
+        <span class="eyebrow">Order of operations</span>
+        <h2>A three-phase path</h2>
+      </div>
+      <div class="cycle-strip roadmap">
+        <div class="cycle-cell">
+          <div class="cycle-cell__n" style="color:var(--discover-soft)">PHASE 1 · FOUNDATIONS</div>
+          <div class="cycle-cell__name">Make the board machine-ready</div>
+          <p class="cycle-cell__desc">Agent members + API keys (A1) · card edit endpoint (B1) · persisted ordering
+            (B2) · activity log (A4's audit half). Nothing agent-visible yet — everything agent-necessary.</p>
+        </div>
+        <div class="cycle-cell">
+          <div class="cycle-cell__n" style="color:var(--lime)">PHASE 2 · THE AGENT SURFACE</div>
+          <div class="cycle-cell__name">Let agents in</div>
+          <p class="cycle-cell__desc">MCP server (A3) · delegation field (A2) · agent sessions (A4) · comments +
+            @mentions (A5) · webhooks (A6). At the end of this phase, Claude can pick up a card, work the loop,
+            and move it — with a human still accountable.</p>
+        </div>
+        <div class="cycle-cell">
+          <div class="cycle-cell__n" style="color:var(--demo-soft)">PHASE 3 · THE EXPERIENCE</div>
+          <div class="cycle-cell__name">Make it feel alive</div>
+          <p class="cycle-cell__desc">Agent presence on the board (A7) · priority &amp; labels (B3) · triage lane
+            (B4) · relations (B5) · command palette (B6) · human-vs-agent cycle analytics (B7).</p>
+        </div>
+      </div>
+      <p class="scripture" style="max-width:56ch;margin-top:var(--s6)">The enforcement engine is the reason this works:
+        an agent cannot skip the loop, cannot force Done, cannot break the rhythm — the server won't let it. Liturgy
+        doesn't need to trust its agents. It needs only to let them pray in order.
+        <cite>Thesis of this brief</cite>
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════ Footer / sources ═══════════════ -->
+  <footer class="foot">
+    <div class="wrap">
+      <div class="foot__grid" style="grid-template-columns: 1.4fr 1fr">
+        <div>
+          <div class="foot__h">Sources</div>
+          <ul class="foot__links srcs">
+            <li><a href="https://linear.app">linear.app — product overview</a></li>
+            <li><a href="https://linear.app/agents">Linear for Agents</a></li>
+            <li><a href="https://linear.app/now/our-approach-to-building-the-agent-interaction-sdk">Our approach to building the Agent Interaction SDK</a></li>
+            <li><a href="https://linear.app/docs/agents-in-linear">Docs — AI agents in Linear</a></li>
+            <li><a href="https://linear.app/docs/mcp">Docs — Linear MCP server</a></li>
+            <li><a href="https://linear.app/changelog/2026-03-24-introducing-linear-agent">Changelog — Introducing Linear Agent</a></li>
+            <li><a href="https://linear.app/changelog/2026-04-23-linear-agent-mcp-support">Changelog — Linear Agent MCP support</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="foot__h">Grounded in</div>
+          <ul class="foot__links">
+            <li>backend/src/Liturgy.Domain — Card, BoardColumn, RKind</li>
+            <li>Liturgy.Application/Enforcement/EnforcementEngine.cs</li>
+            <li>Liturgy.Api/Controllers/BoardController.cs</li>
+            <li>Liturgy.Infrastructure/Realtime — BoardHub, notifier</li>
+            <li>frontend · develop-board + @liturgy/api services</li>
+          </ul>
+        </div>
+      </div>
+      <div class="foot__base">
+        <span class="rail__mark" aria-hidden="true"></span>
+        <span>Liturgy — build redemptive technology in rhythm.</span>
+        <span style="margin-left:auto">Research brief · 2026-07-16</span>
+      </div>
+    </div>
+  </footer>
+
+</main>
+</body>
+</html>
