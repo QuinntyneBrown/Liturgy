@@ -1,0 +1,348 @@
+{
+  "slug": "liturgy-workspace",
+  "revision": "e5fa9a25b8b22f8dff477f98978e30b7f01f0e64",
+  "runId": "879804db65068f5b",
+  "versions": {
+    "dotnet": "9.0.308",
+    "ffmpeg": "ffmpeg version 9.0.1-essentials_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+    "ffprobe": "ffprobe version 9.0.1-essentials_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers",
+    "node": "v22.21.0",
+    "playwright": "1.61.1"
+  },
+  "voice": "Microsoft David Desktop",
+  "duration": 226.776,
+  "width": 1280,
+  "height": 720,
+  "bytes": 41833467,
+  "calibrationTrimSeconds": 0.6,
+  "chapters": [
+    {
+      "id": "welcome",
+      "title": "Liturgy · Team workspace",
+      "text": "Welcome to the Liturgy workspace. This demonstration uses fictional projects and seeded team members, with real local services saving every change we make.",
+      "start": 0.37880539999999746,
+      "duration": 11.717596,
+      "captions": [
+        {
+          "text": "Welcome to the Liturgy workspace.",
+          "start": 0.3852094999999972,
+          "duration": 2.5109134285714285
+        },
+        {
+          "text": "This demonstration uses fictional projects and seeded team members, with real local services saving every change we make.",
+          "start": 2.910552800000005,
+          "duration": 9.206682571428573
+        }
+      ]
+    },
+    {
+      "id": "dashboard",
+      "title": "Begin with the team",
+      "text": "The dashboard brings the team and its projects into view. For a Christian team, shared attention begins with people: who we are serving, and what faithful work asks of us today.",
+      "start": 12.641243400000006,
+      "duration": 12.942132,
+      "captions": [
+        {
+          "text": "The dashboard brings the team and its projects into view.",
+          "start": 12.644529900000009,
+          "duration": 4.191485931818182
+        },
+        {
+          "text": "For a Christian team, shared attention begins with people: who we are serving, and what faithful work asks of us today.",
+          "start": 16.846162299999996,
+          "duration": 8.750646068181819
+        }
+      ]
+    },
+    {
+      "id": "projects",
+      "title": "Choose a project",
+      "text": "Here are the projects in the demonstration workspace. We will follow Lantern, an example project about an after hours crisis line. These are synthetic records, not live service data.",
+      "start": 28.046440000000004,
+      "duration": 14.826984,
+      "captions": [
+        {
+          "text": "Here are the projects in the demonstration workspace.",
+          "start": 28.049668099999995,
+          "duration": 4.365723066666667
+        },
+        {
+          "text": "We will follow Lantern, an example project about an after hours crisis line.",
+          "start": 32.439522200000006,
+          "duration": 6.260282133333333
+        },
+        {
+          "text": "These are synthetic records, not live service data.",
+          "start": 38.707676000000006,
+          "duration": 4.2009788
+        }
+      ]
+    },
+    {
+      "id": "journey",
+      "title": "The four D journey",
+      "text": "Lantern is in Develop. Discover and Discern are already complete in this seeded example. Demonstrate remains behind a gate whose checklist the team can inspect.",
+      "start": 45.274613800000004,
+      "duration": 12.052336,
+      "captions": [
+        {
+          "text": "Lantern is in Develop.",
+          "start": 45.2771793,
+          "duration": 1.6781733670886074
+        },
+        {
+          "text": "Discover and Discern are already complete in this seeded example.",
+          "start": 46.959120999999996,
+          "duration": 4.958239493670886
+        },
+        {
+          "text": "Demonstrate remains behind a gate whose checklist the team can inspect.",
+          "start": 51.93076400000001,
+          "duration": 5.4159231392405065
+        }
+      ]
+    },
+    {
+      "id": "gate",
+      "title": "A visible boundary",
+      "text": "The outstanding requirement is to prepare a demo for the community. This is a team maintained checklist: the server enforces its recorded state, rather than independently judging the quality of the work.",
+      "start": 58.86060540000001,
+      "duration": 14.046848,
+      "captions": [
+        {
+          "text": "The outstanding requirement is to prepare a demo for the community.",
+          "start": 58.86413160000001,
+          "duration": 4.65910304950495
+        },
+        {
+          "text": "This is a team maintained checklist: the server enforces its recorded state, rather than independently judging the quality of the work.",
+          "start": 63.5303342,
+          "duration": 9.38774495049505
+        }
+      ]
+    },
+    {
+      "id": "board",
+      "title": "Develop together",
+      "text": "The board brings work items into a shared view. We will open Lantern twenty four and finish the remaining movements in its five R loop.",
+      "start": 76.45852529999999,
+      "duration": 9.387619,
+      "captions": [
+        {
+          "text": "The board brings work items into a shared view.",
+          "start": 76.46230459999998,
+          "duration": 3.292672335820896
+        },
+        {
+          "text": "We will open Lantern twenty four and finish the remaining movements in its five R loop.",
+          "start": 79.7724048,
+          "duration": 6.094946664179105
+        }
+      ]
+    },
+    {
+      "id": "loop",
+      "title": "Three of five movements complete",
+      "text": "This card already has Request, Receive, and Review logged. Mark done is disabled because Render and Rejoice remain. Completion asks us to carry the work through its whole rhythm.",
+      "start": 87.520526,
+      "duration": 13.88254,
+      "captions": [
+        {
+          "text": "This card already has Request, Receive, and Review logged.",
+          "start": 87.52314630000001,
+          "duration": 4.574927954545455
+        },
+        {
+          "text": "Mark done is disabled because Render and Rejoice remain.",
+          "start": 92.10490430000002,
+          "duration": 4.417171818181818
+        },
+        {
+          "text": "Completion asks us to carry the work through its whole rhythm.",
+          "start": 96.53808649999999,
+          "duration": 4.890440227272728
+        }
+      ]
+    },
+    {
+      "id": "render-intro",
+      "title": "Render · Give the work form",
+      "text": "Render records the artifact and what changed from the vision. We will describe a synthetic handoff script and the clearer escalation path created for this demonstration.",
+      "start": 102.0071418,
+      "duration": 11.3722,
+      "captions": [
+        {
+          "text": "Render records the artifact and what changed from the vision.",
+          "start": 102.00925629999999,
+          "duration": 4.129191666666666
+        },
+        {
+          "text": "We will describe a synthetic handoff script and the clearer escalation path created for this demonstration.",
+          "start": 106.1552485,
+          "duration": 7.243008333333333
+        }
+      ]
+    },
+    {
+      "id": "render-filled",
+      "title": "Record the result",
+      "text": "The artifact reference and explanation are now entered. These notes help the team connect its earlier discernment with the concrete work it is ready to share.",
+      "start": 113.99358459999999,
+      "duration": 10.382404,
+      "captions": [
+        {
+          "text": "The artifact reference and explanation are now entered.",
+          "start": 114.0017551,
+          "duration": 3.6371478980891716
+        },
+        {
+          "text": "These notes help the team connect its earlier discernment with the concrete work it is ready to share.",
+          "start": 117.64166429999999,
+          "duration": 6.745256101910829
+        }
+      ]
+    },
+    {
+      "id": "render-saved",
+      "title": "Render recorded",
+      "text": "Render has been saved, and Rejoice is now the current movement. The remaining step gives the team a place to name its gratitude before calling the work done.",
+      "start": 127.05691840000001,
+      "duration": 10.797642,
+      "captions": [
+        {
+          "text": "Render has been saved, and Rejoice is now the current movement.",
+          "start": 127.0588527,
+          "duration": 4.360586192307692
+        },
+        {
+          "text": "The remaining step gives the team a place to name its gratitude before calling the work done.",
+          "start": 131.4409226,
+          "duration": 6.437055807692308
+        }
+      ]
+    },
+    {
+      "id": "rejoice",
+      "title": "Rejoice · Give thanks",
+      "text": "We give thanks to God for the people who serve their neighbours and for the care reflected in this example. Thanksgiving is recorded alongside the practical work.",
+      "start": 138.4251216,
+      "duration": 10.472336,
+      "captions": [
+        {
+          "text": "We give thanks to God for the people who serve their neighbours and for the care reflected in this example.",
+          "start": 138.4298924,
+          "duration": 6.95987547826087
+        },
+        {
+          "text": "Thanksgiving is recorded alongside the practical work.",
+          "start": 145.4017079,
+          "duration": 3.512460521739131
+        }
+      ]
+    },
+    {
+      "id": "complete",
+      "title": "Five of five movements complete",
+      "text": "All five movements are now recorded. Mark done is enabled. The application has verified the loop is complete before offering this final action.",
+      "start": 150.88744010000002,
+      "duration": 11.092834,
+      "captions": [
+        {
+          "text": "All five movements are now recorded.",
+          "start": 150.88936839999997,
+          "duration": 2.8322129361702126
+        },
+        {
+          "text": "Mark done is enabled.",
+          "start": 153.74080459999996,
+          "duration": 1.6521242127659574
+        },
+        {
+          "text": "The application has verified the loop is complete before offering this final action.",
+          "start": 155.4007269,
+          "duration": 6.60849685106383
+        }
+      ]
+    },
+    {
+      "id": "done",
+      "title": "Done, and saved",
+      "text": "The card is now in Done, and it remains there after reloading the board. This result comes from the persisted application state.",
+      "start": 169.62351169999997,
+      "duration": 9.382721,
+      "captions": [
+        {
+          "text": "The card is now in Done, and it remains there after reloading the board.",
+          "start": 169.6292709,
+          "duration": 5.31933788976378
+        },
+        {
+          "text": "This result comes from the persisted application state.",
+          "start": 174.97721330000002,
+          "duration": 4.063383110236221
+        }
+      ]
+    },
+    {
+      "id": "return-gate",
+      "title": "Prepare to demonstrate",
+      "text": "We return to the project journey. With our example walkthrough prepared, we can record the outstanding community demo requirement on the checklist.",
+      "start": 181.2365771,
+      "duration": 10.582313,
+      "captions": [
+        {
+          "text": "We return to the project journey.",
+          "start": 181.2384699,
+          "duration": 2.3918926643835614
+        },
+        {
+          "text": "With our example walkthrough prepared, we can record the outstanding community demo requirement on the checklist.",
+          "start": 183.66852170000004,
+          "duration": 8.190420335616437
+        }
+      ]
+    },
+    {
+      "id": "gate-open",
+      "title": "The checklist gate opens",
+      "text": "The gate now shows Open and keeps that state after a reload. This verifies the checklist update was saved; an open gate is distinct from claiming the project has changed phase.",
+      "start": 198.5431554,
+      "duration": 12.547347,
+      "captions": [
+        {
+          "text": "The gate now shows Open and keeps that state after a reload.",
+          "start": 198.54577790000005,
+          "duration": 4.3019475428571425
+        },
+        {
+          "text": "This verifies the checklist update was saved; an open gate is distinct from claiming the project has changed phase.",
+          "start": 202.85614030000002,
+          "duration": 8.245399457142858
+        }
+      ]
+    },
+    {
+      "id": "close",
+      "title": "A rhythm of faithful work",
+      "text": "We have completed a work item and opened a checklist gate through the real application. May our work be shaped by prayer, attentive discernment, service to our neighbours, and thanksgiving.",
+      "start": 211.6291448,
+      "duration": 13.282177,
+      "captions": [
+        {
+          "text": "We have completed a work item and opened a checklist gate through the real application.",
+          "start": 211.6374019,
+          "duration": 6.146539356382979
+        },
+        {
+          "text": "May our work be shaped by prayer, attentive discernment, service to our neighbours, and thanksgiving.",
+          "start": 217.8339645,
+          "duration": 7.135637643617021
+        }
+      ]
+    }
+  ],
+  "assertions": "passed",
+  "review": "Assertions, full decode, normal-speed browser playback, and visual chapter inspection passed",
+  "audioMix": "Original Windows SAPI PCM; limiter at 0.75 with automatic gain disabled",
+  "audioPeakDb": -2.1
+}

@@ -1,0 +1,109 @@
+WEBVTT
+
+00:00:00.385 --> 00:00:02.896
+Welcome to the Liturgy workspace.
+
+00:00:02.910 --> 00:00:12.117
+This demonstration uses fictional projects and seeded team members, with real local services saving every change we make.
+
+00:00:12.644 --> 00:00:16.836
+The dashboard brings the team and its projects into view.
+
+00:00:16.846 --> 00:00:25.596
+For a Christian team, shared attention begins with people: who we are serving, and what faithful work asks of us today.
+
+00:00:28.049 --> 00:00:32.415
+Here are the projects in the demonstration workspace.
+
+00:00:32.439 --> 00:00:38.699
+We will follow Lantern, an example project about an after hours crisis line.
+
+00:00:38.707 --> 00:00:42.908
+These are synthetic records, not live service data.
+
+00:00:45.277 --> 00:00:46.955
+Lantern is in Develop.
+
+00:00:46.959 --> 00:00:51.917
+Discover and Discern are already complete in this seeded example.
+
+00:00:51.930 --> 00:00:57.346
+Demonstrate remains behind a gate whose checklist the team can inspect.
+
+00:00:58.864 --> 00:01:03.523
+The outstanding requirement is to prepare a demo for the community.
+
+00:01:03.530 --> 00:01:12.918
+This is a team maintained checklist: the server enforces its recorded state, rather than independently judging the quality of the work.
+
+00:01:16.462 --> 00:01:19.754
+The board brings work items into a shared view.
+
+00:01:19.772 --> 00:01:25.867
+We will open Lantern twenty four and finish the remaining movements in its five R loop.
+
+00:01:27.523 --> 00:01:32.098
+This card already has Request, Receive, and Review logged.
+
+00:01:32.104 --> 00:01:36.522
+Mark done is disabled because Render and Rejoice remain.
+
+00:01:36.538 --> 00:01:41.428
+Completion asks us to carry the work through its whole rhythm.
+
+00:01:42.009 --> 00:01:46.138
+Render records the artifact and what changed from the vision.
+
+00:01:46.155 --> 00:01:53.398
+We will describe a synthetic handoff script and the clearer escalation path created for this demonstration.
+
+00:01:54.001 --> 00:01:57.638
+The artifact reference and explanation are now entered.
+
+00:01:57.641 --> 00:02:04.386
+These notes help the team connect its earlier discernment with the concrete work it is ready to share.
+
+00:02:07.058 --> 00:02:11.419
+Render has been saved, and Rejoice is now the current movement.
+
+00:02:11.440 --> 00:02:17.877
+The remaining step gives the team a place to name its gratitude before calling the work done.
+
+00:02:18.429 --> 00:02:25.389
+We give thanks to God for the people who serve their neighbours and for the care reflected in this example.
+
+00:02:25.401 --> 00:02:28.914
+Thanksgiving is recorded alongside the practical work.
+
+00:02:30.889 --> 00:02:33.721
+All five movements are now recorded.
+
+00:02:33.740 --> 00:02:35.392
+Mark done is enabled.
+
+00:02:35.400 --> 00:02:42.009
+The application has verified the loop is complete before offering this final action.
+
+00:02:49.629 --> 00:02:54.948
+The card is now in Done, and it remains there after reloading the board.
+
+00:02:54.977 --> 00:02:59.040
+This result comes from the persisted application state.
+
+00:03:01.238 --> 00:03:03.630
+We return to the project journey.
+
+00:03:03.668 --> 00:03:11.858
+With our example walkthrough prepared, we can record the outstanding community demo requirement on the checklist.
+
+00:03:18.545 --> 00:03:22.847
+The gate now shows Open and keeps that state after a reload.
+
+00:03:22.856 --> 00:03:31.101
+This verifies the checklist update was saved; an open gate is distinct from claiming the project has changed phase.
+
+00:03:31.637 --> 00:03:37.783
+We have completed a work item and opened a checklist gate through the real application.
+
+00:03:37.833 --> 00:03:44.969
+May our work be shaped by prayer, attentive discernment, service to our neighbours, and thanksgiving.

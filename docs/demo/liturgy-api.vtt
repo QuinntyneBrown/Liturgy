@@ -1,0 +1,64 @@
+WEBVTT
+
+00:00:00.031 --> 00:00:05.548
+This technical demonstration follows real requests to the local Liturgy API.
+
+00:00:05.576 --> 00:00:13.271
+The display shows selected response fields, while authentication credentials remain outside the recording.
+
+00:00:14.864 --> 00:00:19.064
+An authenticated request has returned the seeded projects.
+
+00:00:19.099 --> 00:00:27.281
+We select Lantern and inspect its actual board and movement state, using a fresh database for this demonstration.
+
+00:00:30.872 --> 00:00:36.211
+Lantern twenty four has three movements recorded and cannot yet be marked done.
+
+00:00:36.218 --> 00:00:42.166
+The response exposes both the next movement and whether completion is currently allowed.
+
+00:00:43.225 --> 00:00:50.465
+A premature Done request returned conflict, with the explanation that the five R loop is incomplete.
+
+00:00:50.478 --> 00:00:56.125
+This is server enforcement, independent of the disabled button in the browser.
+
+00:00:57.722 --> 00:00:59.874
+The Render request succeeded.
+
+00:00:59.882 --> 00:01:05.745
+The response now reports four completed movements and Rejoice as the next step.
+
+00:01:05.758 --> 00:01:09.691
+The artifact and change notes accompany the movement.
+
+00:01:10.854 --> 00:01:13.531
+The thanksgiving request succeeded.
+
+00:01:13.547 --> 00:01:20.353
+All five movements are logged, and the API now reports that this card can be marked done.
+
+00:01:21.100 --> 00:01:27.392
+The Done request succeeded, and a fresh board request confirms the card remains in Done.
+
+00:01:27.424 --> 00:01:33.859
+This read back verifies the saved result rather than relying only on the command response.
+
+00:01:35.240 --> 00:01:42.547
+The project response shows the Develop gate is blocked by its outstanding demo preparation requirement.
+
+00:01:42.560 --> 00:01:49.086
+The checklist is a recorded team declaration, not an automated assessment of every artifact.
+
+00:01:49.944 --> 00:01:56.323
+The checklist update succeeded, and another project request confirms the gate is Open.
+
+00:01:56.331 --> 00:02:00.559
+The response gives clients the same persisted gate state.
+
+00:02:01.080 --> 00:02:08.299
+The API has demonstrated movement ordering, completion enforcement, and a persisted gate update.
+
+00:02:08.317 --> 00:02:14.859
+These shared rules support a team rhythm of prayer, discernment, action, and gratitude.
