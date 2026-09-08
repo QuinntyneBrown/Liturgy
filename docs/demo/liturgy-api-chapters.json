@@ -1,0 +1,219 @@
+{
+  "slug": "liturgy-api",
+  "revision": "e5fa9a25b8b22f8dff477f98978e30b7f01f0e64",
+  "runId": "689303739a845bc4",
+  "versions": {
+    "dotnet": "9.0.308",
+    "ffmpeg": "ffmpeg version 9.0.1-essentials_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+    "ffprobe": "ffprobe version 9.0.1-essentials_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers",
+    "node": "v22.21.0",
+    "playwright": "1.61.1"
+  },
+  "voice": "Microsoft David Desktop",
+  "duration": 136.416,
+  "width": 1280,
+  "height": 720,
+  "bytes": 18609082,
+  "calibrationTrimSeconds": 0.32,
+  "chapters": [
+    {
+      "id": "welcome",
+      "title": "Liturgy · API enforcement",
+      "text": "This technical demonstration follows real requests to the local Liturgy API. The display shows selected response fields, while authentication credentials remain outside the recording.",
+      "start": 0.009252500000002328,
+      "duration": 13.211927,
+      "captions": [
+        {
+          "text": "This technical demonstration follows real requests to the local Liturgy API.",
+          "start": 0.031285999999992785,
+          "duration": 5.517068417582418
+        },
+        {
+          "text": "The display shows selected response fields, while authentication credentials remain outside the recording.",
+          "start": 5.576670899999997,
+          "duration": 7.694858582417583
+        }
+      ]
+    },
+    {
+      "id": "projects",
+      "title": "Read the workspace",
+      "text": "An authenticated request has returned the seeded projects. We select Lantern and inspect its actual board and movement state, using a fresh database for this demonstration.",
+      "start": 14.86016399999999,
+      "duration": 12.382041,
+      "captions": [
+        {
+          "text": "An authenticated request has returned the seeded projects.",
+          "start": 14.864984299999996,
+          "duration": 4.199756596491228
+        },
+        {
+          "text": "We select Lantern and inspect its actual board and movement state, using a fresh database for this demonstration.",
+          "start": 19.099520999999992,
+          "duration": 8.182284403508772
+        }
+      ]
+    },
+    {
+      "id": "loop",
+      "title": "Inspect the loop",
+      "text": "Lantern twenty four has three movements recorded and cannot yet be marked done. The response exposes both the next movement and whether completion is currently allowed.",
+      "start": 30.86332770000001,
+      "duration": 11.287256,
+      "captions": [
+        {
+          "text": "Lantern twenty four has three movements recorded and cannot yet be marked done.",
+          "start": 30.872124399999986,
+          "duration": 5.339480383233533
+        },
+        {
+          "text": "The response exposes both the next movement and whether completion is currently allowed.",
+          "start": 36.21894559999999,
+          "duration": 5.947775616766466
+        }
+      ]
+    },
+    {
+      "id": "reject",
+      "title": "An incomplete loop is rejected",
+      "text": "A premature Done request returned conflict, with the explanation that the five R loop is incomplete. This is server enforcement, independent of the disabled button in the browser.",
+      "start": 43.19568099999999,
+      "duration": 12.887302,
+      "captions": [
+        {
+          "text": "A premature Done request returned conflict, with the explanation that the five R loop is incomplete.",
+          "start": 43.225354799999984,
+          "duration": 7.2400573033707865
+        },
+        {
+          "text": "This is server enforcement, independent of the disabled button in the browser.",
+          "start": 50.47866539999998,
+          "duration": 5.647244696629214
+        }
+      ]
+    },
+    {
+      "id": "render",
+      "title": "Record Render",
+      "text": "The Render request succeeded. The response now reports four completed movements and Rejoice as the next step. The artifact and change notes accompany the movement.",
+      "start": 57.720891699999996,
+      "duration": 11.947574,
+      "captions": [
+        {
+          "text": "The Render request succeeded.",
+          "start": 57.722779300000006,
+          "duration": 2.1520474906832296
+        },
+        {
+          "text": "The response now reports four completed movements and Rejoice as the next step.",
+          "start": 59.88293089999999,
+          "duration": 5.862474198757764
+        },
+        {
+          "text": "The artifact and change notes accompany the movement.",
+          "start": 65.7584678,
+          "duration": 3.933052310559006
+        }
+      ]
+    },
+    {
+      "id": "rejoice",
+      "title": "Record Rejoice",
+      "text": "The thanksgiving request succeeded. All five movements are logged, and the API now reports that this card can be marked done.",
+      "start": 70.83974409999999,
+      "duration": 9.482993,
+      "captions": [
+        {
+          "text": "The thanksgiving request succeeded.",
+          "start": 70.8549977,
+          "duration": 2.6766512500000004
+        },
+        {
+          "text": "All five movements are logged, and the API now reports that this card can be marked done.",
+          "start": 73.54733870000001,
+          "duration": 6.8063417500000005
+        }
+      ]
+    },
+    {
+      "id": "done",
+      "title": "Complete and read back",
+      "text": "The Done request succeeded, and a fresh board request confirms the card remains in Done. This read back verifies the saved result rather than relying only on the command response.",
+      "start": 81.098539,
+      "duration": 12.727211,
+      "captions": [
+        {
+          "text": "The Done request succeeded, and a fresh board request confirms the card remains in Done.",
+          "start": 81.10007899999998,
+          "duration": 6.292104314606742
+        },
+        {
+          "text": "This read back verifies the saved result rather than relying only on the command response.",
+          "start": 87.42479270000001,
+          "duration": 6.435106685393259
+        }
+      ]
+    },
+    {
+      "id": "gate-before",
+      "title": "Inspect the gate checklist",
+      "text": "The project response shows the Develop gate is blocked by its outstanding demo preparation requirement. The checklist is a recorded team declaration, not an automated assessment of every artifact.",
+      "start": 95.2356242,
+      "duration": 13.832109,
+      "captions": [
+        {
+          "text": "The project response shows the Develop gate is blocked by its outstanding demo preparation requirement.",
+          "start": 95.24093009999999,
+          "duration": 7.306190907692308
+        },
+        {
+          "text": "The checklist is a recorded team declaration, not an automated assessment of every artifact.",
+          "start": 102.5601284,
+          "duration": 6.525918092307692
+        }
+      ]
+    },
+    {
+      "id": "gate-after",
+      "title": "Save and verify the gate",
+      "text": "The checklist update succeeded, and another project request confirms the gate is Open. The response gives clients the same persisted gate state.",
+      "start": 109.94164459999999,
+      "duration": 10.607528,
+      "captions": [
+        {
+          "text": "The checklist update succeeded, and another project request confirms the gate is Open.",
+          "start": 109.94456149999999,
+          "duration": 6.379352503496504
+        },
+        {
+          "text": "The response gives clients the same persisted gate state.",
+          "start": 116.3312259,
+          "duration": 4.228175496503496
+        }
+      ]
+    },
+    {
+      "id": "close",
+      "title": "Shared rules, faithful practice",
+      "text": "The API has demonstrated movement ordering, completion enforcement, and a persisted gate update. These shared rules support a team rhythm of prayer, discernment, action, and gratitude.",
+      "start": 121.0778022,
+      "duration": 13.762177,
+      "captions": [
+        {
+          "text": "The API has demonstrated movement ordering, completion enforcement, and a persisted gate update.",
+          "start": 121.08018209999999,
+          "duration": 7.21950268852459
+        },
+        {
+          "text": "These shared rules support a team rhythm of prayer, discernment, action, and gratitude.",
+          "start": 128.3172496,
+          "duration": 6.54267431147541
+        }
+      ]
+    }
+  ],
+  "assertions": "passed",
+  "review": "Assertions, full decode, normal-speed browser playback, and visual chapter inspection passed",
+  "audioMix": "Original Windows SAPI PCM; limiter at 0.75 with automatic gain disabled",
+  "audioPeakDb": -2.1
+}

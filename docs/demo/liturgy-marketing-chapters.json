@@ -1,0 +1,152 @@
+{
+  "slug": "liturgy-marketing",
+  "revision": "e5fa9a25b8b22f8dff477f98978e30b7f01f0e64",
+  "runId": "ba46afa46a26783c",
+  "versions": {
+    "dotnet": "9.0.308",
+    "ffmpeg": "ffmpeg version 9.0.1-essentials_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+    "ffprobe": "ffprobe version 9.0.1-essentials_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers",
+    "node": "v22.21.0",
+    "playwright": "1.61.1"
+  },
+  "voice": "Microsoft David Desktop",
+  "duration": 100.816,
+  "width": 1280,
+  "height": 720,
+  "bytes": 3625775,
+  "calibrationTrimSeconds": 0.32,
+  "chapters": [
+    {
+      "id": "welcome",
+      "title": "Build in rhythm",
+      "text": "Welcome to Liturgy, a workspace for teams seeking to build technology through prayer, discernment, and service to their neighbours.",
+      "start": 4.392296800000004,
+      "duration": 8.712925,
+      "captions": [
+        {
+          "text": "Welcome to Liturgy, a workspace for teams seeking to build technology through prayer, discernment, and service to their neighbours.",
+          "start": 4.418377,
+          "duration": 8.712925
+        }
+      ]
+    },
+    {
+      "id": "purpose",
+      "title": "A shared way of working",
+      "text": "The public introduction brings the purpose into focus. Our process forms our team, so the rhythm of our work deserves the same care as the things we build.",
+      "start": 13.829507000000005,
+      "duration": 11.012426,
+      "captions": [
+        {
+          "text": "The public introduction brings the purpose into focus.",
+          "start": 13.844228600000003,
+          "duration": 3.8615000259740255
+        },
+        {
+          "text": "Our process forms our team, so the rhythm of our work deserves the same care as the things we build.",
+          "start": 17.715603200000004,
+          "duration": 7.1509259740259745
+        }
+      ]
+    },
+    {
+      "id": "rhythm",
+      "title": "Discover · Discern · Develop · Demonstrate",
+      "text": "The four D cycle moves from Discover to Discern, Develop, and Demonstrate. Checklists give each transition a visible boundary, inviting teams to prepare together before moving forward.",
+      "start": 25.517196700000007,
+      "duration": 13.35229,
+      "captions": [
+        {
+          "text": "The four D cycle moves from Discover to Discern, Develop, and Demonstrate.",
+          "start": 25.52184810000001,
+          "duration": 5.399286666666667
+        },
+        {
+          "text": "Checklists give each transition a visible boundary, inviting teams to prepare together before moving forward.",
+          "start": 30.937488300000005,
+          "duration": 7.953003333333333
+        }
+      ]
+    },
+    {
+      "id": "board",
+      "title": "Keep the ritual",
+      "text": "Inside Develop, the board connects practical delivery with the five R loop: Request, Receive, Review, Render, and Rejoice. Each movement makes space for attention, action, and thanksgiving.",
+      "start": 39.50223960000001,
+      "duration": 15.917143,
+      "captions": [
+        {
+          "text": "Inside Develop, the board connects practical delivery with the five R loop: Request, Receive, Review, Render, and Rejoice.",
+          "start": 39.5048535,
+          "duration": 10.329209819148936
+        },
+        {
+          "text": "Each movement makes space for attention, action, and thanksgiving.",
+          "start": 49.839066200000005,
+          "duration": 5.5879331808510635
+        }
+      ]
+    },
+    {
+      "id": "overview",
+      "title": "Take the overview with you",
+      "text": "The product overview has downloaded successfully as a PDF. It gives the team a shared introduction to discuss before beginning a project together.",
+      "start": 59.5131901,
+      "duration": 10.472517,
+      "captions": [
+        {
+          "text": "The product overview has downloaded successfully as a PDF.",
+          "start": 59.5203994,
+          "duration": 4.1890068
+        },
+        {
+          "text": "It gives the team a shared introduction to discuss before beginning a project together.",
+          "start": 63.7428237,
+          "duration": 6.2835102
+        }
+      ]
+    },
+    {
+      "id": "signin",
+      "title": "Enter the workspace",
+      "text": "The sign in link opens the working application. In the next demonstration, we will follow a seeded project and see the rhythm enforced through real changes.",
+      "start": 74.7408628,
+      "duration": 11.00771,
+      "captions": [
+        {
+          "text": "The sign in link opens the working application.",
+          "start": 74.75952799999999,
+          "duration": 3.3378217419354836
+        },
+        {
+          "text": "In the next demonstration, we will follow a seeded project and see the rhythm enforced through real changes.",
+          "start": 78.1204798,
+          "duration": 7.669888258064516
+        }
+      ]
+    },
+    {
+      "id": "close",
+      "title": "Build with care",
+      "text": "Liturgy invites us to connect what we build with how we serve. Let prayer shape our attention, discernment guide our choices, and gratitude accompany the work.",
+      "start": 86.31407270000003,
+      "duration": 11.56254,
+      "captions": [
+        {
+          "text": "Liturgy invites us to connect what we build with how we serve.",
+          "start": 86.33396780000001,
+          "duration": 4.537199240506329
+        },
+        {
+          "text": "Let prayer shape our attention, discernment guide our choices, and gratitude accompany the work.",
+          "start": 90.88823610000001,
+          "duration": 7.025340759493671
+        }
+      ]
+    }
+  ],
+  "assertions": "passed",
+  "review": "Assertions, full decode, normal-speed browser playback, and visual chapter inspection passed",
+  "audioMix": "Original Windows SAPI PCM; limiter at 0.75 with automatic gain disabled",
+  "audioPeakDb": -2.3
+}

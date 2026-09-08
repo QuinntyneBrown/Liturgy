@@ -1,0 +1,14 @@
+{
+  "description": "SHA256 hashes of the delivered rerun recipe; application revisions are recorded separately per video. These are not historical capture-script snapshots.",
+  "sources": {
+    "frontend/tools/demo/document.mjs": "56c4ba39e86f057525192a8916c61236620d36b826eaf37ba41fbe15387ada6a",
+    "frontend/tools/demo/narration.mjs": "6feb706a05b52de289f9dfe08073b5100a40d38edba02f9f8db0618ae86fa981",
+    "frontend/tools/demo/promote.mjs": "1c6dad2760339994e6d8d9926e31f237593a42c464129bf501050e11b5fa7959",
+    "frontend/tools/demo/record.mjs": "ae8e833dddc83c1f0dc08f6e5c7b5462194810ad1f10414904d75fa63d4526b8",
+    "frontend/tools/demo/remix.mjs": "29f9a8c71015bad1a318bb2b49e8c933be1e66a692772ba742be48996adaa0e4",
+    "frontend/tools/demo/review.mjs": "ebb9a329c6f41b41842728a9dfcf2a6a99025a1db552ca2240bff4f0435e0a37",
+    "frontend/tools/demo/setup-tools.ps1": "f07ac7ba7bce75cb47dc3cde6b8a23dc581e0ae75697726a9554400430a0f470",
+    "frontend/tools/demo/speak.ps1": "5138441deee2dca0e507274ef982fa8b60e7e55074e703d21fade04022280c1b",
+    "frontend/tools/demo/stories.mjs": "042042b49d06660600b7ee26665ddfa03ad7933a294810007da0508056853690"
+  }
+}
